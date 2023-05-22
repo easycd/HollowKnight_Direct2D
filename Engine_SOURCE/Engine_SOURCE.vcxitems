@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{8a630eda-13c3-41ae-bb4f-41122655dd2f}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameEngine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmTime.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmInput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmTime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)kmMath.inl" />
+  </ItemGroup>
+</Project>
