@@ -11,14 +11,18 @@ namespace km::graphics
 		UINT deviceFlag = D3D11_CREATE_DEVICE_DEBUG;
 		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 
+		//GPU 할당 함수
 		D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr
 			, deviceFlag, nullptr, 0
-			, D3D11_SDK_VERSION
+			, D3D11_SDK_VERSION //SDK버전을 가져온다.
 			, mDevice.GetAddressOf(), &featureLevel
 			, mContext.GetAddressOf());
+		//.GetAddressof()는 포인터 변수의 주소를 가져온다.
 
 		//SwapChain
-		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+		//SwapChain을 여러개 쓰면 한쪽 코어만 사용하지 않고 사용하지 않는 코어도 같이 사용하게 할 수 있다.
+		//DXGI_SWAP_CHAIN_DESC는 어떤 스왑체인을 가져올건지 가리키는것 ex) 옵션
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {}; 
 		swapChainDesc.BufferCount = 2;
 		swapChainDesc.BufferDesc.Width = application.GetWidth();
 		swapChainDesc.BufferDesc.Height = application.GetHeight();
@@ -57,17 +61,17 @@ namespace km::graphics
 	{
 		DXGI_SWAP_CHAIN_DESC dxgiDesc = {};
 
-		dxgiDesc.OutputWindow = hWnd;
+		dxgiDesc.OutputWindow = hWnd; //hWnd에 그려준다.
 		dxgiDesc.Windowed = true;
-		dxgiDesc.BufferCount = desc->BufferCount;
+		dxgiDesc.BufferCount = desc->BufferCount; //버퍼를 몇개를 사용할지
 		dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_DISCARD;
 
 		dxgiDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		dxgiDesc.BufferDesc.Width = desc->BufferDesc.Width;
 		dxgiDesc.BufferDesc.Height = desc->BufferDesc.Height;
 		dxgiDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
-		dxgiDesc.BufferDesc.RefreshRate.Numerator = 240;
-		dxgiDesc.BufferDesc.RefreshRate.Denominator = 1;
+		dxgiDesc.BufferDesc.RefreshRate.Numerator = 240; //최대 프레임 설정
+		dxgiDesc.BufferDesc.RefreshRate.Denominator = 1; //최소 프레임 설정
 		dxgiDesc.BufferDesc.Scaling = DXGI_MODE_SCALING::DXGI_MODE_SCALING_UNSPECIFIED;
 		dxgiDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER::DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 
@@ -78,12 +82,13 @@ namespace km::graphics
 		Microsoft::WRL::ComPtr<IDXGIAdapter> pAdapter = nullptr;
 		Microsoft::WRL::ComPtr<IDXGIFactory> pFactory = nullptr;
 
+		//IDXGIDevice -> 이미지 데이터를 생성
 		if (FAILED(mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)pDXGIDevice.GetAddressOf())))
 			return false;
-
+		//IDXGIAdapter -> 모니터
 		if (FAILED(pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)pAdapter.GetAddressOf())))
 			return false;
-
+		//IDXGIFactory -> 전체 화면시 처리해줌
 		if (FAILED(pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pFactory.GetAddressOf())))
 			return false;
 
@@ -107,7 +112,7 @@ namespace km::graphics
 		dxgiDesc.SampleDesc.Count = desc->SampleDesc.Count;
 		dxgiDesc.SampleDesc.Quality = 0;
 
-		dxgiDesc.MipLevels = desc->MipLevels;
+		dxgiDesc.MipLevels = desc->MipLevels; //오브젝트 크기가 커지거나 작아지면 픽셀이 깨지기 때문에 미리 텍스처 사이즈를 크기별로 만들어서 사용함.
 		dxgiDesc.MiscFlags = desc->MiscFlags;
 
 		if (FAILED(mDevice->CreateTexture2D(&dxgiDesc, nullptr, mDepthStencilBuffer.ReleaseAndGetAddressOf())))
