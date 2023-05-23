@@ -18,6 +18,9 @@ namespace km
 
 	void Application::Run()
 	{
+		Update();
+		LateUpdate();
+		Render();
 	}
 
 	void Application::Initialize()
@@ -34,6 +37,7 @@ namespace km
 
 	void Application::Render()
 	{
+		graphicDevice->Draw();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
