@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTime.h" />
@@ -33,6 +34,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTime.cpp" />

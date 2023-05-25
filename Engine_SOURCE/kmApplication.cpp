@@ -1,5 +1,7 @@
 #include "kmApplication.h"
-
+#include "kmInput.h"
+#include "kmTime.h"
+#include "kmRenderer.h"
 
 namespace km
 {
@@ -25,6 +27,10 @@ namespace km
 
 	void Application::Initialize()
 	{
+		Time::Initiailize();
+		Input::Initialize();
+
+		renderer::Initialize();
 	}
 
 	void Application::Update()

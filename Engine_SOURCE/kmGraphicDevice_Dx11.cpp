@@ -1,5 +1,6 @@
 #include "kmGraphicDevice_Dx11.h"
 #include "kmApplication.h"
+#include "kmRenderer.h"
 
 extern km::Application application;
 
@@ -7,6 +8,20 @@ namespace km::graphics
 {
 	GraphicDevice_Dx11::GraphicDevice_Dx11()
 	{
+		//도형 그리는 순서
+		// 1. graphic device, context 생성
+
+		// 2. 화면에 렌더링 할수 있게 도와주는
+		// swapchain 생성
+
+		// 3. rendertarget,view 생성하고 
+		// 4. 깊이버퍼와 깊이버퍼 뷰 생성해주고
+
+		// 5. 레더타겟 클리어 ( 화면 지우기 )
+		// 6. present 함수로 렌더타겟에 있는 텍스쳐를
+		//    모니터에 그려준다.
+
+		// Device, Context 생성
 		HWND hWnd = application.GetHwnd();
 		UINT deviceFlag = D3D11_CREATE_DEVICE_DEBUG;
 		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
@@ -97,6 +112,40 @@ namespace km::graphics
 
 		return true;
 	}
+	bool GraphicDevice_Dx11::CreateBuffer(ID3D11Buffer** buffer, D3D11_BUFFER_DESC* desc, D3D11_SUBRESOURCE_DATA* data)
+	{
+
+		if(FAILED(mDevice->CreateBuffer(desc, data, buffer)))
+		return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CreateShader()
+	{
+		ID3DBlob* vsBlob = nullptr;
+		std::filesystem::path shaderPath = std::filesystem::current_path().parent_path(); //부모 경로
+		shaderPath += L"\\Shader_SOURCE\\";
+
+		std::filesystem::path vsPath(shaderPath.c_str());
+		vsPath += L"TriangleVS.hlsl";
+
+		D3DCompileFromFile(vsPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+		, "main", "vs_5_0", 0, 0, &km::renderer::triangleVSBlob, &km::renderer::errorBlob);
+
+		if (km::renderer::errorBlob)
+		{
+			OutputDebugStringA((char*)km::renderer::errorBlob->GetBufferPointer());
+			km::renderer::errorBlob->Release();
+		}
+
+		mDevice->CreateVertexShader(km::renderer::triangleVSBlob->GetBufferPointer()
+			, km::renderer::triangleVSBlob->GetBufferSize()
+			, nullptr, &km::renderer::triangleVSShader);
+
+		return true;
+	}
+
 	bool GraphicDevice_Dx11::CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data)
 	{
 		D3D11_TEXTURE2D_DESC dxgiDesc = {};

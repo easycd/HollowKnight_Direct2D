@@ -54,6 +54,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h">
       <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
