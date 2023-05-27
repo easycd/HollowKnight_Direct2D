@@ -5,6 +5,9 @@ namespace km::renderer
 {
 	Vertex vertexes[3] = {};
 
+	// Input Layout (정점 정보)
+	ID3D11InputLayout* triangleLayout = nullptr;
+
 	// Vertex Buffer
 	ID3D11Buffer* triangleBuffer = nullptr;
 
@@ -48,13 +51,13 @@ namespace km::renderer
 
 	void Initialize()
 	{
-		vertexes[0].pos = Vector3(0.0f, 0.5f, 1.0f);
+		vertexes[0].pos = Vector3(0.0f, 0.5f, 0.0f);
 		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
-		vertexes[1].pos = Vector3(0.5f, -0.5f, 1.0f);
+		vertexes[1].pos = Vector3(0.5f, -0.5f, 0.0f);
 		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 
-		vertexes[2].pos = Vector3(-0.5f, -0.5f, 1.0f);
+		vertexes[2].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[2].color = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
 		SetupState();

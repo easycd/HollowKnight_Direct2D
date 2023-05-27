@@ -35,6 +35,8 @@ namespace km
 
 	void Application::Update()
 	{
+		Time::Update();
+		Input::Update();
 	}
 
 	void Application::LateUpdate()
@@ -43,6 +45,8 @@ namespace km
 
 	void Application::Render()
 	{
+		Time::Render();
+
 		graphicDevice->Draw();
 	}
 
@@ -55,6 +59,7 @@ namespace km
 			mHeight = height;
 
 			graphicDevice = std::make_unique<km::graphics::GraphicDevice_Dx11>();
+			km::graphics::GetDevice() = graphicDevice.get();
 		}
 
 		RECT rt = { 0, 0, (LONG)width , (LONG)height };
