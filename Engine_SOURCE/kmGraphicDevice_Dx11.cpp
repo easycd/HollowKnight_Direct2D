@@ -176,15 +176,15 @@ namespace km::graphics
 			, km::renderer::trianglePSBlob->GetBufferSize()
 			, nullptr, &km::renderer::trianglePSShader);
 
-		// Input layout 정점 구조 정보를 넘겨줘야한다.
+		// Input layout 정점 구조 정보(pos, color)를 넘겨줘야한다.
 		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
 
-		arrLayout[0].AlignedByteOffset = 0;
-		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-		arrLayout[0].InputSlot = 0;
-		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-		arrLayout[0].SemanticName = "POSITION";
-		arrLayout[0].SemanticIndex = 0;
+		arrLayout[0].AlignedByteOffset = 0; //정점 위치 Offset
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; //정점 성분의 자료 형식을 구분
+		arrLayout[0].InputSlot = 0; //이 성분의 자료가 공급될 정점 버퍼 슬롯의 색인
+		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA; //인스턴싱에 쓰이는 부분
+		arrLayout[0].SemanticName = "POSITION"; //문자열 이름, 정점 셰이더에서 쓰이는 유요한 변수 이름
+		arrLayout[0].SemanticIndex = 0; // 인덱스, 텍스쳐 좌표의 인덱스를 구분
 
 		arrLayout[1].AlignedByteOffset = 12;
 		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -231,6 +231,53 @@ namespace km::graphics
 	void GraphicDevice_Dx11::BindViewPort(D3D11_VIEWPORT* viewPort)
 	{
 		mContext->RSSetViewports(1, viewPort);
+	}
+
+	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
+	{
+		D3D11_MAPPED_SUBRESOURCE subRes = {};
+		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subRes);
+		memcpy(subRes.pData, data, size); //메모리 복사
+		mContext->Unmap(buffer, 0); //메모리 해제
+	}
+
+	void GraphicDevice_Dx11::BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer)
+	{
+		switch (stage)
+		{
+		case eShaderStage::VS:
+			mContext->VSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::HS:
+			mContext->HSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::DS:
+			mContext->DSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::GS:
+			mContext->GSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::PS:
+			mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::CS:
+			mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case eShaderStage::End:
+			break;
+		default:
+			break;
+		}
+	}
+
+	void GraphicDevice_Dx11::BindsConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer)
+	{
+		mContext->VSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->HSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->DSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->GSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
 	}
 
 	void GraphicDevice_Dx11::Draw()
