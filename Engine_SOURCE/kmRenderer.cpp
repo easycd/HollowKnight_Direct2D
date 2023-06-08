@@ -78,9 +78,9 @@ namespace renderer
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
-		SetupState();
 		LoadBuffer();
 		LoadShader();
+		SetupState();
 	}
 	void Release()
 	{
