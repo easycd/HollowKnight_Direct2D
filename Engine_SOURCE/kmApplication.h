@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEngine.h"
 #include "kmGraphicDevice_Dx11.h"
+#include "kmScene.h"
 
 namespace km
 {
@@ -32,5 +33,7 @@ namespace km
 		HWND mHwnd;
 		UINT mWidth;
 		UINT mHeight;
+
+		Scene* mScene;
 	};
 }

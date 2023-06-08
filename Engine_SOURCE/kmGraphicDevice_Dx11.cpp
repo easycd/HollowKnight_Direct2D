@@ -215,6 +215,11 @@ namespace km::graphics
 		mContext->RSSetViewports(1, viewPort);
 	}
 
+	void GraphicDevice_Dx11::DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation)
+	{
+		mContext->DrawIndexed(IndexCount, StartIndexLocation, BaseVertexLocation);
+	}
+
 	void GraphicDevice_Dx11::BindInputLayout(ID3D11InputLayout* pInputLayout)
 	{
 		mContext->IASetInputLayout(pInputLayout);
@@ -292,6 +297,7 @@ namespace km::graphics
 		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
 	}
 
+
 	void GraphicDevice_Dx11::Draw()
 	{
 		// render target clear
@@ -315,15 +321,13 @@ namespace km::graphics
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 
 		renderer::mesh->BindBuffer();
-
-		mContext->IASetInputLayout(renderer::shader->GetInputLayout());
-
 		renderer::shader->Binds();
-
 		mContext->DrawIndexed(renderer::mesh->GetIndexCount(), 0, 0);
-
-		// 레더타겟에 있는 이미지를 화면에 그려준다
-		mSwapChain->Present(0, 0);
 	}
 
+	void GraphicDevice_Dx11::Present()
+	{
+		// 렌더타겟에 있는 이미지를 화면에 그려준다
+		mSwapChain->Present(0, 0);
+	}
 }
