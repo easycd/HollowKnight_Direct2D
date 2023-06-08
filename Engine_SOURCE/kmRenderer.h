@@ -1,9 +1,12 @@
 #pragma once
 #include "GameEngine.h"
 #include "kmGraphicDevice_Dx11.h"
+#include "kmMesh.h"
+#include "kmShader.h"
+#include "kmConstantBuffer.h"
 
 using namespace km::math;
-namespace km::renderer
+namespace renderer
 {
 	struct Vertex
 	{
@@ -12,18 +15,11 @@ namespace km::renderer
 	};
 
 	extern Vertex vertexes[];
-	extern ID3D11InputLayout* triangleLayout;
-
-	extern ID3D11Buffer* triangleBuffer;
-	extern ID3D11Buffer* triangleIdxBuffer;
-	extern ID3D11Buffer* triangleConstantBuffer;
-
-	extern ID3DBlob* errorBlob;
-	extern ID3DBlob* triangleVSBlob;
-	extern ID3D11VertexShader* triangleVSShader;
-	extern ID3DBlob* trianglePSBlob;
-	extern ID3D11PixelShader* trianglePSShader;
+	extern km::Mesh* mesh;
+	extern km::Shader* shader;
+	extern km::graphics::ConstantBuffer* constantBuffer;
 
 	void Initialize();
+	void Release();
 }
 

@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "Editer_Window.h"
 #include "kmApplication.h"
+#include "kmRenderer.h"
 
 km::Application application;
 
@@ -64,6 +65,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
+    renderer::Release();
     return (int)msg.wParam;
 }
 

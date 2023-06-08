@@ -37,7 +37,7 @@ namespace km::graphics
 		//SwapChain
 		//SwapChain을 여러개 쓰면 한쪽 코어만 사용하지 않고 사용하지 않는 코어도 같이 사용하게 할 수 있다.
 		//DXGI_SWAP_CHAIN_DESC는 어떤 스왑체인을 가져올건지 가리키는것 ex) 옵션
-		DXGI_SWAP_CHAIN_DESC swapChainDesc = {}; 
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 		swapChainDesc.BufferCount = 2;
 		swapChainDesc.BufferDesc.Width = application.GetWidth();
 		swapChainDesc.BufferDesc.Height = application.GetHeight();
@@ -45,8 +45,8 @@ namespace km::graphics
 		if (!CreateSwapChain(&swapChainDesc, hWnd))
 			return;
 
-		if(FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
-		, (void**)mRenderTarget.GetAddressOf())))
+		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
+			, (void**)mRenderTarget.GetAddressOf())))
 			return;
 
 		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget.Get()
@@ -71,7 +71,7 @@ namespace km::graphics
 		D3D11_SUBRESOURCE_DATA data;
 		if (!CreateTexture(&depthStencilDesc, &data))
 			return;
-		
+
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
 
@@ -130,76 +130,6 @@ namespace km::graphics
 
 		return true;
 	}
-	bool GraphicDevice_Dx11::CreateBuffer(ID3D11Buffer** buffer, D3D11_BUFFER_DESC* desc, D3D11_SUBRESOURCE_DATA* data)
-	{
-
-		if(FAILED(mDevice->CreateBuffer(desc, data, buffer)))
-		return false;
-
-		return true;
-	}
-
-	bool GraphicDevice_Dx11::CreateShader()
-	{
-		std::filesystem::path shaderPath = std::filesystem::current_path().parent_path(); //부모 경로
-		shaderPath += L"\\Shader_SOURCE\\";
-
-		std::filesystem::path vsPath(shaderPath.c_str());
-		vsPath += L"TriangleVS.hlsl";
-
-		D3DCompileFromFile(vsPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-		, "main", "vs_5_0", 0, 0, &km::renderer::triangleVSBlob, &km::renderer::errorBlob);
-
-		if (km::renderer::errorBlob)
-		{
-			OutputDebugStringA((char*)km::renderer::errorBlob->GetBufferPointer());
-			km::renderer::errorBlob->Release();
-		}
-
-		mDevice->CreateVertexShader(km::renderer::triangleVSBlob->GetBufferPointer()
-			, km::renderer::triangleVSBlob->GetBufferSize()
-			, nullptr, &km::renderer::triangleVSShader);
-
-		std::filesystem::path psPath(shaderPath.c_str());
-		psPath += L"TrianglePS.hlsl";
-
-		D3DCompileFromFile(psPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, "main", "ps_5_0", 0, 0, &km::renderer::trianglePSBlob, &km::renderer::errorBlob);
-
-		if (km::renderer::errorBlob)
-		{
-			OutputDebugStringA((char*)km::renderer::errorBlob->GetBufferPointer());
-			km::renderer::errorBlob->Release();
-		}
-
-		mDevice->CreatePixelShader(km::renderer::trianglePSBlob->GetBufferPointer()
-			, km::renderer::trianglePSBlob->GetBufferSize()
-			, nullptr, &km::renderer::trianglePSShader);
-
-		// Input layout 정점 구조 정보(pos, color)를 넘겨줘야한다.
-		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
-
-		arrLayout[0].AlignedByteOffset = 0; //정점 위치 Offset
-		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; //정점 성분의 자료 형식을 구분
-		arrLayout[0].InputSlot = 0; //이 성분의 자료가 공급될 정점 버퍼 슬롯의 색인
-		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA; //인스턴싱에 쓰이는 부분
-		arrLayout[0].SemanticName = "POSITION"; //문자열 이름, 정점 셰이더에서 쓰이는 유요한 변수 이름
-		arrLayout[0].SemanticIndex = 0; // 인덱스, 텍스쳐 좌표의 인덱스를 구분
-
-		arrLayout[1].AlignedByteOffset = 12;
-		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-		arrLayout[1].InputSlot = 0;
-		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-		arrLayout[1].SemanticName = "COLOR";
-		arrLayout[1].SemanticIndex = 0;
-
-		mDevice->CreateInputLayout(arrLayout, 2
-			, renderer::triangleVSBlob->GetBufferPointer()
-			, renderer::triangleVSBlob->GetBufferSize()
-			, &renderer::triangleLayout);
-
-		return true;
-	}
 
 	bool GraphicDevice_Dx11::CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data)
 	{
@@ -228,9 +158,91 @@ namespace km::graphics
 		return true;
 	}
 
+	bool GraphicDevice_Dx11::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, UINT NumElements, ID3DBlob* byteCode, ID3D11InputLayout** ppInputLayout)
+	{
+		if (FAILED(mDevice->CreateInputLayout(pInputElementDescs, NumElements
+			, byteCode->GetBufferPointer()
+			, byteCode->GetBufferSize()
+			, ppInputLayout)))
+			return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CreateBuffer(ID3D11Buffer** buffer, D3D11_BUFFER_DESC* desc, D3D11_SUBRESOURCE_DATA* data)
+	{
+
+		if (FAILED(mDevice->CreateBuffer(desc, data, buffer)))
+			return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CompileFromfile(const std::wstring& fileName, const std::string& funcName, const std::string& version, ID3DBlob** ppCode)
+	{
+		ID3DBlob* errorBlob = nullptr;
+		D3DCompileFromFile(fileName.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+			, funcName.c_str(), version.c_str(), 0, 0, ppCode, &errorBlob);
+
+		if (errorBlob)
+		{
+			OutputDebugStringA((char*)(errorBlob->GetBufferPointer()));
+			errorBlob->Release();
+			errorBlob = nullptr;
+		}
+
+		return false;
+	}
+
+	bool GraphicDevice_Dx11::CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11VertexShader** ppVertexShader)
+	{
+		if (FAILED(mDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, nullptr, ppVertexShader)))
+			return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11PixelShader** ppPixelShader)
+	{
+		if (FAILED(mDevice->CreatePixelShader(pShaderBytecode, BytecodeLength, nullptr, ppPixelShader)))
+			return false;
+
+		return true;
+	}
+
 	void GraphicDevice_Dx11::BindViewPort(D3D11_VIEWPORT* viewPort)
 	{
 		mContext->RSSetViewports(1, viewPort);
+	}
+
+	void GraphicDevice_Dx11::BindInputLayout(ID3D11InputLayout* pInputLayout)
+	{
+		mContext->IASetInputLayout(pInputLayout);
+	}
+
+	void GraphicDevice_Dx11::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY Topology)
+	{
+		mContext->IASetPrimitiveTopology(Topology);
+	}
+
+	void GraphicDevice_Dx11::BindVertexBuffer(UINT StartSlot, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets)
+	{
+		mContext->IASetVertexBuffers(StartSlot, 1, ppVertexBuffers, pStrides, pOffsets);
+	}
+
+	void GraphicDevice_Dx11::BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset)
+	{
+		mContext->IASetIndexBuffer(pIndexBuffer, Format, Offset);
+	}
+
+	void GraphicDevice_Dx11::BindVertexShader(ID3D11VertexShader* pVetexShader)
+	{
+		mContext->VSSetShader(pVetexShader, 0, 0);
+	}
+
+	void GraphicDevice_Dx11::BindPixelShader(ID3D11PixelShader* pPixelShader)
+	{
+		mContext->PSSetShader(pPixelShader, 0, 0);
 	}
 
 	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
@@ -302,21 +314,13 @@ namespace km::graphics
 		BindViewPort(&mViewPort);
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 
-		// input assembler 정점데이터 정보 지정
-		UINT vertexsize = sizeof(renderer::Vertex);
-		UINT offset = 0;
+		renderer::mesh->BindBuffer();
 
-		mContext->IASetVertexBuffers(0, 1, &renderer::triangleBuffer, &vertexsize, &offset);
-		mContext->IASetInputLayout(renderer::triangleLayout);
-		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		mContext->IASetInputLayout(renderer::shader->GetInputLayout());
 
-		//Bind VS, PS 
+		renderer::shader->Binds();
 
-		mContext->VSSetShader(renderer::triangleVSShader, 0, 0);
-		mContext->PSSetShader(renderer::trianglePSShader, 0, 0);
-
-		// Draw Render Target
-		mContext->Draw(3, 0);
+		mContext->DrawIndexed(renderer::mesh->GetIndexCount(), 0, 0);
 
 		// 레더타겟에 있는 이미지를 화면에 그려준다
 		mSwapChain->Present(0, 0);
