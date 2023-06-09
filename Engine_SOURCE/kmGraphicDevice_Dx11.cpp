@@ -27,6 +27,7 @@ namespace km::graphics
 		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 
 		//GPU 할당 함수
+		//디스플레이 어댑터를 나타내는 장치만든는 함수
 		D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr
 			, deviceFlag, nullptr, 0
 			, D3D11_SDK_VERSION //SDK버전을 가져온다.
@@ -38,10 +39,11 @@ namespace km::graphics
 		//SwapChain을 여러개 쓰면 한쪽 코어만 사용하지 않고 사용하지 않는 코어도 같이 사용하게 할 수 있다.
 		//DXGI_SWAP_CHAIN_DESC는 어떤 스왑체인을 가져올건지 가리키는것 ex) 옵션
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
-		swapChainDesc.BufferCount = 2;
-		swapChainDesc.BufferDesc.Width = application.GetWidth();
-		swapChainDesc.BufferDesc.Height = application.GetHeight();
+		swapChainDesc.BufferCount = 2; //버퍼 갯수
+		swapChainDesc.BufferDesc.Width = application.GetWidth(); //후면 버퍼 너비
+		swapChainDesc.BufferDesc.Height = application.GetHeight(); //후면 버퍼 높이
 
+		//그래픽 디바이스와 연결된 윈도우와의 교환체인 생성
 		if (!CreateSwapChain(&swapChainDesc, hWnd))
 			return;
 
@@ -49,41 +51,48 @@ namespace km::graphics
 			, (void**)mRenderTarget.GetAddressOf())))
 			return;
 
+		//CreateRenderTargetView -> 랜더 대상 뷰를 생성하는 메서드
 		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget.Get()
 			, nullptr, mRenderTargetView.GetAddressOf());
 
+		//D3D11_TEXTURE2D_DESC -> 깊이 정보를 담는 2차원 텍스처
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
-		depthStencilDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
-		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthStencilDesc.CPUAccessFlags = 0;
+		depthStencilDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL; //자원을 파이프라인에 어떤 식으로 묶을 것인지를 지정하는 하나 이상의 플래그들을 OR로 결합해서 지정한다.
+		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT; //텍스처의 용도를 뜻하는 필드
+		depthStencilDesc.CPUAccessFlags = 0; //CPU가 자원에 접근하는 방식을 결정하는 플래그들을 지정
+		                                     //자원을 기록해야 하는 경우 _WRITE, 읽어야 하는 경우 _READ, 쓰기 접근이 가능해야하는 경우 _DYNAMIC과 STAGING
+		                                     //깊이, 스텐실 버퍼의 경우, GPU깊이 스텐실 버퍼를 읽고 쓸 뿐 CPU는 전혀 접근하지 않을 경우 0
 
-		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthStencilDesc.Width = application.GetWidth();
-		depthStencilDesc.Height = application.GetHeight();
-		depthStencilDesc.ArraySize = 1;
+		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT; //텍셀의 형식을 뜻하는 필드로, DXGI_FORMAT 열거형의 값들 중 하나를 지정한다. 깊이스텐실 버퍼의 경우에 나온 형식들 중 하나를 사용해야 한다.
+		depthStencilDesc.Width = application.GetWidth(); //텍스처의 너비
+		depthStencilDesc.Height = application.GetHeight(); //텍스처의 높이
+		depthStencilDesc.ArraySize = 1; //텍스처 배열의 텍스처 갯수. 깊이, 스텐실 버퍼의 경우에는 텍스처 하나만 필요
 
-		depthStencilDesc.SampleDesc.Count = 1;
+		depthStencilDesc.SampleDesc.Count = 1; //다중 표본 갯수의 품질 수준을 서술하는 구조체
 		depthStencilDesc.SampleDesc.Quality = 0;
 
-		depthStencilDesc.MipLevels = 0;
+		depthStencilDesc.MipLevels = 0; //밉맵 수준의 갯수. 깊이, 스탠실 버퍼를 위한 텍스처에서는 밉맵 수준이 하나만 있으면 된다.
 		depthStencilDesc.MiscFlags = 0;
 
+		//리소스 데이터를 초기화 하는 구조체
 		D3D11_SUBRESOURCE_DATA data;
 		if (!CreateTexture(&depthStencilDesc, &data))
 			return;
 
+		//사각형의 위치와 크기를 나타내는 구조체
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
 
+		//그래픽 출력을 화면에 표시하기 위해 렌더링되는 영역을 정의하는 구조체
 		mViewPort =
 		{
-			0.0f, 0.0f
-			, (float)(winRect.right - winRect.left)
-			, (float)(winRect.bottom - winRect.top)
-			, 0.0f, 1.0f
+			0.0f, 0.0f //뷰포트의 왼쪽 상단 모서리의 X좌표, Y좌표
+			, (float)(winRect.right - winRect.left) //뷰포트의 너비
+			, (float)(winRect.bottom - winRect.top) //뷰포트의 높이
+			, 0.0f, 1.0f //뷰포트의 최소 깊이 값, 최대 깊이 값
 		};
 
-		BindViewPort(&mViewPort);
+		BindViewPort(&mViewPort); // 설정할 뷰포트
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 	}
 
