@@ -2,6 +2,8 @@
 
 namespace renderer
 {
+	using namespace km;
+	using namespace km::graphics;
 	Vertex vertexes[4] = {};
 	km::Mesh* mesh = nullptr;
 	km::Shader* shader = nullptr;
@@ -49,7 +51,7 @@ namespace renderer
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
 		// Constant Buffer
-		constantBuffer = new km::graphics::ConstantBuffer(eCBType::Transform);
+		constantBuffer = new ConstantBuffer(eCBType::Transform);
 		constantBuffer->Create(sizeof(Vector4));
 
 		Vector4 pos(0.2f, 0.0f, 0.0f, 1.0f);
