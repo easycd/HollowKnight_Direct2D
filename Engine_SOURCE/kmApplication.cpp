@@ -52,10 +52,9 @@ namespace km
 	{
 		Time::Render();
 
-		graphicDevice->Draw();
 		mScene->Render();
-		graphicDevice->Present();
-		
+		graphicDevice->Draw();
+		graphicDevice->Present();		
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

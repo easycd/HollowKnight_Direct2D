@@ -93,12 +93,14 @@ namespace km::graphics
 		};
 
 		BindViewPort(&mViewPort); // ¼³Á¤ÇÒ ºäÆ÷Æ®
+		//OMSetRenderTargets(·»´õÅ¸°ÙÀÇ ¼ö, ·»´õÅ¸°Ù ºäÀÇ ¹è¿­, ±íÀÌ ½ºÅÙ½Ç ¹öÆÛ)
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 	}
 
 	GraphicDevice_Dx11::~GraphicDevice_Dx11()
 	{
 	}
+
 	bool GraphicDevice_Dx11::CreateSwapChain(const DXGI_SWAP_CHAIN_DESC* desc, HWND hWnd)
 	{
 		DXGI_SWAP_CHAIN_DESC dxgiDesc = {};

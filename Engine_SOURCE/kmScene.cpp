@@ -31,6 +31,6 @@ namespace km
 		for (GameObject* gameObj : mGameObjects)
 		{
 			gameObj->Render();
-		}
+		}		
 	}
 }
