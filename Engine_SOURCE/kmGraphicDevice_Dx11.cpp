@@ -106,21 +106,21 @@ namespace km::graphics
 		DXGI_SWAP_CHAIN_DESC dxgiDesc = {};
 
 		dxgiDesc.OutputWindow = hWnd; //hWnd에 그려준다.
-		dxgiDesc.Windowed = true;
-		dxgiDesc.BufferCount = desc->BufferCount; //버퍼를 몇개를 사용할지
-		dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_DISCARD;
+		dxgiDesc.Windowed = true; //창모드면 true, 전체화면모드면 false
+		dxgiDesc.BufferCount = desc->BufferCount; //교환 사슬이 사용할 버퍼의 갯수, 이중 버퍼링에서는 2개
+		dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_DISCARD; //스왑체인의 동작 방식 설정. DXGI_SWAP_EFFECT_DISCARD -> 후면 버퍼를 폐기하고 새로운 프레임을 그려 넣음.
 
-		dxgiDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		dxgiDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //후면버퍼와 프론트 버퍼의 사용 방식을 제어. DXGI_USAGE_RENDER_TARGET_OUTPUT -> 후면 버퍼는 렌더 타겟으로 사용되고, 프론트 버퍼는 화면에 출력
 		dxgiDesc.BufferDesc.Width = desc->BufferDesc.Width;
 		dxgiDesc.BufferDesc.Height = desc->BufferDesc.Height;
 		dxgiDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
 		dxgiDesc.BufferDesc.RefreshRate.Numerator = 240; //최대 프레임 설정
 		dxgiDesc.BufferDesc.RefreshRate.Denominator = 1; //최소 프레임 설정
-		dxgiDesc.BufferDesc.Scaling = DXGI_MODE_SCALING::DXGI_MODE_SCALING_UNSPECIFIED;
-		dxgiDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER::DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		dxgiDesc.BufferDesc.Scaling = DXGI_MODE_SCALING::DXGI_MODE_SCALING_UNSPECIFIED; //스왑체인의 후면 버퍼 크기 조정 방식. DXGI_MODE_SCALING_UNSPECIFIED -> 크기 조정 방식이 지정되지 않았음을 나타냄 이 경우 후면 버퍼의 크기는 자동으로 조정되지 않음.
+		dxgiDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER::DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED; //스완 체인의 후면 버퍼의 스캔라인 순서 지정. DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED -> 후면 버퍼의 스캔 라인 순서는 자동으로 설정.
 
-		dxgiDesc.SampleDesc.Count = 1;
-		dxgiDesc.SampleDesc.Quality = 0;
+		dxgiDesc.SampleDesc.Count = 1; //스왑체인의 후면 버퍼에서 사용되는 멀티 샘플링 수준을 지정. 값이 높을수록 더 많은 샘플이 사용되어 품질이 향상 ex) 1, 2, 4, 8
+		dxgiDesc.SampleDesc.Quality = 0; //멀티 샘플링의 수준을 지정하는 값
 
 		Microsoft::WRL::ComPtr<IDXGIDevice> pDXGIDevice = nullptr;
 		Microsoft::WRL::ComPtr<IDXGIAdapter> pAdapter = nullptr;
@@ -169,6 +169,7 @@ namespace km::graphics
 		return true;
 	}
 
+	//인자 값이 fail때 오류 확인하기 위한 함수
 	bool GraphicDevice_Dx11::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, UINT NumElements, ID3DBlob* byteCode, ID3D11InputLayout** ppInputLayout)
 	{
 		if (FAILED(mDevice->CreateInputLayout(pInputElementDescs, NumElements
