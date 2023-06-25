@@ -6,33 +6,50 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-enum class eShaderStage
-{
-	VS,
-	HS,
-	DS,
-	GS,
-	PS,
-	CS,
-	End,
-};
+#define CB_GETBINDSLOT(name) __CBUFFERBINDSLOT__##name##__
+#define CBUFFER(name, slot) static const int CB_GETBINDSLOT(name) = slot; struct alignas(16) name 
 
-enum class eCBType
-{
-	Transform,
-	End,
-};
+#define CBSLOT_TRANSFORM		0
+//#define CBSLOT_PARTICLE			1
 
-struct GPUBuffer
+namespace km::graphics
 {
-	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
-	D3D11_BUFFER_DESC desc;
-
-	GPUBuffer()
-		: buffer(nullptr)
-		, desc{}
+	enum class eShaderStage
 	{
+		VS,
+		HS,
+		DS,
+		GS,
+		PS,
+		CS,
+		End,
+	};
 
-	}
-	virtual ~GPUBuffer() = default;
-};
+	enum class eCBType
+	{
+		Transform,
+		Material,
+		End,
+	};
+
+	enum class eSamplerType
+	{
+		Point,
+		Anisotropic,
+		End,
+	};
+
+	struct GPUBuffer
+	{
+		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+		D3D11_BUFFER_DESC desc;
+
+		GPUBuffer()
+			: buffer(nullptr)
+			, desc{}
+		{
+
+		}
+		virtual ~GPUBuffer() = default;
+	};
+}

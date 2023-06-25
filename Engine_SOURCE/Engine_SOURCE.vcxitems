@@ -17,6 +17,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCameraScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h" />
@@ -28,16 +30,24 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMaterial.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmPlayScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCameraScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />
@@ -47,13 +57,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMeshRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmPlayScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)kmMath.inl" />

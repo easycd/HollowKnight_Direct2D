@@ -6,18 +6,25 @@
 #include "kmConstantBuffer.h"
 
 using namespace km::math;
+using namespace km::graphics;
 namespace renderer
 {
 	struct Vertex
 	{
 		Vector3 pos;
 		Vector4 color;
+		Vector2 uv;
+	};
+
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM)
+	{
+		Matrix mWorld;
+		Matrix mView;
+		Matrix mProjection;
 	};
 
 	extern Vertex vertexes[];
-	extern km::Mesh* mesh;
-	extern km::Shader* shader;
-	extern km::graphics::ConstantBuffer* constantBuffer;
+	extern km::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End];
 
 	void Initialize();
 	void Release();

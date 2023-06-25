@@ -4,10 +4,13 @@
 namespace km
 {
 	using namespace km::enums;
+	using namespace km::math;
+
+	class GameObject;
 	class Component : public Entity
 	{
 	public:
-		Component();
+		Component(eComponentType type);
 		~Component();
 
 		virtual void Initialize();
@@ -15,8 +18,12 @@ namespace km
 		virtual void LateUpdate();
 		virtual void Render();
 
+		GameObject* GetOwner() { return mOwner; }
+		void SetOwner(GameObject* owner) { mOwner = owner; }
+
 	private:
 		const eComponentType mType;
+		GameObject* mOwner;
 	};
 }
 
