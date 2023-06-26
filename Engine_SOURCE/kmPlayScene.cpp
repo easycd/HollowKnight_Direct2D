@@ -16,25 +16,46 @@ namespace km
 	}
 	void PlayScene::Initialize()
 	{
+	//	{
+	//		GameObject* player = new GameObject();
+	//		AddGameObject(eLayerType::Player, player);
+	//		MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+	//		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+	//		mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
+	//		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+	//		//player->AddComponent<CameraScript>();
+	//	}
+		
 		{
-			GameObject* player = new GameObject();
-			AddGameObject(eLayerType::Player, player);
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+			GameObject* bg = new GameObject();
+			AddGameObject(eLayerType::BG, bg);
+			MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			mr->SetMaterial(Resources::Find<Material>(L"bg"));
+			bg->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			bg->GetComponent<Transform>()->SetScale(Vector3(10.0f, 10.0f, 0.0f));
 			//player->AddComponent<CameraScript>();
 		}
 
-		{
-			GameObject* player = new GameObject();
-			AddGameObject(eLayerType::Player, player);
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
-			player->GetComponent<Transform>()->SetPosition(Vector3(2.0f, 0.0f, 0.0f));
-			//player->AddComponent<CameraScript>();
-		}
+	//	{
+	//		GameObject* player = new GameObject(); 
+	//		AddGameObject(eLayerType::Player, player);
+	//		MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+	//		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+	//		mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+	//		player->GetComponent<Transform>()->SetPosition(Vector3(2.0f, 0.0f, 0.0f));
+	//		//player->AddComponent<CameraScript>();
+	//	}
+
+	//	{
+	//		GameObject* player = new GameObject();
+	//		AddGameObject(eLayerType::Player, player);
+	//		MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+	//		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+	//		mr->SetMaterial(Resources::Find<Material>(L"TitleBG"));
+	//		player->GetComponent<Transform>()->SetPosition(Vector3(2.0f, 0.0f, 0.0f));
+	//		//player->AddComponent<CameraScript>();
+	//	}
 
 		//Main Camera
 		GameObject* camera = new GameObject();

@@ -96,24 +96,41 @@ namespace renderer
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		km::Resources::Insert(L"SpriteShader", spriteShader);
 
+	//	{
+	//		std::shared_ptr<Texture> texture0
+	//			= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+	//		std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+	//		spriteMateiral->SetShader(spriteShader);
+	//		spriteMateiral->SetTexture(texture0);
+	//		Resources::Insert(L"SpriteMaterial", spriteMateiral);
+	//	}
+		
 		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
-
+			std::shared_ptr<Texture> texture1
+				= Resources::Load<Texture>(L"TitleBG", L"..\\Resources\\Title_BG\\TitleBG.png");
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(texture);
-			Resources::Insert(L"SpriteMaterial", spriteMateiral);
+			spriteMateiral->SetTexture(texture1);
+			Resources::Insert(L"bg", spriteMateiral);
 		}
 
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(texture);
-			Resources::Insert(L"SpriteMaterial02", spriteMateiral);
-		}
+	//	{
+	//		std::shared_ptr<Texture> texture2
+	//			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+	//		std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+	//		spriteMateiral->SetShader(spriteShader);
+	//		spriteMateiral->SetTexture(texture2);
+	//		Resources::Insert(L"SpriteMaterial02", spriteMateiral);
+	//	}
+
+//		{
+//			std::shared_ptr<Texture> texture
+//				= Resources::Load<Texture>(L"TitleBG", L"..\\Resources\\Title_BG\\TitleBG.png");
+//			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+//			spriteMateiral->SetShader(spriteShader);
+//			spriteMateiral->SetTexture(texture);
+//			Resources::Insert(L"TitleBG", spriteMateiral);
+//		}
 	}
 
 	void Initialize()
@@ -138,12 +155,16 @@ namespace renderer
 		LoadShader();
 		SetupState();
 
-		std::shared_ptr<Texture> texture
-			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
-		texture
-			= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+		//std::shared_ptr<Texture> texture0
+		//	= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		//std::shared_ptr<Texture> texture1
+		//	= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+		std::shared_ptr<Texture> texture2
+			= Resources::Load<Texture>(L"TitleBG", L"..\\Resources\\Title_BG\\TitleBG.png");
 
-		texture->BindShader(eShaderStage::PS, 0);
+		//texture0->BindShader(eShaderStage::PS, 0);
+		//texture1->BindShader(eShaderStage::PS, 0);
+		texture2->BindShader(eShaderStage::PS, 0);
 	}
 
 	void Release()

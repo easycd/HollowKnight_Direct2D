@@ -19,6 +19,7 @@ namespace km::enums
 		Player,
 		Monster,
 		UI,
+		BG,
 		End,
 	};
 
