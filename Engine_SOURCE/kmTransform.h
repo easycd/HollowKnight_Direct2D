@@ -33,6 +33,9 @@ namespace km
 		Vector3 Right() { return mRight; }
 		Vector3 Up() { return mUp; }
 
+		void SetParent(Transform* transform) { mParent = transform; }
+		Transform* GetParent() { return mParent; }
+
 	private:
 		Vector3 mPosition;
 		Vector3 mRotation;
@@ -43,6 +46,8 @@ namespace km
 		Vector3 mRight;
 
 		Matrix mWorld;
+
+		Transform* mParent;
 	};
 }
 

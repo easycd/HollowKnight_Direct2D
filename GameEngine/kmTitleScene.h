@@ -1,14 +1,13 @@
 #pragma once
-#include "kmScene.h"
-
+#include "..\Engine_SOURCE\kmScene.h"
 
 namespace km
 {
-	class PlayScene : public Scene
+	class TitleScene : public Scene
 	{
 	public:
-		PlayScene();
-		virtual ~PlayScene();
+		TitleScene();
+		virtual ~TitleScene();
 
 		virtual void Initialize() override;
 		virtual void Update() override;

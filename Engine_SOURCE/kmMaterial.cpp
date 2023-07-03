@@ -7,6 +7,7 @@ namespace km::graphics
 		: Resource(km::enums::eResourceType::Material)
 		, mShader(nullptr)
 		, mTexture(nullptr)
+		, mMode(eRenderingMode::Opaque)
 	{
 
 	}
@@ -23,8 +24,11 @@ namespace km::graphics
 
 	void Material::Binds()
 	{
-		mTexture->BindShader(eShaderStage::PS, 0);
-		mShader->Binds();
+		if (mTexture)
+			mTexture->BindShader(eShaderStage::PS, 0);
+
+		if (mShader)
+			mShader->Binds();
 	}
 
 	void Material::Clear()

@@ -3,8 +3,17 @@
 
 #include "framework.h"
 #include "Editer_Window.h"
-#include "kmApplication.h"
-#include "kmRenderer.h"
+
+#include "..\Engine_SOURCE\kmApplication.h"
+#include "..\Engine_SOURCE\kmRenderer.h"
+#include "..\Engine_SOURCE\kmResources.h"
+#include "LoadScene.h"
+
+#ifdef _DEBUG
+#pragma comment(lib, "..\\x64\\Debug\\GameEngine.lib")
+#else
+#pragma comment(lib, "..\\x64\\Release\\GameEngine.lib")
+#endif
 
 km::Application application;
 
@@ -66,6 +75,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     renderer::Release();
+    km::SceneManager::Release();
+
     return (int)msg.wParam;
 }
 
@@ -79,7 +90,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+    WNDCLASSEXW wcex = {};
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -125,6 +136,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    application.Initialize();
+   km::InitializeScenes();
 
    return TRUE;
 }

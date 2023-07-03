@@ -79,7 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -147,10 +147,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Engine_SOURCE\kmCameraScript.h" />
+    <ClInclude Include="Boss_PureVessel_Stage.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="kmBoss_Grimm_Stage.h" />
+    <ClInclude Include="kmDirtmouth.h" />
+    <ClInclude Include="kmGodhome.h" />
+    <ClInclude Include="kmPlayScene.h" />
+    <ClInclude Include="kmTitleScene.h" />
+    <ClInclude Include="LoadScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Engine_SOURCE\kmCameraScript.cpp" />
+    <ClCompile Include="Boss_PureVessel_Stage.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="kmBoss_Grimm_Stage.cpp" />
+    <ClCompile Include="kmDirtmouth.cpp" />
+    <ClCompile Include="kmGodhome.cpp" />
+    <ClCompile Include="kmPlayScene.cpp" />
+    <ClCompile Include="kmTitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="C:\Users\JAEWON\Desktop\Client\Engine_SOURCE\kmMath.inl">

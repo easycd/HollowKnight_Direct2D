@@ -54,8 +54,7 @@ namespace km
 
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
-		SceneManager::Render();
-		//graphicDevice->Draw();
+		renderer::Render();
 		graphicDevice->Present();
 	}
 

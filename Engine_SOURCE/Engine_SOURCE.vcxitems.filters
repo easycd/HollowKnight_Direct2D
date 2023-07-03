@@ -49,6 +49,39 @@
     <Filter Include="Scene\Manager">
       <UniqueIdentifier>{19fa6f1d-92e8-4e40-9f9c-ae62606be9a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Component\Base">
+      <UniqueIdentifier>{4d262e72-27f2-4d0d-a083-00d1115f880b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Camera">
+      <UniqueIdentifier>{da446e7a-9470-4883-8713-f5cf4276e63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\MeshRenderer">
+      <UniqueIdentifier>{544abcc1-a783-43dc-a482-7faf8b5408cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Transform">
+      <UniqueIdentifier>{a91b5d8a-2d24-439d-aee1-5dbeaa79feec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ConstantBuffer">
+      <UniqueIdentifier>{bbed545b-7455-4f5a-a202-4f70d58f161c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GraphicDevice">
+      <UniqueIdentifier>{1e2560d2-31de-4df6-a6c1-0828257accf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer">
+      <UniqueIdentifier>{eb80e969-8c76-4553-9449-565b40e3bab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{8ebedb39-f038-4df4-90f1-576955865b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{fa027f74-5215-4e96-af8b-362aee76bdac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{0d8cb726-9b93-40c5-a78f-e43f6b8545f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{07185af0-88d2-4b69-82ec-eb3d1ebbc124}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -59,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTime.cpp">
       <Filter>Common\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmApplication.cpp">
       <Filter>Hight Level Interface</Filter>
@@ -75,23 +105,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmMesh.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmShader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScript.cpp">
       <Filter>GameObject\Component\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmComponent.cpp">
-      <Filter>GameObject\Component</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp">
       <Filter>GameObject</Filter>
@@ -99,22 +114,44 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLayer.cpp">
       <Filter>Scene\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmMeshRenderer.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmTransform.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmCamera.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmCameraScript.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmMaterial.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmPlayScene.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScene.cpp">
       <Filter>Scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmSceneManager.cpp">
       <Filter>Scene\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmComponent.cpp">
+      <Filter>GameObject\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCamera.cpp">
+      <Filter>GameObject\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMeshRenderer.cpp">
+      <Filter>GameObject\Component\MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmTransform.cpp">
+      <Filter>GameObject\Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp">
+      <Filter>Graphics\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp">
+      <Filter>Graphics\GraphicDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp">
+      <Filter>Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMaterial.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmMesh.cpp">
+      <Filter>Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmShader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmTexture.cpp">
+      <Filter>Resource\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,9 +173,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameEngine.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -154,23 +188,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmMesh.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmShader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScript.h">
       <Filter>GameObject\Component\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmComponent.h">
-      <Filter>GameObject\Component</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGameObject.h">
       <Filter>GameObject</Filter>
@@ -178,22 +197,44 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLayer.h">
       <Filter>Scene\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmTransform.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmCamera.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmCameraScript.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmMaterial.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmPlayScene.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScene.h">
       <Filter>Scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmSceneManager.h">
       <Filter>Scene\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmComponent.h">
+      <Filter>GameObject\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCamera.h">
+      <Filter>GameObject\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h">
+      <Filter>GameObject\Component\MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmTransform.h">
+      <Filter>GameObject\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h">
+      <Filter>Graphics\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.h">
+      <Filter>Graphics\GraphicDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h">
+      <Filter>Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMaterial.h">
+      <Filter>Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmMesh.h">
+      <Filter>Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmTexture.h">
+      <Filter>Resource\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editer_Window", "Editer_Window\Editer_Window.vcxproj", "{FE05D7C4-750B-47E2-9AB8-A0BCB1DAA3BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D6C64D59-D11A-4A7A-B48A-CD12A8BA1E59} = {D6C64D59-D11A-4A7A-B48A-CD12A8BA1E59}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editer_SOURCE", "Editer_SOURCE\Editer_SOURCE.vcxitems", "{E05CF1B2-7E0B-427F-8B1C-345786A99101}"
 EndProject
@@ -50,6 +53,5 @@ Global
 		Editer_SOURCE\Editer_SOURCE.vcxitems*{e05cf1b2-7e0b-427f-8b1c-345786a99101}*SharedItemsImports = 9
 		Shader_SOURCE\Shader_SOURCE.vcxitems*{f0c6939d-18cf-4262-ad6d-644eb8bce74e}*SharedItemsImports = 9
 		Editer_SOURCE\Editer_SOURCE.vcxitems*{fe05d7c4-750b-47e2-9ab8-a0bcb1daa3be}*SharedItemsImports = 4
-		Engine_SOURCE\Engine_SOURCE.vcxitems*{fe05d7c4-750b-47e2-9ab8-a0bcb1daa3be}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

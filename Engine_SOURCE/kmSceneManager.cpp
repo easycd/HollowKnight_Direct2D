@@ -1,5 +1,4 @@
 #include "kmSceneManager.h"
-#include "kmPlayScene.h"
 
 namespace km
 {
@@ -10,10 +9,10 @@ namespace km
 	{
 		//PlayScene* test = new PlayScene();
 
-		mActiveScene = new PlayScene();
-		mScenes.insert(std::make_pair(L"PlayScene", mActiveScene));
-
-		mActiveScene->Initialize();
+		//mActiveScene = new PlayScene();
+		//mScenes.insert(std::make_pair(L"PlayScene", mActiveScene));
+		//
+		//mActiveScene->Initialize();
 	}
 
 	void SceneManager::Update()

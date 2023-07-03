@@ -1,15 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{e340661e-48a5-4afe-a342-ddd1339c4ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Load">
+      <UniqueIdentifier>{d4ef4845-01c7-43d2-8457-2d5b722d1203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene">
+      <UniqueIdentifier>{2044e947-da18-42cb-bce2-1790f2007458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script">
+      <UniqueIdentifier>{9c495874-19c8-449e-a5d4-686b61773847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene\PureVessel_Scene">
+      <UniqueIdentifier>{b8377682-79ec-49aa-94cd-a8a05c94739c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene\Grimm_Scene">
+      <UniqueIdentifier>{a84c1a4e-de18-47bf-adb4-5396c3e7bdd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene\TitleScene">
+      <UniqueIdentifier>{9d6e9113-6d08-4667-9e0a-95ba74b3d9ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="LoadScene.h">
+      <Filter>Contents\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine_SOURCE\kmCameraScript.h">
+      <Filter>Contents\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_PureVessel_Stage.h">
+      <Filter>Contents\Scene\PureVessel_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="kmBoss_Grimm_Stage.h">
+      <Filter>Contents\Scene\Grimm_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="kmTitleScene.h">
+      <Filter>Contents\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="kmPlayScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGodhome.h">
+      <Filter>Contents\Scene\PureVessel_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="kmDirtmouth.h">
+      <Filter>Contents\Scene\Grimm_Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="..\Engine_SOURCE\kmCameraScript.cpp">
+      <Filter>Contents\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_PureVessel_Stage.cpp">
+      <Filter>Contents\Scene\PureVessel_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmBoss_Grimm_Stage.cpp">
+      <Filter>Contents\Scene\Grimm_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmTitleScene.cpp">
+      <Filter>Contents\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGodhome.cpp">
+      <Filter>Contents\Scene\PureVessel_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmDirtmouth.cpp">
+      <Filter>Contents\Scene\Grimm_Scene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
