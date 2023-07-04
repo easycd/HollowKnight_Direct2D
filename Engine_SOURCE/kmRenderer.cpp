@@ -203,23 +203,43 @@ namespace renderer
 		km::Resources::Insert(L"SpriteShader", spriteShader);
 
 		{
-			std::shared_ptr<Texture> texture
+			std::shared_ptr<Texture> GrimmTownBG
 				= Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
 		
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(texture);
+			spriteMateiral->SetTexture(GrimmTownBG);
 			Resources::Insert(L"GrimmTown", spriteMateiral);
 		}
 
 		{
-			std::shared_ptr<Texture> texture
+			std::shared_ptr<Texture> TitleBG
 				= Resources::Load<Texture>(L"Title", L"..\\Resources\\Title_BG\\TitleBG.png");
 
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(texture);
+			spriteMateiral->SetTexture(TitleBG);
 			Resources::Insert(L"TitleBG", spriteMateiral);
+		}
+
+		{
+			std::shared_ptr<Texture> GrimmStage
+				= Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Stage\\Grimm_Stage_BG.png");
+
+			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+			spriteMateiral->SetShader(spriteShader);
+			spriteMateiral->SetTexture(GrimmStage);
+			Resources::Insert(L"GrimmStage_BG", spriteMateiral);
+		}
+
+		{
+			std::shared_ptr<Texture> PureVesselStageBG
+				= Resources::Load<Texture>(L"PureVesselStageBG", L"..\\Resources\\Boss_PureVessel\\StageBG\\PureVesselBG.png");
+
+			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+			spriteMateiral->SetShader(spriteShader);
+			spriteMateiral->SetTexture(PureVesselStageBG);
+			Resources::Insert(L"PureVesselStage_BG", spriteMateiral);
 		}
 
 	}
@@ -251,9 +271,12 @@ namespace renderer
 			= Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town.png");
 		std::shared_ptr<Texture> texture01
 			= Resources::Load<Texture>(L"TitleBG", L"..\\Resources\\Title_BG\\TitleBG.png");
+		std::shared_ptr<Texture> texture02
+			= Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Stage\\Grimm_Stage_BG.png");
 
 		texture0->BindShader(eShaderStage::PS, 0);
 		texture01->BindShader(eShaderStage::PS, 0);
+		texture02->BindShader(eShaderStage::PS, 0);
 	}
 
 	void Render()

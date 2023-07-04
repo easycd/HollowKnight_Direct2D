@@ -6,6 +6,7 @@
 #include "kmCameraScript.h"
 #include "kmCamera.h"
 #include "kmSceneManager.h"
+#include "kmInput.h"
 
 namespace km
 {
@@ -52,6 +53,10 @@ namespace km
 	void Dirtmouth::Update()
 	{
 		Scene::Update();
+		if (Input::GetKeyDown(eKeyCode::K))
+		{
+			SceneManager::LoadScene(L"Boss_Grimm_Stage");
+		}
 	}
 	void Dirtmouth::LateUpdate()
 	{

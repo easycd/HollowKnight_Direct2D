@@ -22,10 +22,12 @@ namespace km
 		//PlayScene* playScene = new PlayScene();
 		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
 
-		//SceneManager::CreateScene<TitleScene>(L"TitleScene");
+		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<Dirtmouth>(L"Dirtmouth");
-		//SceneManager::CreateScene<Boss_Grimm_Stage>(L"Boss_Grimm_Stage");
+		SceneManager::CreateScene<Boss_Grimm_Stage>(L"Boss_Grimm_Stage");
 		//SceneManager::CreateScene<Godhome>(L"Godhome");
-		//SceneManager::CreateScene<Boss_PureVessel_Stage>(L"Boss_PureVessel_Stage");
+		SceneManager::CreateScene<Boss_PureVessel_Stage>(L"Boss_PureVessel_Stage");
+
+		SceneManager::LoadScene(L"TitleScene");
 	}
 }

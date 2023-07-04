@@ -6,6 +6,7 @@
 #include "kmCameraScript.h"
 #include "kmCamera.h"
 #include "kmSceneManager.h"
+#include "kmInput.h"
 
 namespace km
 {
@@ -24,8 +25,8 @@ namespace km
 			MeshRenderer* mr = TitleBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"TitleBG"));
-			TitleBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-			TitleBG->GetComponent<Transform>()->SetScale(Vector3(7.0f, 4.5f, 0.0f));
+			TitleBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
+			TitleBG->GetComponent<Transform>()->SetScale(Vector3(8.0f, 5.0f, 0.0f));
 		}
 
 		{
@@ -51,6 +52,10 @@ namespace km
 	void TitleScene::Update()
 	{
 		Scene::Update();
+		if (Input::GetKeyDown(eKeyCode::K))
+		{
+			SceneManager::LoadScene(L"Dirtmouth");
+		}
 	}
 
 	void TitleScene::LateUpdate()
