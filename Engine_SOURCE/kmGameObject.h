@@ -67,6 +67,9 @@ namespace km
 			return comp;
 		}
 
+		void SetState(eState state) { mState = state; }
+		eState GetState() { return mState; }
+
 	private:
 		eState mState;
 		std::vector<Component*> mComponents;

@@ -20,7 +20,7 @@ namespace km
 	void InitializeScenes()
 	{
 		//PlayScene* playScene = new PlayScene();
-		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
+		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 
 		SceneManager::CreateScene<TitleScene>(L"TitleScene");
 		SceneManager::CreateScene<Dirtmouth>(L"Dirtmouth");

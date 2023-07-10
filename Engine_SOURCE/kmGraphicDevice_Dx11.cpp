@@ -108,7 +108,7 @@ namespace km::graphics
 		dxgiDesc.OutputWindow = hWnd; //hWnd에 그려준다.
 		dxgiDesc.Windowed = true; //창모드면 true, 전체화면모드면 false
 		dxgiDesc.BufferCount = desc->BufferCount; //교환 사슬이 사용할 버퍼의 갯수, 이중 버퍼링에서는 2개
-		dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_DISCARD; //스왑체인의 동작 방식 설정. DXGI_SWAP_EFFECT_DISCARD -> 후면 버퍼를 폐기하고 새로운 프레임을 그려 넣음.
+		dxgiDesc.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_FLIP_DISCARD; // DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_DISCARD; //스왑체인의 동작 방식 설정. DXGI_SWAP_EFFECT_DISCARD -> 후면 버퍼를 폐기하고 새로운 프레임을 그려 넣음.
 
 		dxgiDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //후면버퍼와 프론트 버퍼의 사용 방식을 제어. DXGI_USAGE_RENDER_TARGET_OUTPUT -> 후면 버퍼는 렌더 타겟으로 사용되고, 프론트 버퍼는 화면에 출력
 		dxgiDesc.BufferDesc.Width = desc->BufferDesc.Width;

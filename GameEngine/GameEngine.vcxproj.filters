@@ -49,6 +49,9 @@
     <ClInclude Include="kmDirtmouth.h">
       <Filter>Contents\Scene\Grimm_Scene</Filter>
     </ClInclude>
+    <ClInclude Include="kmGridScript.h">
+      <Filter>Contents\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -72,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="kmDirtmouth.cpp">
       <Filter>Contents\Scene\Grimm_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGridScript.cpp">
+      <Filter>Contents\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

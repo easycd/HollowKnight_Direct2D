@@ -82,6 +82,9 @@
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{07185af0-88d2-4b69-82ec-eb3d1ebbc124}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Object">
+      <UniqueIdentifier>{f232ba9e-da04-4512-84ae-42d0de1324c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTexture.h">
       <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmObject.h">
+      <Filter>Common\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

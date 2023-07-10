@@ -1,6 +1,5 @@
 #pragma once
 #include "kmResource.h"
-		  
 #include "kmResource.h"
 #include "kmGraphicDevice_Dx11.h"
 

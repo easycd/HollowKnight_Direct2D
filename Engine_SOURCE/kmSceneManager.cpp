@@ -7,12 +7,6 @@ namespace km
 
 	void SceneManager::Initialize()
 	{
-		//PlayScene* test = new PlayScene();
-
-		//mActiveScene = new PlayScene();
-		//mScenes.insert(std::make_pair(L"PlayScene", mActiveScene));
-		//
-		//mActiveScene->Initialize();
 	}
 
 	void SceneManager::Update()
@@ -28,6 +22,11 @@ namespace km
 	void SceneManager::Render()
 	{
 		mActiveScene->Render();
+	}
+
+	void SceneManager::Destroy()
+	{
+		mActiveScene->Destroy();
 	}
 
 	void SceneManager::Release()

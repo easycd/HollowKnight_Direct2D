@@ -24,6 +24,7 @@ namespace km
 		Update();
 		LateUpdate();
 		Render();
+		Destroy();
 	}
 
 	void Application::Initialize()
@@ -56,6 +57,11 @@ namespace km
 		graphicDevice->UpdateViewPort();
 		renderer::Render();
 		graphicDevice->Present();
+	}
+
+	void Application::Destroy()
+	{
+		SceneManager::Destroy();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

@@ -31,6 +31,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMaterial.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
