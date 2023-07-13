@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollider2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollider2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />

@@ -162,6 +162,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollider2D.cpp">
       <Filter>GameObject\Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCollisionManager.cpp">
+      <Filter>Scene\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollider2D.h">
       <Filter>GameObject\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCollisionManager.h">
+      <Filter>Scene\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

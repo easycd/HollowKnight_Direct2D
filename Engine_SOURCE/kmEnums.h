@@ -22,7 +22,7 @@ namespace km::enums
 		Monster,
 		UI,
 		BG,
-		End,
+		End = 16,
 	};
 
 	enum class eResourceType
