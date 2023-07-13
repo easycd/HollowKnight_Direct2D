@@ -7,7 +7,6 @@ namespace renderer
 {
 	using namespace km;
 	using namespace km::graphics;
-	Vertex vertexes[4] = {};
 	km::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[(UINT)eSamplerType::End] = {};
 
@@ -15,7 +14,9 @@ namespace renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 
+	km::Camera* mainCamera = nullptr;
 	std::vector<km::Camera*> cameras = {};
+	std::vector<DebugMesh> debugMeshs = {};
 
 	void SetupState()
 	{
@@ -55,6 +56,11 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = km::Resources::Find<Shader>(L"GridShader");
+		km::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = km::Resources::Find<Shader>(L"DebugShader");
 		km::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
@@ -174,7 +180,11 @@ namespace renderer
 
 	void LoadMesh()
 	{
+		std::vector<Vertex> vertexes = {};
+		std::vector<UINT> indexes = {};
+
 		//RECT
+		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
 		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 		vertexes[0].uv = Vector2(0.0f, 0.0f);
@@ -190,17 +200,13 @@ namespace renderer
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
-	}
 
-	void LoadBuffer()
-	{
 		// Vertex Buffer
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 		Resources::Insert(L"RectMesh", mesh);
 
-		mesh->CreateVertexBuffer(vertexes, 4);
+		mesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
 
-		std::vector<UINT> indexes = {};
 		indexes.push_back(0);
 		indexes.push_back(1);
 		indexes.push_back(2);
@@ -210,6 +216,64 @@ namespace renderer
 		indexes.push_back(3);
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
+
+
+		// Rect Debug Mesh
+		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugRect", rectDebug);
+		rectDebug->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		rectDebug->CreateIndexBuffer(indexes.data(), indexes.size());
+
+		// Circle Debug Mesh
+		vertexes.clear();
+		indexes.clear();
+
+		Vertex center = {};
+		center.pos = Vector3(0.0f, 0.0f, 0.0f);
+		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes.push_back(center);
+
+		int iSlice = 40;
+		float fRadius = 0.5f;
+		float fTheta = XM_2PI / (float)iSlice;
+
+		for (int i = 0; i < iSlice; ++i)
+		{
+			center.pos = Vector3(fRadius * cosf(fTheta * (float)i)
+				, fRadius * sinf(fTheta * (float)i)
+				, 0.0f);
+			center.color = Vector4(0.0f, 1.0f, 0.0f, 1.f);
+			vertexes.push_back(center);
+		}
+
+		//for (UINT i = 0; i < (UINT)iSlice; ++i)
+		//{
+		//	indexes.push_back(0);
+		//	if (i == iSlice - 1)
+		//	{
+		//		indexes.push_back(1);
+		//	}
+		//	else
+		//	{
+		//		indexes.push_back(i + 2);
+		//	}
+		//	indexes.push_back(i + 1);
+		//}
+
+		for (int i = 0; i < vertexes.size() - 2; ++i)
+		{
+			indexes.push_back(i + 1);
+		}
+		indexes.push_back(1);
+
+		std::shared_ptr<Mesh> circleDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugCircle", circleDebug);
+		circleDebug->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		circleDebug->CreateIndexBuffer(indexes.data(), indexes.size());
+	}
+
+	void LoadBuffer()
+	{
 		// Constant Buffer
 		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
@@ -235,6 +299,14 @@ namespace renderer
 		girdShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
 		girdShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
 		km::Resources::Insert(L"GridShader", girdShader);
+
+		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
+		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
+		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		debugShader->SetRSState(eRSType::SolidNone);
+
+		km::Resources::Insert(L"DebugShader", debugShader);
 }
 
 	void LoadMaterial()
@@ -298,12 +370,21 @@ namespace renderer
 			Resources::Insert(L"PureVesselStage_BG", spriteMateiral);
 		}
 
+		//Grid Shader
 		std::shared_ptr<Shader> gridShader
 			= Resources::Find<Shader>(L"GridShader");
 		
 		material = std::make_shared<Material>();
 		material->SetShader(gridShader);
 		Resources::Insert(L"GridMaterial", material);
+
+		//DebugShader
+		std::shared_ptr<Shader> debugShader
+			= Resources::Find<Shader>(L"DebugShader");
+
+		material = std::make_shared<Material>();
+		material->SetShader(debugShader);
+		Resources::Insert(L"DebugMaterial", material);
 	}
 
 	void Initialize()
@@ -313,6 +394,11 @@ namespace renderer
 		LoadShader();
 		SetupState();
 		LoadMaterial();
+	}
+
+	void PushDebugMeshAttribute(DebugMesh mesh)
+	{
+		debugMeshs.push_back(mesh);
 	}
 
 	void Render()

@@ -8,6 +8,8 @@
 #include "kmSceneManager.h"
 #include "kmGridScript.h"
 #include "kmObject.h"
+#include "kmRenderer.h"
+#include "kmCollider2D.h"
 
 namespace km
 { 
@@ -25,27 +27,28 @@ namespace km
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
 
 			player->SetName(L"Zelda");
+			Collider2D* cd = player->AddComponent<Collider2D>();
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
 
-			GameObject* player2 = new GameObject();
-			player2->SetName(L"ZeldaChild");
-			AddGameObject(eLayerType::Player, player2);
-			MeshRenderer* mr2 = player2->AddComponent<MeshRenderer>();
-			mr2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr2->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			player2->GetComponent<Transform>()->SetPosition(Vector3(1.0f, 0.0f, 1.0001f));
-
-			player2->GetComponent<Transform>()->SetParent(player->GetComponent<Transform>());
+			//GameObject* player2 = new GameObject();
+			//player2->SetName(L"ZeldaChild");
+			//AddGameObject(eLayerType::Player, player2);
+			//MeshRenderer* mr2 = player2->AddComponent<MeshRenderer>();
+			//mr2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			//mr2->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
+			//player2->GetComponent<Transform>()->SetPosition(Vector3(1.0f, 0.0f, 1.0001f));
+			//
+			//player2->GetComponent<Transform>()->SetParent(player->GetComponent<Transform>());
 			//player->AddComponent<CameraScript>();
 
 			const float pi = 3.141592f;
 			float degree = pi / 2.0f;
 
 			player->GetComponent<Transform>()->SetPosition(Vector3(-3.0f, 0.0f, 1.0001f));
-			player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
+			//player->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 		}
 
 		{
@@ -60,13 +63,13 @@ namespace km
 		}
 
 		{
-			GameObject* player = new GameObject();
-			player->SetName(L"Smile");
-			AddGameObject(eLayerType::UI, player);
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
-			player->GetComponent<Transform>()->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
+			//GameObject* player = new GameObject();
+			//player->SetName(L"Smile");
+			//AddGameObject(eLayerType::UI, player);
+			//MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+			//mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			//mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+			//player->GetComponent<Transform>()->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
 			//player->AddComponent<CameraScript>();
 		}
 
@@ -79,6 +82,8 @@ namespace km
 			cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
 			camera->AddComponent<CameraScript>();
+			renderer::cameras.push_back(cameraComp);
+			renderer::mainCamera = cameraComp;
 		}
 
 		//UI Camera
@@ -91,16 +96,16 @@ namespace km
 			//camera->AddComponent<CameraScript>();
 		}
 
-		{
-			GameObject* grid = new GameObject();
-			grid->SetName(L"Grid");
-			AddGameObject(eLayerType::Grid, grid);
-			MeshRenderer* mr = grid->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"GridMaterial"));
-			GridScript* gridSc = grid->AddComponent<GridScript>();
-			gridSc->SetCamera(cameraComp);
-		}
+		//{
+		//	GameObject* grid = new GameObject();
+		//	grid->SetName(L"Grid");
+		//	AddGameObject(eLayerType::Grid, grid);
+		//	MeshRenderer* mr = grid->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"GridMaterial"));
+		//	GridScript* gridSc = grid->AddComponent<GridScript>();
+		//	gridSc->SetCamera(cameraComp);
+		//}
 	}
 
 	void PlayScene::Update()

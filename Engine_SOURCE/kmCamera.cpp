@@ -199,6 +199,10 @@ namespace km
 		{
 			if (gameObj == nullptr)
 				continue;
+			if (gameObj->GetState()
+				!= GameObject::eState::Active)
+				continue;
+
 
 			gameObj->Render();
 		}
@@ -210,6 +214,9 @@ namespace km
 		{
 			if (gameObj == nullptr)
 				continue;
+			if (gameObj->GetState()
+				!= GameObject::eState::Active)
+				continue;
 
 			gameObj->Render();
 		}
@@ -220,6 +227,9 @@ namespace km
 		for (GameObject* gameObj : mTransparentGameObjects)
 		{
 			if (gameObj == nullptr)
+				continue;
+			if (gameObj->GetState()
+				!= GameObject::eState::Active)
 				continue;
 
 			gameObj->Render();

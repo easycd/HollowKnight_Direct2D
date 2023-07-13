@@ -85,6 +85,9 @@
     <Filter Include="Common\Object">
       <UniqueIdentifier>{f232ba9e-da04-4512-84ae-42d0de1324c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Component\Collider">
+      <UniqueIdentifier>{46999cd8-68d5-47d5-8539-2b033648b694}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTexture.cpp">
       <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmCollider2D.cpp">
+      <Filter>GameObject\Component\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmObject.h">
       <Filter>Common\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmCollider2D.h">
+      <Filter>GameObject\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
-#include <kmScript.h>
-#include "kmCamera.h"
+#include "..\\Engine_SOURCE\\kmScript.h"
+#include "..\\Engine_SOURCE\\kmCamera.h"
 
 namespace km
 {
