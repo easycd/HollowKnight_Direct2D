@@ -25,8 +25,8 @@ namespace km
 			MeshRenderer* mr = GrimmStageBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmStage_BG"));
-			GrimmStageBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
-			GrimmStageBG->GetComponent<Transform>()->SetScale(Vector3(8.0f, 5.0f, 0.0f));
+			GrimmStageBG->GetComponent<Transform>()->SetPosition(Vector3(16.0f,0.5f, 0.0f));
+			GrimmStageBG->GetComponent<Transform>()->SetScale(Vector3(50.0f, 6.0f, 0.0f));
 		}
 
 		{
@@ -38,15 +38,15 @@ namespace km
 			camera->AddComponent<CameraScript>();
 		}
 
-		//UI Camera
-		{
-			GameObject* camera = new GameObject();
-			AddGameObject(eLayerType::BG, camera);
-			camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::Player, false);
-			//camera->AddComponent<CameraScript>();
-		}
+		////UI Camera
+		//{
+		//	GameObject* camera = new GameObject();
+		//	AddGameObject(eLayerType::BG, camera);
+		//	camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
+		//	Camera* cameraComp = camera->AddComponent<Camera>();
+		//	cameraComp->TurnLayerMask(eLayerType::Player, false);
+		//	//camera->AddComponent<CameraScript>();
+		//}
 	}
 	void Boss_Grimm_Stage::Update()
 	{

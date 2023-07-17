@@ -352,7 +352,7 @@ namespace renderer
 		
 		{
 			std::shared_ptr<Texture> GrimmStage
-				= Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Stage\\Grimm_Stage_BG.png");
+				= Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
 		
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
@@ -368,6 +368,16 @@ namespace renderer
 			spriteMateiral->SetShader(spriteShader);
 			spriteMateiral->SetTexture(PureVesselStageBG);
 			Resources::Insert(L"PureVesselStage_BG", spriteMateiral);
+		}
+
+		{
+			std::shared_ptr<Texture> PlayerHUD
+				= Resources::Load<Texture>(L"PlayerHUD", L"..\\Resources\\UI\\MPUI\\HUD\\HUD.png");
+
+			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+			spriteMateiral->SetShader(spriteShader);
+			spriteMateiral->SetTexture(PlayerHUD);
+			Resources::Insert(L"Palyer_HUD", spriteMateiral);
 		}
 
 		//Grid Shader
