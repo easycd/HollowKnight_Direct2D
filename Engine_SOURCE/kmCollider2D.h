@@ -22,6 +22,8 @@ namespace km
 		void SetType(eColliderType type) { mType = type; }
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetCenter(Vector2 size) { mCenter = size; }
+
+		Vector2 GetSize() { return mSize; }
 		UINT GetColliderID() { return mColliderID; }
 
 	private:

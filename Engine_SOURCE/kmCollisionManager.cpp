@@ -20,7 +20,7 @@ namespace km
 		{
 			for (UINT row = 0; row < (UINT)eLayerType::End; row++)
 			{
-				if (mMatrix[row] == true)
+				if (mMatrix[column][row] == true)
 				{
 					LayerCollision((eLayerType)column, (eLayerType)row);
 				}
@@ -101,6 +101,26 @@ namespace km
 	}
 	bool CollisionManager::Intersect(Collider2D* left, Collider2D* right)
 	{
+		// Rect vs Rect 
+		// 0 --- 1
+		// |     |
+		// 3 --- 2
+		Vector3 arrLocalPos[4] =
+		{
+		   Vector3{-0.5f, 0.5f, 0.0f}
+		   ,Vector3{0.5f, 0.5f, 0.0f}
+		   ,Vector3{0.5f, -0.5f, 0.0f}
+		   ,Vector3{-0.5f, -0.5f, 0.0f}
+		};
+		
+		Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
+		Transform* rightTr = left->GetOwner()->GetComponent<Transform>();
+
+		Matrix leftMatrix = leftTr->GetMatrix();
+		Matrix rightMatrix = rightTr->GetMatrix();
+
+		Vector3 Axis[4] = {};
+
 		return false;
 	}
 	void CollisionManager::SetLayer(eLayerType left, eLayerType right, bool enable)

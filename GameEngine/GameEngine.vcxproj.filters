@@ -52,6 +52,7 @@
     <ClInclude Include="kmGridScript.h">
       <Filter>Contents\Script</Filter>
     </ClInclude>
+    <ClInclude Include="kmPlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -79,5 +80,6 @@
     <ClCompile Include="kmGridScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
+    <ClCompile Include="kmPlayerScript.cpp" />
   </ItemGroup>
 </Project>

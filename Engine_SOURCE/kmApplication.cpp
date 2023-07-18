@@ -3,6 +3,7 @@
 #include "kmTime.h"
 #include "kmRenderer.h"
 #include "kmSceneManager.h"
+#include "kmCollisionManager.h"
 
 namespace km
 {
@@ -41,6 +42,7 @@ namespace km
 	{
 		Time::Update();
 		Input::Update();
+		CollisionManager::Update();
 		SceneManager::Update();
 	}
 

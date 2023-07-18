@@ -154,6 +154,7 @@
     <ClInclude Include="kmDirtmouth.h" />
     <ClInclude Include="kmGodhome.h" />
     <ClInclude Include="kmGridScript.h" />
+    <ClInclude Include="kmPlayerScript.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmTitleScene.h" />
     <ClInclude Include="LoadScene.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="kmDirtmouth.cpp" />
     <ClCompile Include="kmGodhome.cpp" />
     <ClCompile Include="kmGridScript.cpp" />
+    <ClCompile Include="kmPlayerScript.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
     <ClCompile Include="kmTitleScene.cpp" />
   </ItemGroup>
