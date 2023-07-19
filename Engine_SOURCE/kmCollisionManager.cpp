@@ -121,7 +121,46 @@ namespace km
 
 		Vector3 Axis[4] = {};
 
-		return false;
+		Vector3 leftScale = Vector3(left->GetSize().x, left->GetSize().y, 1.0f);
+		Matrix finalLeft = Matrix::CreateScale(leftScale);
+		finalLeft *= leftMatrix;
+
+		Vector3 rightScale = Vector3(right->GetSize().x, right->GetSize().y, 1.0f);
+		Matrix finalRight = Matrix::CreateScale(rightScale);
+		finalRight *= rightMatrix;
+
+		Axis[0] = Vector3::Transform(arrLocalPos[1], finalLeft);
+		Axis[1] = Vector3::Transform(arrLocalPos[3], finalLeft);
+		Axis[2] = Vector3::Transform(arrLocalPos[1], finalRight);
+		Axis[3] = Vector3::Transform(arrLocalPos[3], finalRight);
+
+		Axis[0] -= Vector3::Transform(arrLocalPos[0], finalLeft);
+		Axis[1] -= Vector3::Transform(arrLocalPos[0], finalLeft);
+		Axis[2] -= Vector3::Transform(arrLocalPos[0], finalRight);
+		Axis[3] -= Vector3::Transform(arrLocalPos[0], finalRight);
+
+		for (size_t i = 0; i < 4; i++)
+			Axis[i].z = 0.0f;
+
+		Vector3 vc = leftTr->GetPosition() - rightTr->GetPosition();
+		vc.z = 0.0f;
+
+		Vector3 centerDir = vc;
+		for (size_t i = 0; i < 4; i++)
+		{
+			Vector3 vA = Axis[i];
+
+			float projDistance = 0.0f;
+			for (size_t j = 0; j < 4; j++)
+			{
+				projDistance += fabsf(Axis[j].Dot(vA) / 2.0f);
+			}
+
+			if (projDistance < fabsf(centerDir.Dot(vA)))
+				return false;
+		}
+
+		return true;
 	}
 	void CollisionManager::SetLayer(eLayerType left, eLayerType right, bool enable)
 	{

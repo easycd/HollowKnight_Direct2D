@@ -21,17 +21,17 @@ namespace km
 	}
 	void Dirtmouth::Initialize()
 	{
-		//{ //BackGround
-		//	GameObject* GrimmTownBG = new GameObject();
-		//	GrimmTownBG->SetName(L"Grimm_Town");
-		//	AddGameObject(eLayerType::BG, GrimmTownBG);
-		//	MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
-		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		//	mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
-		//	GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(5.0f, 0.5f, 0.0f));
-		//	GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(25.0f, 7.0f, 0.0f));
-		//	//player->AddComponent<CameraScript>();
-		//}
+		{ //BackGround
+			GameObject* GrimmTownBG = new GameObject();
+			GrimmTownBG->SetName(L"Grimm_Town");
+			AddGameObject(eLayerType::BG, GrimmTownBG);
+			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
+			GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(5.0f, 0.5f, 0.0f));
+			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
+			//player->AddComponent<CameraScript>();
+		}
 
 		{ //HUD
 			GameObject* GrimmTownBG = new GameObject();
@@ -61,15 +61,15 @@ namespace km
 			renderer::mainCamera = cameraComp;
 		}
 
-		//UI Camera
-		{
-			GameObject* camera = new GameObject();
-			AddGameObject(eLayerType::Player, camera);
-			camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::Player, false);
-			//camera->AddComponent<CameraScript>();
-		}
+		////UI Camera
+		//{
+		//	GameObject* camera = new GameObject();
+		//	AddGameObject(eLayerType::Player, camera);
+		//	camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
+		//	Camera* cameraComp = camera->AddComponent<Camera>();
+		//	cameraComp->TurnLayerMask(eLayerType::Player, false);
+		//	//camera->AddComponent<CameraScript>();
+		//}
 	}
 	void Dirtmouth::Update()
 	{

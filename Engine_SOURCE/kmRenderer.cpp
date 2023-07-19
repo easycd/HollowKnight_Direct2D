@@ -303,8 +303,8 @@ namespace renderer
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
-		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
-		debugShader->SetRSState(eRSType::SolidNone);
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		debugShader->SetRSState(eRSType::WireframeNone);
 
 		km::Resources::Insert(L"DebugShader", debugShader);
 }
@@ -368,6 +368,16 @@ namespace renderer
 			spriteMateiral->SetShader(spriteShader);
 			spriteMateiral->SetTexture(PureVesselStageBG);
 			Resources::Insert(L"PureVesselStage_BG", spriteMateiral);
+		}
+
+		{
+			std::shared_ptr<Texture> GodHomeBG
+				= Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
+
+			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
+			spriteMateiral->SetShader(spriteShader);
+			spriteMateiral->SetTexture(GodHomeBG);
+			Resources::Insert(L"GodHome_BG", spriteMateiral);
 		}
 
 		{

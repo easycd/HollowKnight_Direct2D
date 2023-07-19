@@ -53,7 +53,7 @@ namespace km
 		Scene::Update();
 		if (Input::GetKeyDown(eKeyCode::K))
 		{
-			SceneManager::LoadScene(L"Boss_PureVessel_Stage");
+			SceneManager::LoadScene(L"Godhome");
 		}
 	}
 	void Boss_Grimm_Stage::LateUpdate()

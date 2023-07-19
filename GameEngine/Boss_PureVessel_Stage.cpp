@@ -27,7 +27,7 @@ namespace km
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"PureVesselStage_BG"));
 			TitleBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
-			TitleBG->GetComponent<Transform>()->SetScale(Vector3(8.0f, 5.0f, 0.0f));
+			TitleBG->GetComponent<Transform>()->SetScale(Vector3(12.0f, 7.0f, 0.0f));
 		}
 
 		{
@@ -39,15 +39,15 @@ namespace km
 			camera->AddComponent<CameraScript>();
 		}
 
-		//UI Camera
-		{
-			GameObject* camera = new GameObject();
-			AddGameObject(eLayerType::BG, camera);
-			camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::Player, false);
-			//camera->AddComponent<CameraScript>();
-		}
+		////UI Camera
+		//{
+		//	GameObject* camera = new GameObject();
+		//	AddGameObject(eLayerType::BG, camera);
+		//	camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
+		//	Camera* cameraComp = camera->AddComponent<Camera>();
+		//	cameraComp->TurnLayerMask(eLayerType::Player, false);
+		//	//camera->AddComponent<CameraScript>();
+		//}
 	}
 	void Boss_PureVessel_Stage::Update()
 	{
