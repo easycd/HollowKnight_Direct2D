@@ -114,7 +114,7 @@ namespace km
 		};
 		
 		Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
-		Transform* rightTr = left->GetOwner()->GetComponent<Transform>();
+		Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
 
 		Matrix leftMatrix = leftTr->GetMatrix();
 		Matrix rightMatrix = rightTr->GetMatrix();

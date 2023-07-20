@@ -10,6 +10,8 @@
 #include "kmObject.h"
 #include "kmRenderer.h"
 #include "kmCollider2D.h"
+#include "kmPlayerScript.h"
+#include "kmCollisionManager.h"
 
 namespace km
 { 
@@ -21,13 +23,15 @@ namespace km
 	}
 	void PlayScene::Initialize()
 	{
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
+
 		{
 			GameObject* player
 				= object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 1.0001f), eLayerType::Player);
-
 			player->SetName(L"Zelda");
 
 			Collider2D* cd = player->AddComponent<Collider2D>();
+			cd->SetSize(Vector2(2.0f, 2.0f));
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -43,12 +47,13 @@ namespace km
 		{
 			GameObject* player = new GameObject();
 			player->SetName(L"Smile");
-			AddGameObject(eLayerType::UI, player);
+			AddGameObject(eLayerType::Monster, player);
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
 			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
-			//player->AddComponent<CameraScript>();
+			Collider2D* cd = player->AddComponent<Collider2D>();
+			player->AddComponent<PlayerScript>();
 		}
 
 		//{
