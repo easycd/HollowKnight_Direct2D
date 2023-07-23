@@ -10,6 +10,9 @@
 #include "kmObject.h"
 #include "kmRenderer.h"
 #include "kmCollider2D.h"
+#include "kmPlayerScript.h"
+#include "kmCollisionManager.h"
+#include "kmAnimator.h"
 
 namespace km
 {
@@ -21,31 +24,40 @@ namespace km
 	}
 	void Dirtmouth::Initialize()
 	{
+		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
+
 		{ //BackGround
-			GameObject* GrimmTownBG = new GameObject();
+			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
+			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
 			GrimmTownBG->SetName(L"Grimm_Town");
-			AddGameObject(eLayerType::BG, GrimmTownBG);
 			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
-			GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(5.0f, 0.5f, 0.0f));
-			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
 			//player->AddComponent<CameraScript>();
 		}
 
-		{ //HUD
-			GameObject* GrimmTownBG = new GameObject();
-			GrimmTownBG->SetName(L"PlayerHUD");
-			AddGameObject(eLayerType::UI, GrimmTownBG);
-			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
+		//{ //HUD
+		//	GameObject* GrimmTownBG = new GameObject();
+		//	GrimmTownBG->SetName(L"PlayerHUD");
+		//	AddGameObject(eLayerType::UI, GrimmTownBG);
+		//	MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"Palyer_HUD"));
+		//	GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(-2.8f, 1.3f, 0.0f));
+		//	GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(1.0f, 0.8f, 0.0f));
+		//	//player->AddComponent<CameraScript>();
+		//}
+
+		{
+			GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			player->SetName(L"Player");
+
+			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"Palyer_HUD"));
-			GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(-2.8f, 1.3f, 0.0f));
-			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(1.0f, 0.8f, 0.0f));
-			//player->AddComponent<CameraScript>();
+			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+			Animator* at = player->AddComponent<Animator>();
+			player->AddComponent<PlayerScript>();
 		}
-
-	
 
 
 		//Main Camera
@@ -55,7 +67,7 @@ namespace km
 			AddGameObject(eLayerType::Player, camera);
 			camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 			cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::UI, false);
+			cameraComp->TurnLayerMask(eLayerType::BG, true);
 			camera->AddComponent<CameraScript>();
 			renderer::cameras.push_back(cameraComp);
 			renderer::mainCamera = cameraComp;

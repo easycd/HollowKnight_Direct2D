@@ -10,6 +10,7 @@ namespace km::enums
 		Collider2D,
 		Particle,
 		MeshRenderer,
+		Animator,
 		Script,
 		Camera,
 		End,
@@ -31,6 +32,7 @@ namespace km::enums
 		Shader,
 		Material,
 		Mesh,
+		Animation,
 		End,
 	};
 

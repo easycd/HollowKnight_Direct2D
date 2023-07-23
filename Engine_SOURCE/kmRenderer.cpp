@@ -65,6 +65,11 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
+		shader = km::Resources::Find<Shader>(L"SpriteAnimationShader");
+		km::graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region Sampler State
 		//Sampler State
@@ -281,6 +286,10 @@ namespace renderer
 		// Grid Buffer
 		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
 		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(TransformCB));
+
+		// Animator Buffer
+		constantBuffer[(UINT)eCBType::Animator] = new ConstantBuffer(eCBType::Animator);
+		constantBuffer[(UINT)eCBType::Animator]->Create(sizeof(AnimatorCB));
 	}
 
 	void LoadShader()
@@ -295,6 +304,11 @@ namespace renderer
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		km::Resources::Insert(L"SpriteShader", spriteShader);
 
+		std::shared_ptr<Shader> spriteAniShader = std::make_shared<Shader>();
+		spriteAniShader->Create(eShaderStage::VS, L"SpriteAnimationVS.hlsl", "main");
+		spriteAniShader->Create(eShaderStage::PS, L"SpriteAnimationPS.hlsl", "main");
+		km::Resources::Insert(L"SpriteAnimationShader", spriteAniShader);
+
 		std::shared_ptr<Shader> girdShader = std::make_shared<Shader>();
 		girdShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
 		girdShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
@@ -305,23 +319,20 @@ namespace renderer
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		debugShader->SetRSState(eRSType::WireframeNone);
-
 		km::Resources::Insert(L"DebugShader", debugShader);
 }
 
 	void LoadMaterial()
 	{
-		std::shared_ptr<Shader> spriteShader
-			= Resources::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> spriteShader = Resources::Find<Shader>(L"SpriteShader");
 
-
-		std::shared_ptr<Texture> texture
-			= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
 
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(spriteShader);
 		material->SetTexture(texture);
 		Resources::Insert(L"SpriteMaterial", material);
+
 
 		texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
 		material = std::make_shared<Material>();
@@ -330,19 +341,31 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"SpriteMaterial02", material);
 
-		{
-			std::shared_ptr<Texture> GrimmTownBG
-				= Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
+		texture = Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GrimmTown", material);
+
+		//Animation Shader
+		spriteShader = Resources::Find<Shader>(L"SpriteAnimationShader");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"SpriteAnimaionMaterial", material);
+
 		
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(GrimmTownBG);
-			Resources::Insert(L"GrimmTown", spriteMateiral);
-		}
+		//texture = Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
+		//material = std::make_shared<Material>();
+		//material->SetShader(spriteShader);
+		//material->SetTexture(texture);
+		//material->SetRenderingMode(eRenderingMode::Transparent);
+		//Resources::Insert(L"GrimmTown", material);
+		
 		
 		{
-			std::shared_ptr<Texture> TitleBG
-				= Resources::Load<Texture>(L"Title", L"..\\Resources\\Title_BG\\TitleBG.png");
+			std::shared_ptr<Texture> TitleBG = Resources::Load<Texture>(L"Title", L"..\\Resources\\Title_BG\\TitleBG.png");
 		
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
@@ -351,8 +374,7 @@ namespace renderer
 		}
 		
 		{
-			std::shared_ptr<Texture> GrimmStage
-				= Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
+			std::shared_ptr<Texture> GrimmStage = Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
 		
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
@@ -361,8 +383,7 @@ namespace renderer
 		}
 		
 		{
-			std::shared_ptr<Texture> PureVesselStageBG
-				= Resources::Load<Texture>(L"PureVesselStageBG", L"..\\Resources\\Boss_PureVessel\\StageBG\\PureVesselBG.png");
+			std::shared_ptr<Texture> PureVesselStageBG = Resources::Load<Texture>(L"PureVesselStageBG", L"..\\Resources\\Boss_PureVessel\\StageBG\\PureVesselBG.png");
 		
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
@@ -371,8 +392,7 @@ namespace renderer
 		}
 
 		{
-			std::shared_ptr<Texture> GodHomeBG
-				= Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
+			std::shared_ptr<Texture> GodHomeBG = Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
 
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);
@@ -381,8 +401,7 @@ namespace renderer
 		}
 
 		{
-			std::shared_ptr<Texture> PlayerHUD
-				= Resources::Load<Texture>(L"PlayerHUD", L"..\\Resources\\UI\\MPUI\\HUD\\HUD.png");
+			std::shared_ptr<Texture> PlayerHUD = Resources::Load<Texture>(L"PlayerHUD", L"..\\Resources\\UI\\MPUI\\HUD\\HUD.png");
 
 			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
 			spriteMateiral->SetShader(spriteShader);

@@ -11,7 +11,7 @@ namespace km
 		Z, X, C, V, B, N, M,
 
 		UP, DOWN, LEFT, RIGHT, SPACE,
-		LBUTTON, RBUTTON,
+		LBUTTON, RBUTTON, LSHFIT,
 		END,
 	};
 

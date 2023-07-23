@@ -12,7 +12,7 @@ namespace km
 		'Z', 'X', 'C', 'V', 'B', 'N', 'M',
 
 		VK_UP, VK_DOWN, VK_LEFT ,VK_RIGHT, VK_SPACE,
-		VK_LBUTTON, VK_RBUTTON,
+		VK_LBUTTON, VK_RBUTTON, VK_LSHIFT,
 	};
 
 	std::vector<Input::Key> Input::mKeys;

@@ -2,6 +2,7 @@
 #include "kmGameObject.h"
 #include "kmTransform.h"
 #include "kmRenderer.h"
+#include "kmAnimator.h"
 
 namespace km
 {
@@ -28,6 +29,13 @@ namespace km
 
 		mMesh->BindBuffer();
 		mMaterial->Binds();
+
+		Animator* animator = GetOwner()->GetComponent<Animator>();
+		if (animator)
+		{
+			animator->Binds();
+		}
+
 		mMesh->Render();
 
 		mMaterial->Clear();

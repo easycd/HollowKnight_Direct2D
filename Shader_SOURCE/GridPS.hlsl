@@ -15,7 +15,9 @@ struct VSOut
 
 float4 main(VSOut In) : SV_TARGET
 {
-    float4 Out = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    //float4 Out = float4(1.0f, 1.0f, 1.0f, 1.0f);
+
+    float4 Out = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
     const int width = 100;
     const int height = 100;
