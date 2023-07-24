@@ -22,6 +22,15 @@
     <Filter Include="Contents\Scene\TitleScene">
       <UniqueIdentifier>{9d6e9113-6d08-4667-9e0a-95ba74b3d9ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Script\Boss">
+      <UniqueIdentifier>{6f67b03a-989d-4ccf-8758-36f5b4f1addd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Player">
+      <UniqueIdentifier>{b759d439-57d0-4378-ab89-0d626304614f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene\Test">
+      <UniqueIdentifier>{29c51dcb-a791-45b3-ad35-a58124322ea2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -40,9 +49,6 @@
     <ClInclude Include="kmTitleScene.h">
       <Filter>Contents\Scene\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="kmPlayScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="kmGodhome.h">
       <Filter>Contents\Scene\PureVessel_Scene</Filter>
     </ClInclude>
@@ -52,8 +58,17 @@
     <ClInclude Include="kmGridScript.h">
       <Filter>Contents\Script</Filter>
     </ClInclude>
+    <ClInclude Include="kmPureVesselScript.h">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGrimmScript.h">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClInclude>
     <ClInclude Include="kmPlayerScript.h">
-      <Filter>Contents\Script</Filter>
+      <Filter>Contents\Script\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="kmPlayScene.h">
+      <Filter>Contents\Scene\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -70,9 +85,6 @@
     <ClCompile Include="kmTitleScene.cpp">
       <Filter>Contents\Scene\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="kmPlayScene.cpp">
-      <Filter>Contents\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="kmGodhome.cpp">
       <Filter>Contents\Scene\PureVessel_Scene</Filter>
     </ClCompile>
@@ -82,8 +94,17 @@
     <ClCompile Include="kmGridScript.cpp">
       <Filter>Contents\Script</Filter>
     </ClCompile>
+    <ClCompile Include="kmPureVesselScript.cpp">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGrimmScript.cpp">
+      <Filter>Contents\Script\Boss</Filter>
+    </ClCompile>
     <ClCompile Include="kmPlayerScript.cpp">
-      <Filter>Contents\Script</Filter>
+      <Filter>Contents\Script\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayScene.cpp">
+      <Filter>Contents\Scene\Test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
