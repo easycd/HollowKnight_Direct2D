@@ -369,6 +369,7 @@ inline void Vector2::Normalize() noexcept
     XMStoreFloat2(this, X);
 }
 
+
 inline void Vector2::Normalize(Vector2& result) const noexcept
 {
     using namespace DirectX;

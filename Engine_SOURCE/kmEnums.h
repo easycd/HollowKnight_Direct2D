@@ -13,6 +13,7 @@ namespace km::enums
 		Animator,
 		Script,
 		Camera,
+		Rigidbody,
 		End,
 	};
 

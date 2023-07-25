@@ -13,6 +13,7 @@
 #include "kmPlayerScript.h"
 #include "kmCollisionManager.h"
 #include "kmAnimator.h"
+#include "kmRigidbody.h"
 
 namespace km
 {
@@ -49,7 +50,8 @@ namespace km
 		//}
 
 		{
-			GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			GameObject* player = object::Instantiate<GameObject>(Vector3(0.0f, 2.0f, 0.0f), eLayerType::Player);
 			player->SetName(L"Player");
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
@@ -57,6 +59,10 @@ namespace km
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 			Animator* at = player->AddComponent<Animator>();
 			player->AddComponent<PlayerScript>();
+			//리지드바디 구현 중
+			//문제점 기본 API리지드 바디는 Vector2기반 Dx는 Vector3기반이라서 기존위치에 계산된 위치가 안덮어짐 
+			Rigidbody* mRigidbody = player->AddComponent<Rigidbody>();
+			player->AddComponent<Rigidbody>();
 		}
 
 

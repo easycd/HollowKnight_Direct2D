@@ -29,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGround.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMath.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRigidbody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScript.h" />
@@ -59,6 +61,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmGround.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMath.cpp" />
@@ -68,6 +71,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRigidbody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScript.cpp" />

@@ -193,6 +193,34 @@ namespace km::math
         static const Vector2 One;
         static const Vector2 UnitX;
         static const Vector2 UnitY;
+
+        //내적
+        inline static float Dots(Vector2& v1, Vector2& v2)
+        {
+            return v1.x * v2.x + v1.y * v2.y;
+        }
+        //외적
+        inline static float Cross(Vector2& v1, Vector2& v2)
+        {
+            return v1.x * v2.y - v1.y * v2.x;
+        }
+        long Length()
+        {
+            return sqrtf(x * x + y * y);
+        }
+        //길이가 1인 단위 벡터로 만들어줌
+        Vector2& Normalizes()
+        {
+            long length = Length();
+
+            if (Length() == 0.0f)
+                return *this;
+
+            x /= length;
+            y /= length;
+
+            return *this;
+        }
     };
 
     // Binary operators
@@ -979,6 +1007,7 @@ namespace km::math
 #endif
         static RECT __cdecl ComputeTitleSafeArea(UINT backBufferWidth, UINT backBufferHeight) noexcept;
     };
+
 
 #include "kmMath.inl"
 }

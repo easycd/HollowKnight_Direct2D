@@ -18,6 +18,7 @@ namespace km
 		virtual void LateUpdate();
 		virtual void Render();
 
+		eComponentType GetType() { return mType; }
 		GameObject* GetOwner() { return mOwner; }
 		void SetOwner(GameObject* owner) { mOwner = owner; }
 

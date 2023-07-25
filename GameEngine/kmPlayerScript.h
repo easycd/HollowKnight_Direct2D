@@ -3,6 +3,8 @@
 
 namespace km
 {
+	class Rigidbody;
+
 	class PlayerScript : public Script
 	{
 	public:
@@ -29,8 +31,9 @@ namespace km
 		//virtual void OnCollisionExit(Collider2D* other) override;
 
 	private:
-		Animator* at;
 		PlayerState mState;
+		Rigidbody* mRigidbody;
+		Animator* at;
 		Transform* tr;
 		Vector3 pos;
 

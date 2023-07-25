@@ -6,6 +6,8 @@
 #include "kmInput.h"
 #include "kmAnimator.h"
 #include "kmResources.h"
+#include "kmRigidbody.h"
+
 namespace km
 {
 	PlayerScript::PlayerScript()
@@ -45,6 +47,7 @@ namespace km
 		at->Create(L"Dash_Right", RightDash, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 12);
 
 		at->PlayAnimation(L"Idle_Right", true);
+
 	}
 	void PlayerScript::Update()
 	{
@@ -78,13 +81,13 @@ namespace km
 
 	void PlayerScript::Idle()
 	{
-		if (Input::GetKeyDown(eKeyCode::LEFT))
+		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			mState = PlayerState::Move;
 			at->PlayAnimation(L"walk_Left", true);
 			direction = 0;
 		}
-		else if (Input::GetKeyDown(eKeyCode::RIGHT))
+		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			mState = PlayerState::Move;
 			at->PlayAnimation(L"walk_Right", true);
@@ -101,7 +104,6 @@ namespace km
 			{
 				at->PlayAnimation(L"Attack_Right", true);
 			}
-
 		}
 	}
 

@@ -94,6 +94,15 @@
     <Filter Include="Resource\Animation">
       <UniqueIdentifier>{ec92ccc8-bab1-4c44-9897-2834198dad6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Component\Ground">
+      <UniqueIdentifier>{1db443ea-08e8-4ec5-a887-81d5de448190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\GameObject">
+      <UniqueIdentifier>{955026ab-f090-4242-9b66-ba9523f30030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Rigidbody">
+      <UniqueIdentifier>{98851ab4-794e-4224-ad68-b0abe8ea0fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -119,9 +128,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScript.cpp">
       <Filter>GameObject\Component\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLayer.cpp">
       <Filter>Scene\Layer</Filter>
@@ -177,6 +183,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmAnimation.cpp">
       <Filter>Resource\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmGround.cpp">
+      <Filter>GameObject\Component\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp">
+      <Filter>GameObject\Component\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRigidbody.cpp">
+      <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h">
@@ -214,9 +229,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScript.h">
       <Filter>GameObject\Component\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)kmGameObject.h">
-      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLayer.h">
       <Filter>Scene\Layer</Filter>
@@ -274,6 +286,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmAnimation.h">
       <Filter>Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGround.h">
+      <Filter>GameObject\Component\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmGameObject.h">
+      <Filter>GameObject\Component\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRigidbody.h">
+      <Filter>GameObject\Component\Rigidbody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
