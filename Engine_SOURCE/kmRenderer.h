@@ -5,6 +5,7 @@
 #include "kmShader.h"
 #include "kmConstantBuffer.h"
 #include "kmCamera.h"
+#include "kmLight.h"
 
 using namespace km::math;
 using namespace km::graphics;
@@ -47,11 +48,13 @@ namespace renderer
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilStates[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
 
+	extern std::vector<km::Light*> lights;
 	extern km::Camera* mainCamera;
 	extern std::vector<km::Camera*> cameras;
 	extern std::vector<DebugMesh> debugMeshs;
 
 	void Initialize();
+	void BindLights();
 	void Render();
 	void Release();
 

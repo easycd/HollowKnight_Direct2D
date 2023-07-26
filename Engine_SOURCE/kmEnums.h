@@ -12,6 +12,7 @@ namespace km::enums
 		MeshRenderer,
 		Animator,
 		Script,
+		Light,
 		Camera,
 		Rigidbody,
 		End,
@@ -22,6 +23,7 @@ namespace km::enums
 		Grid,
 		Player,
 		Monster,
+		Light,
 		UI,
 		BG,
 		End = 16,
@@ -43,6 +45,14 @@ namespace km::enums
 		Circle,
 		Sphere,
 		Cube,
+		End,
+	};
+
+	enum class eLightType
+	{
+		Directional,
+		Point,
+		Spot,
 		End,
 	};
 }

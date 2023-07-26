@@ -103,6 +103,12 @@
     <Filter Include="GameObject\Component\Rigidbody">
       <UniqueIdentifier>{98851ab4-794e-4224-ad68-b0abe8ea0fe6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\StructedBuffer">
+      <UniqueIdentifier>{1198f6de-244b-4863-a3a6-103faf4e2151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Light">
+      <UniqueIdentifier>{eade2dbc-8031-4037-b9fd-1d74a8647bdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -191,6 +197,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmRigidbody.cpp">
       <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmStructedBuffer.cpp">
+      <Filter>Graphics\StructedBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmLight.cpp">
+      <Filter>GameObject\Component\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRigidbody.h">
       <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmStructedBuffer.h">
+      <Filter>Graphics\StructedBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmLight.h">
+      <Filter>GameObject\Component\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

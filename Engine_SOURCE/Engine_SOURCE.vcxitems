@@ -32,6 +32,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGround.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmLight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmStructedBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmTransform.h" />
@@ -64,6 +66,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGround.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMeshRenderer.cpp" />
@@ -76,6 +79,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmStructedBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmTransform.cpp" />

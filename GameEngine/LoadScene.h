@@ -28,6 +28,6 @@ namespace km
 		SceneManager::CreateScene<Godhome>(L"Godhome");
 		SceneManager::CreateScene<Boss_PureVessel_Stage>(L"Boss_PureVessel_Stage");
 
-		SceneManager::LoadScene(L"Dirtmouth");
+		SceneManager::LoadScene(L"PlayScene");
 	}
 }

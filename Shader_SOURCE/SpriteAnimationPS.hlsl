@@ -37,5 +37,7 @@ float4 main(VSOut In) : SV_TARGET
         color = atlasTexture.Sample(anisotropicSampler, UV);
     }
 
+    color *= lightsAttribute[0].color;
+
     return color;
 }

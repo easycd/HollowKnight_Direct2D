@@ -13,6 +13,7 @@
 #include "kmPlayerScript.h"
 #include "kmCollisionManager.h"
 #include "kmAnimator.h"
+#include "kmLight.h"
 
 namespace km
 { 
@@ -52,6 +53,8 @@ namespace km
 			player->AddComponent<PlayerScript>();
 		}
 
+
+
 		{
 			GameObject* player = new GameObject();
 			player->SetName(L"Smile");
@@ -62,6 +65,15 @@ namespace km
 			player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 			Collider2D* cd = player->AddComponent<Collider2D>();
 			//player->AddComponent<PlayerScript>();
+		}
+
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Smile");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetColor(Vector4(1.0f, 0.0f, 1.0f, 1.0f));
 		}
 
 		//{
