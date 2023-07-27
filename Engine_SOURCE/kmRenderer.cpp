@@ -336,12 +336,53 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"SpriteMaterial02", material);
 
+		//Title Scene
+		texture = Resources::Load<Texture>(L"Title", L"..\\Resources\\Title_BG\\TitleBG.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"TitleBG", material);
+
+		//»Î¿« ∏∂¿ª
 		texture = Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
 		material = std::make_shared<Material>();
 		material->SetShader(spriteShader);
 		material->SetTexture(texture);
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"GrimmTown", material);
+
+		//Boss Grimm Stage
+		texture = Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GrimmStage_BG", material);
+
+		//GodHome
+		texture = Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GodHome_BG", material);
+
+		//Boss Vessel Stage
+		texture = Resources::Load<Texture>(L"PureVesselStageBG", L"..\\Resources\\Boss_PureVessel\\StageBG\\PureVesselBG.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"PureVesselStage_BG", material);
+
+		//HP UI
+		texture = Resources::Load<Texture>(L"PlayerHUD", L"..\\Resources\\UI\\MPUI\\HUD\\HUD.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"Palyer_HUD", material);
 
 		//Animation Shader
 		spriteShader = Resources::Find<Shader>(L"SpriteAnimationShader");
@@ -350,71 +391,15 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"SpriteAnimaionMaterial", material);
 
-		
-		//texture = Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
-		//material = std::make_shared<Material>();
-		//material->SetShader(spriteShader);
-		//material->SetTexture(texture);
-		//material->SetRenderingMode(eRenderingMode::Transparent);
-		//Resources::Insert(L"GrimmTown", material);
-		
-		
-		{
-			std::shared_ptr<Texture> TitleBG = Resources::Load<Texture>(L"Title", L"..\\Resources\\Title_BG\\TitleBG.png");
-		
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(TitleBG);
-			Resources::Insert(L"TitleBG", spriteMateiral);
-		}
-		
-		{
-			std::shared_ptr<Texture> GrimmStage = Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
-		
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(GrimmStage);
-			Resources::Insert(L"GrimmStage_BG", spriteMateiral);
-		}
-		
-		{
-			std::shared_ptr<Texture> PureVesselStageBG = Resources::Load<Texture>(L"PureVesselStageBG", L"..\\Resources\\Boss_PureVessel\\StageBG\\PureVesselBG.png");
-		
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(PureVesselStageBG);
-			Resources::Insert(L"PureVesselStage_BG", spriteMateiral);
-		}
-
-		{
-			std::shared_ptr<Texture> GodHomeBG = Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
-
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(GodHomeBG);
-			Resources::Insert(L"GodHome_BG", spriteMateiral);
-		}
-
-		{
-			std::shared_ptr<Texture> PlayerHUD = Resources::Load<Texture>(L"PlayerHUD", L"..\\Resources\\UI\\MPUI\\HUD\\HUD.png");
-
-			std::shared_ptr<Material> spriteMateiral = std::make_shared<Material>();
-			spriteMateiral->SetShader(spriteShader);
-			spriteMateiral->SetTexture(PlayerHUD);
-			Resources::Insert(L"Palyer_HUD", spriteMateiral);
-		}
-
 		//Grid Shader
-		std::shared_ptr<Shader> gridShader
-			= Resources::Find<Shader>(L"GridShader");
+		std::shared_ptr<Shader> gridShader = Resources::Find<Shader>(L"GridShader");
 		
 		material = std::make_shared<Material>();
 		material->SetShader(gridShader);
 		Resources::Insert(L"GridMaterial", material);
 
 		//DebugShader
-		std::shared_ptr<Shader> debugShader
-			= Resources::Find<Shader>(L"DebugShader");
+		std::shared_ptr<Shader> debugShader = Resources::Find<Shader>(L"DebugShader");
 
 		material = std::make_shared<Material>();
 		material->SetShader(debugShader);
