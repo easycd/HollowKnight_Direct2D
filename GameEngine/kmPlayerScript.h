@@ -39,6 +39,8 @@ namespace km
 
 		int direction = 0; //0이면 왼쪽 1이면 오른쪽
 
+
+
 	private:
 		void Idle();
 		void Move();

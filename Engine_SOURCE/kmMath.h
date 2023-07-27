@@ -194,24 +194,22 @@ namespace km::math
         static const Vector2 UnitX;
         static const Vector2 UnitY;
 
-        //내적
-        inline static float Dots(Vector2& v1, Vector2& v2)
-        {
-            return v1.x * v2.x + v1.y * v2.y;
-        }
-        //외적
-        inline static float Cross(Vector2& v1, Vector2& v2)
-        {
-            return v1.x * v2.y - v1.y * v2.x;
-        }
-        long Length()
+
+
+
+
+
+
+
+
+        float Length()
         {
             return sqrtf(x * x + y * y);
         }
-        //길이가 1인 단위 벡터로 만들어줌
+
         Vector2& Normalizes()
         {
-            long length = Length();
+            float length = Length();
 
             if (Length() == 0.0f)
                 return *this;

@@ -204,6 +204,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmLight.cpp">
       <Filter>GameObject\Component\Light</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmRigidbodyMath.cpp">
+      <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmLight.h">
       <Filter>GameObject\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmRigidbodyMath.h">
+      <Filter>GameObject\Component\Rigidbody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
