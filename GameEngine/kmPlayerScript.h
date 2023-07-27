@@ -37,6 +37,7 @@ namespace km
 		Transform* tr;
 		Vector3 pos;
 
+		VectorR velocity;
 		int direction = 0; //0이면 왼쪽 1이면 오른쪽
 
 

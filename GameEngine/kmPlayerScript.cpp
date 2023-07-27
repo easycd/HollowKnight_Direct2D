@@ -48,7 +48,7 @@ namespace km
 
 		at->PlayAnimation(L"Idle_Right", true);
 
-		//VectorR velocity = mRigidbody->GetVelocity();
+		
 
 	}
 	void PlayerScript::Update()
@@ -165,7 +165,7 @@ namespace km
 
 	void PlayerScript::Jump()
 	{
-		if (Input::GetKeyUp(eKeyCode::C))
+		if (Input::GetKeyUp(eKeyCode::X))
 		{
 			mState = PlayerState::Idle;
 			if (direction == 0)
@@ -177,6 +177,7 @@ namespace km
 				at->PlayAnimation(L"Idle_Right", true);
 			}
 		}
+
 	}
 
 	void PlayerScript::Dash()

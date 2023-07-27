@@ -51,7 +51,7 @@ namespace km
 		}
 		else
 		{
-			mVelocity += mGravity * Time::DeltaTime();
+			mVelocity -= mGravity * Time::DeltaTime();
 		}
 
 		// 중력가속도 최대 속도 제한
