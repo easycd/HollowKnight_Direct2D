@@ -31,6 +31,9 @@
     <Filter Include="Contents\Scene\Test">
       <UniqueIdentifier>{29c51dcb-a791-45b3-ad35-a58124322ea2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Script\Ground1">
+      <UniqueIdentifier>{9d747251-c8ee-4950-b687-de149d5586e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -70,6 +73,9 @@
     <ClInclude Include="kmPlayScene.h">
       <Filter>Contents\Scene\Test</Filter>
     </ClInclude>
+    <ClInclude Include="kmGroundScript.h">
+      <Filter>Contents\Script\Ground1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -105,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="kmPlayScene.cpp">
       <Filter>Contents\Scene\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGroundScript.cpp">
+      <Filter>Contents\Script\Ground1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

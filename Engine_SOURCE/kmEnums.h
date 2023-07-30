@@ -8,6 +8,7 @@ namespace km::enums
 		Transform,
 		Mesh,
 		Collider2D,
+		Ground,
 		Particle,
 		MeshRenderer,
 		Animator,
@@ -21,6 +22,7 @@ namespace km::enums
 	enum class eLayerType
 	{
 		Grid,
+		Ground,
 		Player,
 		Monster,
 		Light,

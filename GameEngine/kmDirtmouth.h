@@ -14,7 +14,8 @@ namespace km
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-	private:
 
+	private:
+		GameObject* player;
 	};
 }

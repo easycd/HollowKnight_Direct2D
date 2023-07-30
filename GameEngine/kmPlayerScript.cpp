@@ -7,6 +7,7 @@
 #include "kmAnimator.h"
 #include "kmResources.h"
 #include "kmRigidbody.h"
+#include "kmGroundScript.h"
 
 namespace km
 {
@@ -48,7 +49,10 @@ namespace km
 
 		at->PlayAnimation(L"Idle_Right", true);
 
-		
+
+
+
+		 Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
 
 	}
 	void PlayerScript::Update()
@@ -78,6 +82,23 @@ namespace km
 		}
 	}
 	void PlayerScript::Complete()
+	{
+	}
+
+	void PlayerScript::OnCollisionEnter(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+		if (gd == nullptr)
+		{
+			//mRigidbody->SetGround(true);
+		}
+	}
+
+	void PlayerScript::OnCollisionStay(Collider2D* other)
+	{
+	}
+
+	void PlayerScript::OnCollisionExit(Collider2D* other)
 	{
 	}
 

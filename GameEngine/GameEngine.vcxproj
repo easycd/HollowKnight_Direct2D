@@ -155,6 +155,7 @@
     <ClInclude Include="kmGodhome.h" />
     <ClInclude Include="kmGridScript.h" />
     <ClInclude Include="kmGrimmScript.h" />
+    <ClInclude Include="kmGroundScript.h" />
     <ClInclude Include="kmPlayerScript.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmPureVesselScript.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="kmGodhome.cpp" />
     <ClCompile Include="kmGridScript.cpp" />
     <ClCompile Include="kmGrimmScript.cpp" />
+    <ClCompile Include="kmGroundScript.cpp" />
     <ClCompile Include="kmPlayerScript.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
     <ClCompile Include="kmPureVesselScript.cpp" />
