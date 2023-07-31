@@ -14,8 +14,18 @@ namespace km
 			Idle,
 			Move,
 			Jump,
+			DoubleJump,
 			Dash,
+			UpAttack,
 			Attack,
+			DownAttack,
+			FireBall,
+			FocusStart,
+			Focus,
+			FocusOn,
+			FocusEnd,
+			Death,
+			End,
 		};
 		PlayerScript();
 		~PlayerScript();
@@ -46,8 +56,16 @@ namespace km
 		void Idle();
 		void Move();
 		void Jump();
+		void DoubleJump();
 		void Dash();
+		void UpAttack();
 		void Attack();
+		void DownAttack();
+		void FocusStart();
+		void Focus();
+		void FocusOn();
+		void FocusEnd();
+		void Death();
 	};
 }
 

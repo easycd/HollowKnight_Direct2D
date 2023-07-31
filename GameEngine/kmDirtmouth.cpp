@@ -28,15 +28,15 @@ namespace km
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
-		//{ //BackGround
-		//	GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
-		//	GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
-		//	GrimmTownBG->SetName(L"Grimm_Town");
-		//	MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
-		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		//	mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
-		//	//player->AddComponent<CameraScript>();
-		//}
+		{ //BackGround
+			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
+			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
+			GrimmTownBG->SetName(L"Grimm_Town");
+			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
+			//player->AddComponent<CameraScript>();
+		}
 
 		//{ //HUD
 		//	GameObject* GrimmTownBG = new GameObject();
@@ -51,8 +51,8 @@ namespace km
 		//}
 
 		{
-			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
-			player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
+			GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			//player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
 			player->SetName(L"Player");
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
@@ -62,12 +62,6 @@ namespace km
 			player->AddComponent<PlayerScript>();
 			//리지드바디 구현 중
 			//문제점 기본 API리지드 바디는 Vector2기반 Dx는 Vector3기반이라서 기존위치에 계산된 위치가 안덮어짐 
-			Rigidbody* mRigidbody = player->AddComponent<Rigidbody>();
-			mRigidbody->SetMass(0.1f);
-			VectorR velocity = mRigidbody->GetVelocity();
-			velocity.y -= 0.200f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
 		}
 
 		{
