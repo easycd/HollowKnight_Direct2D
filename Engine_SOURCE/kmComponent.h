@@ -20,6 +20,7 @@ namespace km
 
 		eComponentType GetType() { return mType; }
 		GameObject* GetOwner() { return mOwner; }
+		
 		void SetOwner(GameObject* owner) { mOwner = owner; }
 
 	private:

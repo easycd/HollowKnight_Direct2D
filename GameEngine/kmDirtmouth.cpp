@@ -51,8 +51,8 @@ namespace km
 		//}
 
 		{
-			GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
-			//player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
+			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
 			player->SetName(L"Player");
 
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
