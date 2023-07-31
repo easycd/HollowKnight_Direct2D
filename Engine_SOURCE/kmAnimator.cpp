@@ -16,7 +16,6 @@ namespace km
 			iter.second = nullptr;
 		}
 
-
 		for (auto& iter : mEvents)
 		{
 			delete iter.second;

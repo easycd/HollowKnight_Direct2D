@@ -82,7 +82,7 @@ namespace km
 	
 		at->PlayAnimation(L"Idle_Right", true);
 
-		//at->EndEvent(L"Focus_StartRight") = std::bind(&PlayerScript::Focus, this);
+		at->CompleteEvent(L"Focus_StartRight") = std::bind(&PlayerScript::Focus, this);
 		//at->EndEvent(L"Focus_StartLeft") = std::bind(&PlayerScript::Focus, this);
 		//at->EndEvent(L"Focus_Left") = std::bind(&PlayerScript::FocusOn, this);
 		//at->EndEvent(L"Focus_Right") = std::bind(&PlayerScript::FocusOn, this);
@@ -270,16 +270,16 @@ namespace km
 			//	at->PlayAnimation(L"DoubleJump_Right", true);
 			//}
 		}
-		else if (Input::GetKeyDown(eKeyCode::A))
+		else if (Input::GetKey(eKeyCode::A))
 		{
-			mState = PlayerState::FocusStart;
+			//mState = PlayerState::FocusStart;
 			if (direction == 0)
 			{
-				at->PlayAnimation(L"Focus_OnLeft", true);
+				at->PlayAnimation(L"Focus_StartLeft", true);
 			}
 			else
 			{
-				at->PlayAnimation(L"Focus_OnRight", true);
+				at->PlayAnimation(L"Focus_StartRight", true);
 			}
 		}
 	}
@@ -432,50 +432,52 @@ namespace km
 	void PlayerScript::FocusStart()
 	{
 		//mState = PlayerState::FocusStart;
-		//
-		//if (direction == 0)
-		//{
-		//	at->PlayAnimation(L"Focus_StartLeft", false);
-		//}
-		//else
-		//{
-		//	at->PlayAnimation(L"Focus_StartRight", false);
-		//}
-		//
+		
+		if (direction == 0)
+		{
+			at->PlayAnimation(L"Focus_StartLeft", true);
+		}
+		else
+		{
+			at->PlayAnimation(L"Focus_StartRight", true);
+		}
+		
 		//if (Input::GetKeyUp(eKeyCode::A))
 		//	FocusEnd();
-		if (Input::GetKeyUp(eKeyCode::A))
-		{
-			mState = PlayerState::Idle;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Idle_Left", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"Idle_Right", true);
-			}
-		}
+		//if (Input::GetKeyUp(eKeyCode::A))
+		//{
+		//	mState = PlayerState::Idle;
+		//	if (direction == 0)
+		//	{
+		//		at->PlayAnimation(L"Idle_Left", true);
+		//	}
+		//	else
+		//	{
+		//		at->PlayAnimation(L"Idle_Right", true);
+		//	}
+		//}
 	}
 	void PlayerScript::Focus()
 	{
-		mState = PlayerState::Focus;
-
-		if (Input::GetKey(eKeyCode::A))
+		if (Input::GetKeyUp(eKeyCode::A))
 		{
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Focus_Left", false);
-			}
-			else
-			{
-				at->PlayAnimation(L"Focus_Right", false);
-			}
+			int a = 0;
 		}
-		else if(Input::GetKeyUp(eKeyCode::A))
-		{
-			FocusEnd();
-		}
+		//if (Input::GetKey(eKeyCode::A))
+		//{
+		//	if (direction == 0)
+		//	{
+		//		at->PlayAnimation(L"Focus_Left", false);
+		//	}
+		//	else
+		//	{
+		//		at->PlayAnimation(L"Focus_Right", false);
+		//	}
+		//}
+		//else if(Input::GetKeyUp(eKeyCode::A))
+		//{
+		//	FocusEnd();
+		//}
 	}
 	void PlayerScript::FocusOn()
 	{

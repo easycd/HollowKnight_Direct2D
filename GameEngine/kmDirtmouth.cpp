@@ -60,8 +60,6 @@ namespace km
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 			Animator* at = player->AddComponent<Animator>();
 			player->AddComponent<PlayerScript>();
-			//리지드바디 구현 중
-			//문제점 기본 API리지드 바디는 Vector2기반 Dx는 Vector3기반이라서 기존위치에 계산된 위치가 안덮어짐 
 		}
 
 		{
