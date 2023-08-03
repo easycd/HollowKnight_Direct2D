@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmComputeShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEnums.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmMaterial.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmPaintShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmResources.h" />
@@ -60,6 +62,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmComputeShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp" />
@@ -72,6 +75,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmPaintShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmResources.cpp" />

@@ -272,15 +272,7 @@ namespace km
 		}
 		else if (Input::GetKey(eKeyCode::A))
 		{
-			//mState = PlayerState::FocusStart;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Focus_StartLeft", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"Focus_StartRight", true);
-			}
+			FocusStart();
 		}
 	}
 
@@ -430,32 +422,12 @@ namespace km
 		}
 	}
 	void PlayerScript::FocusStart()
-	{
-		//mState = PlayerState::FocusStart;
-		
-		if (direction == 0)
+	{		
+		mState = PlayerState::FocusStart;
+		if (Input::GetKey(eKeyCode::A))
 		{
-			at->PlayAnimation(L"Focus_StartLeft", true);
+				at->PlayAnimation(L"Focus_StartLeft", true);
 		}
-		else
-		{
-			at->PlayAnimation(L"Focus_StartRight", true);
-		}
-		
-		//if (Input::GetKeyUp(eKeyCode::A))
-		//	FocusEnd();
-		//if (Input::GetKeyUp(eKeyCode::A))
-		//{
-		//	mState = PlayerState::Idle;
-		//	if (direction == 0)
-		//	{
-		//		at->PlayAnimation(L"Idle_Left", true);
-		//	}
-		//	else
-		//	{
-		//		at->PlayAnimation(L"Idle_Right", true);
-		//	}
-		//}
 	}
 	void PlayerScript::Focus()
 	{
@@ -463,56 +435,15 @@ namespace km
 		{
 			int a = 0;
 		}
-		//if (Input::GetKey(eKeyCode::A))
-		//{
-		//	if (direction == 0)
-		//	{
-		//		at->PlayAnimation(L"Focus_Left", false);
-		//	}
-		//	else
-		//	{
-		//		at->PlayAnimation(L"Focus_Right", false);
-		//	}
-		//}
-		//else if(Input::GetKeyUp(eKeyCode::A))
-		//{
-		//	FocusEnd();
-		//}
+
 	}
 	void PlayerScript::FocusOn()
 	{
-		mState = PlayerState::FocusOn;
-		if (Input::GetKey(eKeyCode::A))
-		{
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Focus_OnLeft", false);
-			}
-			else
-			{
-				at->PlayAnimation(L"Focus_OnRight", false);
-			}
-		}
-		else if (Input::GetKeyUp(eKeyCode::A))
-		{
-			FocusEnd();
-		}
+
 	}
 	void PlayerScript::FocusEnd()
 	{
-		mState = PlayerState::FocusEnd;
-		if (direction == 0)
-		{
-			at->PlayAnimation(L"Focus_OnLeft", false);
-			mState = PlayerState::Idle;
-			at->PlayAnimation(L"Idle_Left", true);
-		}
-		else
-		{
-			at->PlayAnimation(L"Focus_OnRight", false);
-			mState = PlayerState::Idle;
-			at->PlayAnimation(L"Idle_Right", true);
-		}
+
 	}
 	void PlayerScript::Death()
 	{

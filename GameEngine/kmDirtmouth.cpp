@@ -15,6 +15,7 @@
 #include "kmAnimator.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
+#include "kmComputeShader.h"
 
 namespace km
 {
@@ -28,6 +29,10 @@ namespace km
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
+
+		ComputeShader* cs = new ComputeShader();
+		cs->Create(L"PaintCS.hlsl", "main");
+
 		{ //BackGround
 			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
 			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));

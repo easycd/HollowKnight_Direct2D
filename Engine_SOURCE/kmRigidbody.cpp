@@ -74,13 +74,13 @@ namespace km
 			sideVelocity *= mLimitedVelocity.x;
 		}
 
-		// 마찰력 조건 ( 적용된 힘이 없고, 속도가 0이 아님)
+		//// 마찰력 조건 ( 적용된 힘이 없고, 속도가 0이 아님)
 		if (!(mVelocity == VectorR::Zero))
 		{
 			//속도에 반대방향으로 마찰력이 적용된다.
 			VectorR friction = -mVelocity;
 			friction = friction.Normalize() * mFriction * mMass * Time::DeltaTime(); //방향 * 마찰계수 * 질량계수 * 시간
-
+		
 			//마찰력으로 인한 속도 감소는 현재 속도보다 큰 경우
 			if (mVelocity.Length() < friction.Length()) //마찰력이 더 크면 속도는 0
 			{

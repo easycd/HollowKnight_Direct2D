@@ -118,6 +118,11 @@ namespace km
 			return (x == other.x && y == other.y);
 		}
 
+		bool operator!=(const VectorR& other)
+		{
+			return (x != other.x && y != other.y);
+		}
+
 		void operator-=(const float& value)
 		{
 			x -= value;

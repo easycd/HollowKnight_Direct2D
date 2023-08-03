@@ -109,6 +109,9 @@
     <Filter Include="GameObject\Component\Light">
       <UniqueIdentifier>{eade2dbc-8031-4037-b9fd-1d74a8647bdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Shader\CS">
+      <UniqueIdentifier>{bc54299e-053c-4fe3-bc1c-bc7859d8ee02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -206,6 +209,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmRigidbodyMath.cpp">
       <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmPaintShader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmComputeShader.cpp">
+      <Filter>Resource\Shader\CS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +328,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmRigidbodyMath.h">
       <Filter>GameObject\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmPaintShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmComputeShader.h">
+      <Filter>Resource\Shader\CS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

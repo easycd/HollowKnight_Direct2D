@@ -47,13 +47,19 @@ namespace km::graphics
 		if (!CreateSwapChain(&swapChainDesc, hWnd))
 			return;
 
-		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
-			, (void**)mRenderTarget.GetAddressOf())))
-			return;
+		mRenderTarget = std::make_shared<Texture>();
+		mDepthStencil = std::make_shared<Texture>();
 
-		//CreateRenderTargetView -> 랜더 대상 뷰를 생성하는 메서드
-		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget.Get()
-			, nullptr, mRenderTargetView.GetAddressOf());
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget = nullptr;
+		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
+			, (void**)renderTarget.GetAddressOf())))
+			return;
+		mRenderTarget->SetTexture(renderTarget);
+
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView = nullptr;
+		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget->GetTexture().Get()
+			, nullptr, renderTargetView.GetAddressOf());
+		mRenderTarget->SetRTV(renderTargetView);
 
 		//D3D11_TEXTURE2D_DESC -> 깊이 정보를 담는 2차원 텍스처
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
@@ -74,10 +80,15 @@ namespace km::graphics
 		depthStencilDesc.MipLevels = 0; //밉맵 수준의 갯수. 깊이, 스탠실 버퍼를 위한 텍스처에서는 밉맵 수준이 하나만 있으면 된다.
 		depthStencilDesc.MiscFlags = 0;
 
-		//리소스 데이터를 초기화 하는 구조체
-		D3D11_SUBRESOURCE_DATA data;
-		if (!CreateTexture(&depthStencilDesc, &data))
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer = nullptr;
+		if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
 			return;
+		mDepthStencil->SetTexture(depthStencilBuffer);
+
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> mDepthStencilView = nullptr;
+		if (!CraeteDepthStencilView(depthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()))
+			return;
+		mDepthStencil->SetDSV(mDepthStencilView);
 
 		//사각형의 위치와 크기를 나타내는 구조체
 		RECT winRect = {};
@@ -94,7 +105,7 @@ namespace km::graphics
 
 		BindViewPort(&mViewPort); // 설정할 뷰포트
 		//OMSetRenderTargets(렌더타겟의 수, 렌더타겟 뷰의 배열, 깊이 스텐실 버퍼)
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
 	}
 
 	GraphicDevice_Dx11::~GraphicDevice_Dx11()
@@ -142,28 +153,9 @@ namespace km::graphics
 		return true;
 	}
 
-	bool GraphicDevice_Dx11::CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data)
+	bool GraphicDevice_Dx11::CreateTexture2D(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** ppTexture2D)
 	{
-		D3D11_TEXTURE2D_DESC dxgiDesc = {};
-		dxgiDesc.BindFlags = desc->BindFlags;
-		dxgiDesc.Usage = desc->Usage;
-		dxgiDesc.CPUAccessFlags = 0;
-
-		dxgiDesc.Format = desc->Format;
-		dxgiDesc.Width = desc->Width;
-		dxgiDesc.Height = desc->Height;
-		dxgiDesc.ArraySize = desc->ArraySize;
-
-		dxgiDesc.SampleDesc.Count = desc->SampleDesc.Count;
-		dxgiDesc.SampleDesc.Quality = 0;
-
-		dxgiDesc.MipLevels = desc->MipLevels; //오브젝트 크기가 커지거나 작아지면 픽셀이 깨지기 때문에 미리 텍스처 사이즈를 크기별로 만들어서 사용함.
-		dxgiDesc.MiscFlags = desc->MiscFlags;
-
-		if (FAILED(mDevice->CreateTexture2D(&dxgiDesc, nullptr, mDepthStencilBuffer.ReleaseAndGetAddressOf())))
-			return false;
-
-		if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf())))
+		if (FAILED(mDevice->CreateTexture2D(desc, nullptr, ppTexture2D)))
 			return false;
 
 		return true;
@@ -222,6 +214,14 @@ namespace km::graphics
 		return true;
 	}
 
+	bool GraphicDevice_Dx11::CreateComputeShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ComputeShader** ppComputeShader)
+	{
+		if (FAILED(mDevice->CreateComputeShader(pShaderBytecode, BytecodeLength, nullptr, ppComputeShader)))
+			return false;
+
+		return true;
+	}
+
 	bool GraphicDevice_Dx11::CreateSamplerState(const D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
 	{
 		if (FAILED(mDevice->CreateSamplerState(pSamplerDesc, ppSamplerState)))
@@ -254,9 +254,33 @@ namespace km::graphics
 		return true;
 	}
 
+	bool GraphicDevice_Dx11::CraeteDepthStencilView(ID3D11Resource* pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc, ID3D11DepthStencilView** ppDepthStencilView)
+	{
+		if (FAILED(mDevice->CreateDepthStencilView(pResource, pDesc, ppDepthStencilView)))
+			return false;
+
+		return true;
+	}
+
 	bool GraphicDevice_Dx11::CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView)
 	{
 		if (FAILED(mDevice->CreateShaderResourceView(pResource, pDesc, ppSRView)))
+			return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView)
+	{
+		if (FAILED(mDevice->CreateRenderTargetView(pResource, pDesc, ppRTView)))
+			return false;
+
+		return true;
+	}
+
+	bool GraphicDevice_Dx11::CreateUnordedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView)
+	{
+		if (FAILED(mDevice->CreateUnorderedAccessView(pResource, pDesc, ppUAView)))
 			return false;
 
 		return true;
@@ -315,6 +339,16 @@ namespace km::graphics
 	void GraphicDevice_Dx11::BindPixelShader(ID3D11PixelShader* pPixelShader)
 	{
 		mContext->PSSetShader(pPixelShader, 0, 0);
+	}
+
+	void GraphicDevice_Dx11::BindComputeShader(ID3D11ComputeShader* pComputeShader)
+	{
+		mContext->CSSetShader(pComputeShader, 0, 0);
+	}
+
+	void GraphicDevice_Dx11::Dispatch(UINT ThreadGroupCountX, UINT ThreadGroupCountY, UINT ThreadGroupCountZ)
+	{
+		mContext->Dispatch(ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ);
 	}
 
 	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
@@ -401,6 +435,11 @@ namespace km::graphics
 		}
 	}
 
+	void GraphicDevice_Dx11::BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
+	{
+		mContext->CSSetUnorderedAccessViews(slot, 1, ppUnorderedAccessViews, pUAVInitialCounts);
+	}
+
 	void GraphicDevice_Dx11::BindSampler(eShaderStage stage, UINT StartSlot, ID3D11SamplerState** ppSamplers)
 	{
 		switch (stage)
@@ -434,9 +473,9 @@ namespace km::graphics
 	{
 		// render target clear
 		FLOAT bgColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		mContext->ClearRenderTargetView(mRenderTargetView.Get(), bgColor);
-		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->ClearRenderTargetView(mRenderTarget->GetRTV().Get(), bgColor);
+		mContext->ClearDepthStencilView(mDepthStencil->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+		mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
 	}
 
 	void GraphicDevice_Dx11::UpdateViewPort()

@@ -3,6 +3,7 @@
 #include "kmTexture.h"
 #include "kmMaterial.h"
 #include "kmStructedBuffer.h"
+#include "kmPaintShader.h"
 
 namespace renderer
 {
@@ -226,8 +227,6 @@ namespace renderer
 		indexes.push_back(3);
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
-
-
 		// Rect Debug Mesh
 		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
 		Resources::Insert(L"DebugRect", rectDebug);
@@ -315,7 +314,20 @@ namespace renderer
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		debugShader->SetRSState(eRSType::WireframeNone);
 		km::Resources::Insert(L"DebugShader", debugShader);
-}
+
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"PaintCS.hlsl", "main");
+		km::Resources::Insert(L"PaintShader", paintShader);
+    }
+
+	void LoadTexture()
+	{
+		//paint texture
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		km::Resources::Insert(L"PaintTexuture", uavTexture);
+
+	}
 
 	void LoadMaterial()
 	{
@@ -328,8 +340,8 @@ namespace renderer
 		material->SetTexture(texture);
 		Resources::Insert(L"SpriteMaterial", material);
 
-
-		texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		//texture = Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
+		texture = Resources::Find<Texture>(L"PaintTexuture");
 		material = std::make_shared<Material>();
 		material->SetShader(spriteShader);
 		material->SetTexture(texture);
@@ -404,6 +416,13 @@ namespace renderer
 		material = std::make_shared<Material>();
 		material->SetShader(debugShader);
 		Resources::Insert(L"DebugMaterial", material);
+
+		//std::shared_ptr<Shader> debugShader
+		//	= Resources::Find<Shader>(L"DebugShader");
+		//
+		//material = std::make_shared<Material>();
+		//material->SetShader(debugShader);
+		//Resources::Insert(L"PaintMaterial", material);
 	}
 
 	void Initialize()
@@ -412,6 +431,7 @@ namespace renderer
 		LoadBuffer();
 		LoadShader();
 		SetupState();
+		LoadTexture();
 		LoadMaterial();
 	}
 

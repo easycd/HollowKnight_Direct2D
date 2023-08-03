@@ -38,6 +38,7 @@ namespace km::enums
 		Material,
 		Mesh,
 		Animation,
+		ComputeShader,
 		End,
 	};
 

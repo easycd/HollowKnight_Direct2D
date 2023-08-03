@@ -77,7 +77,7 @@ namespace km
 	void Animation::Binds()
 	{
 		// texture bind
-		mAtlas->BindShader(graphics::eShaderStage::PS, 12);
+		mAtlas->BindShaderResource(graphics::eShaderStage::PS, 12);
 
 		// AnimationCB
 		renderer::AnimatorCB data = {};
