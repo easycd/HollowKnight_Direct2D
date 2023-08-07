@@ -15,6 +15,7 @@ namespace km
 			Move,
 			Jump,
 			DoubleJump,
+			Fall,
 			Dash,
 			UpAttack,
 			Attack,
@@ -27,9 +28,15 @@ namespace km
 			Death,
 			End,
 		};
+
+		enum class eDirection
+		{
+			Left,
+			Right
+		};
+
 		PlayerScript();
 		~PlayerScript();
-
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -48,8 +55,9 @@ namespace km
 		Vector3 pos;
 
 		VectorR velocity;
-		int direction = 0; //0이면 왼쪽 1이면 오른쪽
-
+		eDirection Direction; //0이면 왼쪽 1이면 오른쪽
+		float mTime;
+		bool Test = true;
 
 
 	private:
@@ -58,6 +66,7 @@ namespace km
 		void Jump();
 		void DoubleJump();
 		void Dash();
+		void Fall();
 		void UpAttack();
 		void Attack();
 		void DownAttack();
@@ -66,6 +75,24 @@ namespace km
 		void FocusOn();
 		void FocusEnd();
 		void Death();
+		void ActionInitialize();
+
+		void Up_Attack_End_Evnet();
+		void Attack_End_Event();
+		void Down_Attack_End_Event();
+		void Jump_End_Event();
+		void Double_Jump_End_Event();
+
+	private:
+		bool idle_Check        = false;
+		bool jump_Check        = false;
+		bool double_jump_Check = false;
+		bool dash_jump_Check   = false;
+		bool fall_Check        = false;
+		bool up_attack_Check   = false;
+		bool attack_Check      = false;
+		bool down_attack_Check = false;
+
 	};
 }
 

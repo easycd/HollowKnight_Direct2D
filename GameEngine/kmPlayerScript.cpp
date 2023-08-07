@@ -12,7 +12,7 @@
 namespace km
 {
 	PlayerScript::PlayerScript()
-		: direction(1)
+		: mTime(0.0f)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -81,13 +81,8 @@ namespace km
 
 	
 		at->PlayAnimation(L"Idle_Right", true);
+		Direction = eDirection::Right;
 
-		at->CompleteEvent(L"Focus_StartRight") = std::bind(&PlayerScript::Focus, this);
-		//at->EndEvent(L"Focus_StartLeft") = std::bind(&PlayerScript::Focus, this);
-		//at->EndEvent(L"Focus_Left") = std::bind(&PlayerScript::FocusOn, this);
-		//at->EndEvent(L"Focus_Right") = std::bind(&PlayerScript::FocusOn, this);
-		//at->EndEvent(L"Focus_EndLeft") = std::bind(&PlayerScript::Idle, this);
-		//at->EndEvent(L"Focus_EndRight") = std::bind(&PlayerScript::Idle, this);
 		 Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
 		 mRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		 mRigidbody->SetMass(0.1f);
@@ -115,6 +110,9 @@ namespace km
 			break;
 		case PlayerScript::PlayerState::DoubleJump:
 			DoubleJump();
+			break;
+		case PlayerScript::PlayerState::Fall:
+			Fall();
 			break;
 		case PlayerScript::PlayerState::Dash:
 			Dash();
@@ -146,6 +144,18 @@ namespace km
 		default:
 			break;
 		}
+
+		//if (mRigidbody->GetGround() == false)
+		//{
+		//	if ((mState != PlayerState::Dash) && (mState != PlayerState::Jump)
+		//		&& (mState != PlayerState::DoubleJump) && (mState != PlayerState::Attack) 
+		//		&& (mState != PlayerState::UpAttack) && (mState != PlayerState::DownAttack)
+		//		&& (mState != PlayerState::Death))
+		//	{
+		//		mState = PlayerState::Fall;
+		//		idle_Check = false;
+		//	}
+		//}
 	}
 	void PlayerScript::Complete()
 	{
@@ -153,11 +163,11 @@ namespace km
 
 	void PlayerScript::OnCollisionEnter(Collider2D* other)
 	{
-		//GroundScript* gd = other->GetOwner()->GetComponent<GroundScript>();
-		//if (gd != nullptr)
-		//{
-		//	mRigidbody->SetGround(true);
-		//}
+		GroundScript* gd = other->GetOwner()->GetComponent<GroundScript>();
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(true);
+		}
 		int a = 0;
 	}
 
@@ -181,248 +191,537 @@ namespace km
 
 	void PlayerScript::Idle()
 	{
-		mState = PlayerState::Idle;
 		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (idle_Check == false)
+		{
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+			if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
+
+			idle_Check = true;
+			ActionInitialize();
+		}
+
+		//좌우 이동
+		if (Input::GetKey(eKeyCode::LEFT) || Input::GetKey(eKeyCode::RIGHT))
 		{
 			mState = PlayerState::Move;
-			at->PlayAnimation(L"walk_Left", true);
-			direction = 0;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"walk_Left", true);
+
+			if (Direction == eDirection::Right)
+				at->PlayAnimation(L"walk_Right", true);
+
+			idle_Check = false;
 		}
-		else if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			mState = PlayerState::Move;
-			at->PlayAnimation(L"walk_Right", true);
-			direction = 1;
-		}
-		else if (Input::GetKey(eKeyCode::DOWN))
-		{
-			if (Input::GetKeyDown(eKeyCode::X))
-			{
-				mState = PlayerState::DownAttack;
-				if (direction == 0)
-				{
-					at->PlayAnimation(L"Down_Attack_Left", true);
-				}
-				else
-				{
-					at->PlayAnimation(L"Down_Attack_Right", true);
-				}
-			}
-		}
-		else if (Input::GetKey(eKeyCode::UP))
-		{
-			if (Input::GetKeyDown(eKeyCode::X))
-			{
-				mState = PlayerState::UpAttack;
-				if (direction == 0)
-				{
-					at->PlayAnimation(L"Up_Attack_Left", true);
-				}
-				else
-				{
-					at->PlayAnimation(L"Up_Attack_Right", true);
-				}
-			}
-		}
-		else if (Input::GetKeyDown(eKeyCode::X))
+
+		//일반 공격
+		if (Input::GetKeyDown(eKeyCode::X))
 		{
 			mState = PlayerState::Attack;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Attack_Left", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"Attack_Right", true);
-			}
+			idle_Check = false;
 		}
-		else if (Input::GetKeyDown(eKeyCode::Z))
+
+		//하단 공격
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
 		{
-			//Ground가 False일때 더블점프 할수 있게 구현하면 됨
-			mState = PlayerState::DoubleJump;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"DoubleJump_Left", true);
-				VectorR velocity = mRigidbody->GetVelocity();
-				velocity.y += 15.0f;
-				mRigidbody->SetVelocity(velocity);
-				mRigidbody->SetGround(false);
-			}
-			else
-			{
-				at->PlayAnimation(L"DoubleJump_Right", true);
-				VectorR velocity = mRigidbody->GetVelocity();
-				velocity.y += 15.0f;
-				mRigidbody->SetVelocity(velocity);
-				mRigidbody->SetGround(false);
-			}
+				mState = PlayerState::DownAttack;
+				idle_Check = false;
 		}
-		else if (Input::GetKeyDown(eKeyCode::Z))
+
+		//상단공격
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
 		{
-			////Ground가 False일때 더블점프 할수 있게 구현하면 됨
-			//mState = PlayerState::DoubleJump;
-			//if (direction == 0)
-			//{
-			//	at->PlayAnimation(L"DoubleJump_Left", true);
-			//}
-			//else
-			//{
-			//	at->PlayAnimation(L"DoubleJump_Right", true);
-			//}
+				mState = PlayerState::UpAttack;
+				idle_Check = false;
 		}
-		else if (Input::GetKey(eKeyCode::A))
+
+		// 점프
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			mState = PlayerState::Jump;
+			idle_Check = false;
+		}
+
+		// 대시키 입력시 dash 상태로 변경
+		if (Input::GetKeyDown(eKeyCode::LSHFIT))
+		{
+			mState = PlayerState::Dash;
+			idle_Check = false;
+			return;
+		}
+
+		//체력회복
+		if (Input::GetKey(eKeyCode::A))
 		{
 			FocusStart();
+
+			idle_Check = false;
 		}
 	}
 
 	void PlayerScript::Move()
 	{
-		if (Input::GetKeyUp(eKeyCode::LEFT))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (Input::GetKeyUp(eKeyCode::LEFT) || Input::GetKeyUp(eKeyCode::RIGHT))
 		{
 			mState = PlayerState::Idle;
-			at->PlayAnimation(L"Idle_Left", true);
-			direction = 0;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+
+			if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
 		}
-		else if (Input::GetKeyUp(eKeyCode::RIGHT))
+
+		//일반 공격
+		if (Input::GetKeyDown(eKeyCode::X))
 		{
-			mState = PlayerState::Idle;
-			at->PlayAnimation(L"Idle_Right", true);
-			direction = 1;
+			mState = PlayerState::Attack;
+		}
+
+		//하단 공격
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
+		{
+			mState = PlayerState::DownAttack;
+		}
+
+		//상단공격
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
+		{
+			mState = PlayerState::UpAttack;
+		}
+
+		// 점프
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			mState = PlayerState::Jump;
+		}
+
+		// 대시키 입력시 dash 상태로 변경
+		if (Input::GetKeyDown(eKeyCode::LSHFIT))
+		{
+			mState = PlayerState::Dash;
+		}
+
+		//체력회복
+		if (Input::GetKey(eKeyCode::A))
+		{
+			FocusStart();
 		}
 
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			pos.x -= 3.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
-			direction = 0;
-		}
-		else if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			pos.x += 3.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
-			direction = 1;
 		}
 
-		if (Input::GetKey(eKeyCode::LSHFIT))
+		if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			mState = PlayerState::Dash;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Dash_Left", true);
-				VectorR velocity = mRigidbody->GetVelocity();
-				velocity.x -= 8.0f;
-				mRigidbody->SetVelocity(velocity);
-				mRigidbody->SetGround(false);
-			}
-			else
-			{
-				at->PlayAnimation(L"Dash_Right", true);
-				VectorR velocity = mRigidbody->GetVelocity();
-				velocity.x += 8.0f;
-				mRigidbody->SetVelocity(velocity);
-				mRigidbody->SetGround(false);
-			}
+			pos.x += 3.0f * Time::DeltaTime();
 		}
+
+		tr->SetPosition(pos);
 	}
 
 	void PlayerScript::Jump()
 	{
-		//if (Input::GetKeyUp(eKeyCode::Z))
-		//{
-		//	mState = PlayerState::Idle;
-		//	if (direction == 0)
-		//	{
-		//		at->PlayAnimation(L"Idle_Left", true);
-		//	}
-		//	else
-		//	{
-		//		at->PlayAnimation(L"Idle_Right", true);
-		//	}
-		//}
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (jump_Check == false)
+		{
+			switch (Direction)
+			{
+			case eDirection::Left:
+				at->PlayAnimation(L"Idle_Left", false);
+				jump_Check = true;
+				break;
+			case eDirection::Right:
+				at->PlayAnimation(L"Idle_Right", false);
+				jump_Check = true;
+				break;
+			defualt:
+				break;
+			}
+
+			VectorR velocity = mRigidbody->GetVelocity();
+			velocity.y += 8.0f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+		}
+
+		// 더블점프
+		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
+		{
+			mState = PlayerState::DoubleJump;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Dash
+		if (Input::GetKeyDown(eKeyCode::C))
+		{
+			mState = PlayerState::Dash;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Attack
+		if (Input::GetKeyDown(eKeyCode::X))
+		{
+			mState = PlayerState::Attack;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Up Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
+		{
+			mState = PlayerState::UpAttack;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Down Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
+		{
+			mState = PlayerState::DownAttack;
+			double_jump_Check = false;
+			return;
+		}
+
+		mTime += Time::DeltaTime();
+		if (mTime >= 0.1f)
+		{
+			mTime = 0.0f;
+			Jump_End_Event();
+		}
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x -= 0.001f;
+
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x += 0.001f;
+
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	void PlayerScript::DoubleJump()
 	{
-		if (Input::GetKeyUp(eKeyCode::Z))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (double_jump_Check == false)
+		{
+			switch (Direction)
+			{
+			case eDirection::Left:	// left
+				at->PlayAnimation (L"Idle_Left", false);
+				double_jump_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Idle_Right", false);
+				double_jump_Check = true;
+				break;
+
+			default:
+				break;
+			}
+
+			VectorR velocity = mRigidbody->GetVelocity();
+			velocity.y += 8.0f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+		}
+
+		// 더블점프
+		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
+		{
+			mState = PlayerState::DoubleJump;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Dash
+		if (Input::GetKeyDown(eKeyCode::C))
+		{
+			mState = PlayerState::Dash;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Attack
+		if (Input::GetKeyDown(eKeyCode::X))
+		{
+			mState = PlayerState::Attack;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Up Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
+		{
+			mState = PlayerState::UpAttack;
+			double_jump_Check = false;
+			return;
+		}
+
+		// Down Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
+		{
+			mState = PlayerState::DownAttack;
+			double_jump_Check = false;
+			return;
+		}
+
+		if (Input::GetKeyDown(eKeyCode::RIGHT) || Input::GetKeyDown(eKeyCode::LEFT))
 		{
 			mState = PlayerState::Idle;
-			if (direction == 0)
-			{
-				at->PlayAnimation(L"Idle_Left", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"Idle_Right", true);
-			}
+		}
+
+		mTime += Time::DeltaTime();
+		if (mTime >= 0.2f)
+		{
+			mTime = 0.0f;
+			Double_Jump_End_Event();
 		}
 	}
 
 	void PlayerScript::Dash()
 	{
-		if (Input::GetKeyUp(eKeyCode::LSHFIT))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (dash_jump_Check == false)
 		{
-			if (direction == 0)
+			switch (Direction)
 			{
-				mState = PlayerState::Idle;
-				at->PlayAnimation(L"Idle_Left", true);
-			}
-			else
-			{
-				mState = PlayerState::Idle;
-				at->PlayAnimation(L"Idle_Right", true);
+			case eDirection::Left:	// left
+				at->PlayAnimation(L"Dash_Left", false);
+				dash_jump_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Dash_Right", false);
+				dash_jump_Check = true;
+				break;
+
+			default:
+				break;
 			}
 		}
+
+		velocity = mRigidbody->GetVelocity();
+		if (Direction == eDirection::Left)
+		{
+			velocity.x -= 8.0f;
+		}
+		if (Direction == eDirection::Right)
+		{
+			velocity.x += 8.0f;
+		}
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	void PlayerScript::UpAttack()
 	{
-		if (Input::GetKeyUp(eKeyCode::X))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (up_attack_Check == false)
 		{
-			mState = PlayerState::Idle;
-			if (direction == 0)
+			switch (Direction)
 			{
-				at->PlayAnimation(L"Idle_Left", true);
+			case eDirection::Left:	// left
+				at->PlayAnimation(L"Up_Attack_Left", false);
+				up_attack_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Up_Attack_Right", false);
+				up_attack_Check = true;
+				break;
+
+			default:
+				break;
 			}
-			else
-			{
-				at->PlayAnimation(L"Idle_Right", true);
-			}
+		}
+
+		mTime += Time::DeltaTime();
+		if (mTime >= 0.2f)
+		{
+			mTime = 0.0f;
+			Up_Attack_End_Evnet();
 		}
 	}
 
 	void PlayerScript::Attack()
 	{
-		if (Input::GetKeyUp(eKeyCode::X))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (attack_Check == false)
 		{
-			mState = PlayerState::Idle;
-			if (direction == 0)
+			switch (Direction)
 			{
-				at->PlayAnimation(L"Idle_Left", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"Idle_Right", true);
+			case eDirection::Left:	// left
+				at->PlayAnimation(L"Attack_Left", true);
+				attack_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Attack_Right", true);
+				attack_Check = true;
+				break;
+
+			default:
+				break;
 			}
 		}
+
+		mTime += Time::DeltaTime();
+		if (mTime >= 0.2f)
+		{
+			mTime = 0.0f;
+			Attack_End_Event();
+		}
 	}
-	void PlayerScript::DownAttack()
+
+	void PlayerScript::Fall()
 	{
-		if (Input::GetKeyUp(eKeyCode::X))
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (fall_Check == false)
+		{
+			switch (Direction)
+			{
+			case eDirection::Left:	// left
+				at->PlayAnimation(L"Idle_Left", false);
+				fall_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Idle_Right", false);
+				fall_Check = true;
+				break;
+
+			default:
+				break;
+			}
+
+			ActionInitialize();
+		}
+
+		// 더블점프
+		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
+		{
+			mState = PlayerState::DoubleJump;
+			fall_Check = false;
+			return;
+		}
+
+		// Dash
+		if (Input::GetKeyDown(eKeyCode::C))
+		{
+			mState = PlayerState::Dash;
+			fall_Check = false;
+			return;
+		}
+
+		// Up Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
+		{
+			mState = PlayerState::UpAttack;
+			fall_Check = false;
+			return;
+		}
+
+		// Down Attack
+		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
+		{
+			mState = PlayerState::DownAttack;
+			fall_Check = false;
+			return;
+		}
+
+		// Attack
+		if (Input::GetKeyDown(eKeyCode::X))
+		{
+			mState = PlayerState::Attack;
+			fall_Check = false;
+		}
+
+		if (Input::GetKey(eKeyCode::LEFT) || Input::GetKey(eKeyCode::RIGHT))
 		{
 			mState = PlayerState::Idle;
-			if (direction == 0)
+		}
+	}
+
+	void PlayerScript::DownAttack()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
+		if (down_attack_Check == false)
+		{
+			switch (Direction)
 			{
-				at->PlayAnimation(L"Idle_Left", true);
+			case eDirection::Left:	// left
+				at->PlayAnimation(L"Down_Attack_Left", true);
+				down_attack_Check = true;
+				break;
+
+			case eDirection::Right:	// right
+				at->PlayAnimation(L"Down_Attack_Right", true);
+				down_attack_Check = true;
+				break;
+
+			default:
+				break;
 			}
-			else
-			{
-				at->PlayAnimation(L"Idle_Right", true);
-			}
+		}
+
+		mTime += Time::DeltaTime();
+		if (mTime >= 0.2f)
+		{
+			mTime = 0.0f;
+			Down_Attack_End_Event();
 		}
 	}
 	void PlayerScript::FocusStart()
 	{		
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
 		mState = PlayerState::FocusStart;
 		if (Input::GetKey(eKeyCode::A))
 		{
@@ -431,6 +730,11 @@ namespace km
 	}
 	void PlayerScript::Focus()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
 		if (Input::GetKeyUp(eKeyCode::A))
 		{
 			int a = 0;
@@ -439,14 +743,159 @@ namespace km
 	}
 	void PlayerScript::FocusOn()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
 
 	}
 	void PlayerScript::FocusEnd()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
+
 
 	}
 	void PlayerScript::Death()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			Direction = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			Direction = eDirection::Right;
 
+	}
+	void PlayerScript::ActionInitialize()
+	{
+		idle_Check = false;
+		jump_Check = false;
+		double_jump_Check = false;
+		dash_jump_Check = false;
+		up_attack_Check   = false;
+		attack_Check      = false;
+		down_attack_Check = false;
+	}
+
+	void PlayerScript::Up_Attack_End_Evnet()
+	{
+		switch (mRigidbody->GetGround())
+		{
+		case true:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
+			break;
+
+		case false:
+			mState = PlayerState::Fall;
+			break;
+
+		default:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Knight_Idleleft", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Knight_Idleright", true);
+			break;
+		}
+	}
+	void PlayerScript::Attack_End_Event()
+	{
+		//switch (mRigidbody->GetGround())
+		switch (mRigidbody->GetGround())
+		{
+		case true:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
+			break;
+
+		case false:
+			mState = PlayerState::Fall;
+			break;
+
+		default:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Knight_Idleleft", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Knight_Idleright", true);
+			break;
+		}
+	}
+
+	void PlayerScript::Down_Attack_End_Event()
+	{
+		switch (mRigidbody->GetGround())
+		{
+		case true:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
+			break;
+
+		case false:
+			mState = PlayerState::Fall;
+			break;
+
+		default:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Knight_Idleleft", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Knight_Idleright", true);
+			break;
+		}
+	}
+
+	void PlayerScript::Jump_End_Event()
+	{
+		switch (mRigidbody->GetGround())
+		{
+		case true:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Idle_Left", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Idle_Right", true);
+			break;
+
+		case false:
+			mState = PlayerState::Fall;
+			break;
+
+		default:
+			mState = PlayerState::Idle;
+
+			if (Direction == eDirection::Left)
+				at->PlayAnimation(L"Knight_Idleleft", true);
+			else if (Direction == eDirection::Right)
+				at->PlayAnimation(L"Knight_Idleright", true);
+			break;
+		}
+	}
+
+	void PlayerScript::Double_Jump_End_Event()
+	{
+		mState = PlayerState::Fall;
+
+		if (Direction == eDirection::Left)
+			at->PlayAnimation(L"Idle_Left", true);
+		else if (Direction == eDirection::Right)
+			at->PlayAnimation(L"Idle_Right", true);
 	}
 }

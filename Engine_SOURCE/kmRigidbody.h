@@ -17,7 +17,9 @@ namespace km
 		void AddForce(VectorR force); // 힘을 증가해줄수 있는 함수
 		void SetGround(bool ground) { mbGround = ground; }
 		void SetVelocity(VectorR velocity) { mVelocity = velocity; }
+
 		VectorR GetVelocity() { return mVelocity; }
+		bool GetGround() { return mbGround; }
 
 	private:
 		float mMass; //질량

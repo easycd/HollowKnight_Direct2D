@@ -16,6 +16,7 @@
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
 #include "kmComputeShader.h"
+#include "kmLight.h"
 
 namespace km
 {
@@ -95,6 +96,15 @@ namespace km
 		//	cameraComp->TurnLayerMask(eLayerType::Player, false);
 		//	//camera->AddComponent<CameraScript>();
 		//}
+
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Smile");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		}
 	}
 	void Dirtmouth::Update()
 	{
