@@ -17,5 +17,6 @@ namespace km
 
 	private:
 		GameObject* player;
+		Camera* mCamera;
 	};
 }

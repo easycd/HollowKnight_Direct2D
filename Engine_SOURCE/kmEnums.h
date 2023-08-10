@@ -25,6 +25,7 @@ namespace km::enums
 		Ground,
 		Player,
 		Monster,
+		Camera,
 		Light,
 		UI,
 		BG,

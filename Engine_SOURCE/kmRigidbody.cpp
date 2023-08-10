@@ -16,8 +16,7 @@ namespace km
 		mLimitedVelocity.x = 200.0f;
 		mLimitedVelocity.y = 9000.0f;
 		mbGround = false;
-		mGravity = VectorR(0.0f, 13.0f);
-		//mGravity = VectorR(0.0f, 0.0f);
+		mGravity = VectorR(0.0f, 18.0f);
 		mFriction = 100.0f;
 	}
 

@@ -88,15 +88,15 @@ namespace km
 			lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
-		//{
-		//	GameObject* light = new GameObject();
-		//	light->SetName(L"Smile");
-		//	AddGameObject(eLayerType::Light, light);
-		//	Light* lightComp = light->AddComponent<Light>();
-		//	lightComp->SetType(eLightType::Point);
-		//	lightComp->SetColor(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		//	lightComp->SetRadius(3.0f);
-		//}
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Smile");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetColor(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+			lightComp->SetRadius(3.0f);
+		}
 
 		//{
 		//	GameObject* player = new GameObject();

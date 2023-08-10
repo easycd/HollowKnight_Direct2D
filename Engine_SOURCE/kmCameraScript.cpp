@@ -9,7 +9,17 @@ namespace km
 	void CameraScript::Update()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector3 pos = tr->GetPosition();
+
+		if (mTarget)
+		{
+			Transform* GetPos = mTarget->GetComponent<Transform>();
+			Vector3 PlayerPos = GetPos->GetPosition();
+			tr->SetPosition(Vector3(PlayerPos.x, PlayerPos.y + 1.0f, 0.0f));
+		}
+		else
+		{
+			tr->SetPosition(Vector3(0.f, 0.f, -10.f));
+		}
 
 
 		//if (Input::GetKey(eKeyCode::W))

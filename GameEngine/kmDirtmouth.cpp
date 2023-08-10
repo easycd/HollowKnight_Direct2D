@@ -68,33 +68,41 @@ namespace km
 			player->AddComponent<PlayerScript>();
 		}
 
+		//Ground
 		{
-			GameObject* ground = object::Instantiate<GameObject>(Vector3(0.0f, -2.0f, 0.0f), eLayerType::Ground);
-			ground->SetName(L"ground");
-			ground->AddComponent<GroundScript>();
+			GroundScript* ground = object::Instantiate<GroundScript>(eLayerType::Ground);
+			ground->Initialize();
+			Transform* tr = ground->GetComponent<Transform>();
+			tr->SetPosition(Vector3(0.0f, -1.95f, 0.0f));
+			tr->SetScale(Vector3(100.0f, 0.5f, 1.0f));
+
 		}
 
 		//Main Camera
 		Camera* cameraComp = nullptr;
 		{
 			GameObject* camera = new GameObject();
-			AddGameObject(eLayerType::Player, camera);
-			camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
-			cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(eLayerType::BG, true);
-			camera->AddComponent<CameraScript>();
-			renderer::cameras.push_back(cameraComp);
-			renderer::mainCamera = cameraComp;
+			AddGameObject(eLayerType::Camera, camera);
+			
+			mCamera = camera->AddComponent<Camera>();
+			mCamera->TurnLayerMask(eLayerType::UI, false);
+			
+			CameraScript* camerscript = camera->AddComponent<CameraScript>();
+			camerscript->SetTarget(player);
+			
+			renderer::cameras.push_back(mCamera);
+			renderer::mainCamera = mCamera;
+
+
 		}
 
-		////UI Camera
+		//UI Camera
 		//{
 		//	GameObject* camera = new GameObject();
 		//	AddGameObject(eLayerType::Player, camera);
 		//	camera->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 		//	Camera* cameraComp = camera->AddComponent<Camera>();
 		//	cameraComp->TurnLayerMask(eLayerType::Player, false);
-		//	//camera->AddComponent<CameraScript>();
 		//}
 
 		{
@@ -116,18 +124,18 @@ namespace km
 	}
 	void Dirtmouth::LateUpdate()
 	{
-		Vector3 pos(800, 450, 0.0f);
-		Vector3 pos2(800, 450, 1000.0f);
-		Viewport viewport;
-		viewport.width = 1600.0f;
-		viewport.height = 900.0f;
-		viewport.x = 0;
-		viewport.y = 0;
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-
-		pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
-		pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		//Vector3 pos(800, 450, 0.0f);
+		//Vector3 pos2(800, 450, 1000.0f);
+		//Viewport viewport;
+		//viewport.width = 1600.0f;
+		//viewport.height = 900.0f;
+		//viewport.x = 0;
+		//viewport.y = 0;
+		//viewport.minDepth = 0.0f;
+		//viewport.maxDepth = 1.0f;
+		//
+		//pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		//pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
 		Scene::LateUpdate();
 	}
