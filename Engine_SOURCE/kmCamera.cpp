@@ -14,7 +14,7 @@ namespace km
 	bool CompareZSort(GameObject* a, GameObject* b)
 	{
 		if (a->GetComponent<Transform>()->GetPosition().z
-			< b->GetComponent<Transform>()->GetPosition().z)
+			<= b->GetComponent<Transform>()->GetPosition().z)
 			return false;
 
 		return true;
@@ -169,26 +169,29 @@ namespace km
 		for (GameObject* obj : gameObjs)
 		{
 			//렌더러 컴포넌트가 없다면?
-			MeshRenderer* mr
-				= obj->GetComponent<MeshRenderer>();
+			MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
 			if (mr == nullptr)
 				continue;
-
-			std::shared_ptr<Material> mt = mr->GetMaterial();
-			eRenderingMode mode = mt->GetRenderingMode();
-			switch (mode)
+			else
 			{
-			case km::graphics::eRenderingMode::Opaque:
-				mOpaqueGameObjects.push_back(obj);
-				break;
-			case km::graphics::eRenderingMode::CutOut:
-				mCutOutGameObjects.push_back(obj);
-				break;
-			case km::graphics::eRenderingMode::Transparent:
-				mTransparentGameObjects.push_back(obj);
-				break;
-			default:
-				break;
+				std::shared_ptr<Material> mt = mr->GetMaterial();
+				eRenderingMode mode = mt->GetRenderingMode();
+				switch (mode)
+				{
+				case km::graphics::eRenderingMode::Opaque:
+					mOpaqueGameObjects.push_back(obj);
+					break;
+				case km::graphics::eRenderingMode::CutOut:
+					mCutOutGameObjects.push_back(obj);
+					break;
+				case km::graphics::eRenderingMode::Transparent:
+					mTransparentGameObjects.push_back(obj);
+					break;
+				case km::graphics::eRenderingMode::End:
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}

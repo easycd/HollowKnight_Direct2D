@@ -34,7 +34,13 @@ namespace km
 
 	void GameObject::Initialize()
 	{
-
+		//for (Component* comp : mComponents)
+		//{
+		//	if (comp == nullptr)
+		//		continue;
+		//
+		//	comp->Initialize();
+		//}
 	}
 
 	void GameObject::Update()

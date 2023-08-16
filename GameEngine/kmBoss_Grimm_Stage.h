@@ -14,7 +14,13 @@ namespace km
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-	private:
+		virtual void OnEnter();
+		virtual void OnExit();
 
+	private:
+		GameObject* player;
+		GameObject* Grimm;
+		Camera* mCamera;
+		
 	};
 }

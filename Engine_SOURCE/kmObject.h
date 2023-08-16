@@ -13,7 +13,7 @@ namespace km::object
 		T* gameObj = new T();
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, gameObj);
-
+		gameObj->Initialize();
 		return gameObj;
 	}
 
@@ -26,7 +26,7 @@ namespace km::object
 
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, gameObj);
-
+		gameObj->Initialize();
 		return gameObj;
 	}
 
@@ -40,7 +40,7 @@ namespace km::object
 
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, gameObj);
-
+		gameObj->Initialize();
 		return gameObj;
 	}
 
@@ -54,6 +54,19 @@ namespace km::object
 		tr->SetScale(scale);
 
 		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		return gameObj;
+	}
+
+	template <typename T>
+	static __forceinline T* Instantiate(Vector3 pos, enums::eLayerType layer, Scene* sname)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = sname;
 		scene->AddGameObject(layer, gameObj);
 
 		return gameObj;

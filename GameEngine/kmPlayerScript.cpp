@@ -8,6 +8,11 @@
 #include "kmResources.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
+#include "kmObject.h"
+
+#include "kmPlayerEffet.h"
+
+#include "kmMeshRenderer.h"
 
 namespace km
 {
@@ -21,6 +26,7 @@ namespace km
 	void PlayerScript::Initialize()
 	{
 		at = GetOwner()->GetComponent<Animator>();
+		tr = GetOwner()->GetComponent<Transform>();
 		//at->CompleteEvent(L"Idle") = std::bind(&PlayerScript::Complete, this);
 
 		std::shared_ptr<Texture> LeftIdle = Resources::Load<Texture>(L"LeftIdle", L"..\\Resources\\Knight\\Knight_Idle_Left.png");
@@ -80,21 +86,20 @@ namespace km
 		at->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3);
 
 	
-		at->PlayAnimation(L"Idle_Right", true);
+		//at->PlayAnimation(L"Idle_Right", true);
 		Direction = eDirection::Right;
 
-		 Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
-		 mRigidbody = GetOwner()->AddComponent<Rigidbody>();
-		 mRigidbody->SetMass(0.1f);
-		 VectorR velocity = mRigidbody->GetVelocity();
-		 velocity.y -= 0.2f;
+		Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
+		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
+		mRigidbody->SetMass(0.1f);
+		VectorR velocity = mRigidbody->GetVelocity();
+		velocity.y -= 0.2f;
 
-		 mRigidbody->SetVelocity(velocity);
-		 mRigidbody->SetGround(false);
+		mRigidbody->SetVelocity(velocity);
+		mRigidbody->SetGround(false);
 	}
 	void PlayerScript::Update()
 	{
-		tr = GetOwner()->GetComponent<Transform>();
 		pos = tr->GetPosition();
 
 		switch (mState)
@@ -586,20 +591,18 @@ namespace km
 
 		if (attack_Check == false)
 		{
-			switch (Direction)
+			if (Direction == eDirection::Left)
 			{
-			case eDirection::Left:	// left
 				at->PlayAnimation(L"Attack_Left", true);
 				attack_Check = true;
-				break;
-
-			case eDirection::Right:	// right
+			}
+			else if (Direction == eDirection::Right)
+			{
+				//Effect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
+				//Effect->Normal_Attack_Effect();
+				
 				at->PlayAnimation(L"Attack_Right", true);
 				attack_Check = true;
-				break;
-
-			default:
-				break;
 			}
 		}
 

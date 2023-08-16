@@ -17,6 +17,7 @@
 #include "kmGroundScript.h"
 #include "kmComputeShader.h"
 #include "kmLight.h"
+#include "kmGameObject.h"
 
 namespace km
 {
@@ -38,6 +39,7 @@ namespace km
 			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
 			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
 			GrimmTownBG->SetName(L"Grimm_Town");
+
 			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
@@ -58,9 +60,10 @@ namespace km
 
 		{
 			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
+			
 			player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
 			player->SetName(L"Player");
-
+			
 			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
@@ -78,23 +81,27 @@ namespace km
 
 		}
 
-		//Main Camera
-		Camera* cameraComp = nullptr;
 		{
-			GameObject* camera = new GameObject();
-			AddGameObject(eLayerType::Camera, camera);
-			
+			GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Camera);
+
 			mCamera = camera->AddComponent<Camera>();
 			mCamera->TurnLayerMask(eLayerType::UI, false);
-			
+
 			CameraScript* camerscript = camera->AddComponent<CameraScript>();
 			camerscript->SetTarget(player);
-			
-			renderer::cameras.push_back(mCamera);
-			renderer::mainCamera = mCamera;
-
-
 		}
+
+		//{
+		//	GameObject* camera = new GameObject();
+		//	AddGameObject(eLayerType::Camera, camera);
+		//
+		//	mCamera = camera->AddComponent<Camera>();
+		//	mCamera->TurnLayerMask(eLayerType::UI, false);
+		//
+		//	CameraScript* camerscript = camera->AddComponent<CameraScript>();
+		//	camerscript->SetTarget(player);
+		//}
+
 
 		//UI Camera
 		//{
@@ -124,23 +131,30 @@ namespace km
 	}
 	void Dirtmouth::LateUpdate()
 	{
-		//Vector3 pos(800, 450, 0.0f);
-		//Vector3 pos2(800, 450, 1000.0f);
-		//Viewport viewport;
-		//viewport.width = 1600.0f;
-		//viewport.height = 900.0f;
-		//viewport.x = 0;
-		//viewport.y = 0;
-		//viewport.minDepth = 0.0f;
-		//viewport.maxDepth = 1.0f;
-		//
-		//pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
-		//pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		Vector3 pos(800, 450, 0.0f);
+		Vector3 pos2(800, 450, 1000.0f);
+		Viewport viewport;
+		viewport.width = 1600.0f;
+		viewport.height = 900.0f;
+		viewport.x = 0;
+		viewport.y = 0;
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+		
+		pos = viewport.Unproject(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		pos2 = viewport.Unproject(pos2, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
 		Scene::LateUpdate();
 	}
 	void Dirtmouth::Render()
 	{
 		Scene::Render();
+	}
+	void Dirtmouth::OnEnter()
+	{
+		renderer::mainCamera = mCamera;
+	}
+	void Dirtmouth::OnExit()
+	{
 	}
 }

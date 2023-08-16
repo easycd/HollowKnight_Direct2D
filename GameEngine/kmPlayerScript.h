@@ -4,6 +4,8 @@
 namespace km
 {
 	class Rigidbody;
+	class RigidbodyMath;
+	class PlayerEffet;
 
 	class PlayerScript : public Script
 	{
@@ -42,14 +44,18 @@ namespace km
 		virtual void Update() override;
 
 		void Complete();
+		//PlayerState GetPlayerState() { return mState; }
+		Vector3 GetPlayerPos() { return pos; }
 
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override;
 		virtual void OnCollisionExit(Collider2D* other) override;
 
+
 	private:
 		PlayerState mState;
 		Rigidbody* mRigidbody;
+		PlayerEffet* mEffect;
 		Animator* at;
 		Transform* tr;
 		Vector3 pos;
@@ -59,6 +65,8 @@ namespace km
 		float mTime;
 		bool Test = true;
 
+	private:
+		PlayerEffet* Effect;
 
 	private:
 		void Idle();

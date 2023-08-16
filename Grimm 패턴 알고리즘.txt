@@ -1,0 +1,17 @@
+Grimm 패턴
+
+1. AirDash Attack
+공중으로 텔레포트 -> 캐릭터방향으로 AirDash_Attack1 실행 -> 캐릭터 방향으로 이동하면서 Attack2 실행
+-> Ground와 충돌시 Dash폴더의 Land -> 캐릭터 방향으로 이동하면서 2_Attack 실행 -> 2_Attack애니메이션 종료  후 3_Stop 애니메이션 실행 -> 텔레포트
+
+2. Balloon Attack
+맵 가운데로 순간이동 -> Start애니메이션 실행 -> 10초동안 Loop애니메이션 실행 -> Loop종료 후 텔레포트
+
+3. Capspike attack
+Ground 충돌한 상태의 랜덤 X값에서 On 애니메이션 실행 -> On 애니메이션 끝나고 Loop애니메이션 실행 후 Spike오브젝트 소환 -> Spike애니메이션 종료 후 End 애니메이션 실행 -> 텔레포트
+
+4.Cast Attack
+캐릭터와 반대 지점으로 텔레포트 -> Cast애니메이션 실행 -> Fire오브젝트 소환 후 캐릭터 추적 -> 텔레포트
+
+5. Slash Attack
+캐릭터 반대지점이로 텔레포트 -> Slash 애니메이션 실행과 동시에 캐릭터방향으로 이동 -> Slash애니메이션 종료 후 Up_Attack 애니메이션 실행 -> 텔레포트
