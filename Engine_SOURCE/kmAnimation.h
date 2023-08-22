@@ -59,5 +59,6 @@ namespace km
 		int mIndex;
 		float mTime;
 		bool mbComplete;
+		Vector2 mSpriteSize;
 	};
 }

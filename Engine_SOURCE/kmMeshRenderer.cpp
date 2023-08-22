@@ -3,6 +3,7 @@
 #include "kmTransform.h"
 #include "kmRenderer.h"
 #include "kmAnimator.h"
+#include "kmResources.h"
 
 namespace km
 {

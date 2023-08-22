@@ -55,7 +55,7 @@ namespace km
 	{
 		SetKey(name);
 		mAtlas = atlas;
-
+		mSpriteSize = size;
 
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();

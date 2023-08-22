@@ -69,6 +69,7 @@ namespace km
 		Animator* mAnimation;
 		Transform* mTransform;
 		Vector3 mPos;
+		GameObject sm;
 
 		float mTime;
 		bool Test;

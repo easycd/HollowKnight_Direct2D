@@ -21,6 +21,9 @@ namespace km::graphics
 		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 		eRenderingMode GetRenderingMode() { return mMode; }
 
+
+		std::shared_ptr<Texture> GetTexture() { return mTexture; }
+
 	private:
 		std::shared_ptr<Shader> mShader;
 		std::shared_ptr<Texture> mTexture;

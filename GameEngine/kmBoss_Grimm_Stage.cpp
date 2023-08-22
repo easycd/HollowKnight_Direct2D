@@ -68,7 +68,7 @@ namespace km
 			MeshRenderer* mr = Grimm->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
-			
+
 			Animator* at = Grimm->AddComponent<Animator>();
 			Grimm->AddComponent<GrimmScript>();
 		}
