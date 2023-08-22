@@ -27,7 +27,7 @@ namespace km
 	{
 		at = GetOwner()->GetComponent<Animator>();
 		tr = GetOwner()->GetComponent<Transform>();
-		//at->CompleteEvent(L"Idle") = std::bind(&PlayerScript::Complete, this);
+		
 
 		std::shared_ptr<Texture> LeftIdle = Resources::Load<Texture>(L"LeftIdle", L"..\\Resources\\Knight\\Knight_Idle_Left.png");
 		std::shared_ptr<Texture> RightIdle = Resources::Load<Texture>(L"RightIdle", L"..\\Resources\\Knight\\Knight_Idle_Right.png");
@@ -86,6 +86,7 @@ namespace km
 		at->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3);
 
 	
+		tr->SetScale(Vector3(0.2f, 0.2f, 0.0f));
 		//at->PlayAnimation(L"Idle_Right", true);
 		Direction = eDirection::Right;
 

@@ -36,8 +36,9 @@ namespace km
 		cs->Create(L"PaintCS.hlsl", "main");
 
 		{ //BackGround
-			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(5.0f, 0.5f, 10.0f), eLayerType::BG);
-			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
+			GameObject* GrimmTownBG = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 10.0f), eLayerType::BG);
+			//GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
+			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(5.0f, 1.2f, 0.0f));
 			GrimmTownBG->SetName(L"Grimm_Town");
 
 			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
@@ -74,10 +75,11 @@ namespace km
 		//Ground
 		{
 			GroundScript* ground = object::Instantiate<GroundScript>(eLayerType::Ground);
+			ground->SetName(L"Ground");
 			ground->Initialize();
 			Transform* tr = ground->GetComponent<Transform>();
-			tr->SetPosition(Vector3(0.0f, -1.95f, 0.0f));
-			tr->SetScale(Vector3(100.0f, 0.5f, 1.0f));
+			tr->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
+			tr->SetScale(Vector3(100.0f, 0.1f, 1.0f));
 
 		}
 

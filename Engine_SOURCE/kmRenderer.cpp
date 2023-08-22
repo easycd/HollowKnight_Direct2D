@@ -77,6 +77,7 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 #pragma endregion
+
 #pragma region Sampler State
 		//Sampler State
 		D3D11_SAMPLER_DESC samplerDesc = {};
@@ -92,6 +93,7 @@ namespace renderer
 		GetDevice()->BindSampler(eShaderStage::PS, 1, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 
 #pragma endregion
+
 #pragma region Rasterizer State
 		D3D11_RASTERIZER_DESC rasterizerDesc = {};
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
@@ -114,6 +116,7 @@ namespace renderer
 		GetDevice()->CreateRasterizeState(&rasterizerDesc
 			, rasterizerStates[(UINT)eRSType::WireframeNone].GetAddressOf());
 #pragma endregion
+
 #pragma region Depth Stencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
 

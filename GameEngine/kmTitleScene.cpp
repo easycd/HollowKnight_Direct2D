@@ -25,8 +25,9 @@ namespace km
 			MeshRenderer* mr = TitleBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"TitleBG"));
-			TitleBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
-			TitleBG->GetComponent<Transform>()->SetScale(Vector3(8.0f, 5.0f, 0.0f));
+			TitleBG->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			//TitleBG->GetComponent<Transform>()->SetScale(Vector3(8.0f, 5.0f, 0.0f));
+			TitleBG->GetComponent<Transform>()->SetScale(Vector3(1.7f, 1.0f, 0.0f));
 		}
 
 		{
