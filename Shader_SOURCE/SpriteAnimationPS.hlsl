@@ -25,16 +25,25 @@ float4 main(VSOut In) : SV_TARGET
     // -540 + 1200 
     color = albedoTexture.Sample(anisotropicSampler, In.UV);
     
+   //if (animationType == 1)
+   //{
+   //    float2 diff = (AtlasSize - SpriteSize) / 2.0f;
+   //    float2 UV = (SpriteLeftTop - diff - SpriteOffset) + (AtlasSize * In.UV);
+   //
+   //    if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
+   //        || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
+   //        discard;
+   //    
+   //    color = atlasTexture.Sample(anisotropicSampler, UV);
+   //}
+    
     if (animationType == 1)
     {
-        float2 diff = (AtlasSize - SpriteSize) / 2.0f;
-        float2 UV = (SpriteLeftTop - diff - SpriteOffset) + (AtlasSize * In.UV);
-    
-        if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x
-            || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
-            discard;
-        
+        float2 UV = (SpriteSize * In.UV) + SpriteLeftTop - SpriteOffset;
         color = atlasTexture.Sample(anisotropicSampler, UV);
+        
+        if (UV.x < SpriteLeftTop.x || UV.x > SpriteLeftTop.x + SpriteSize.x || UV.y < SpriteLeftTop.y || UV.y > SpriteLeftTop.y + SpriteSize.y)
+            discard;
     }
     
     float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);

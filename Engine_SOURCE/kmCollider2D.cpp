@@ -44,7 +44,7 @@ namespace km
 		mPosition = pos;
 
 		graphics::DebugMesh mesh = {};
-		mesh.position = pos;
+		mesh.position = mPosition;
 		mesh.scale = scale;
 		mesh.rotation = tr->GetRotation();
 		mesh.type = eColliderType::Rect;

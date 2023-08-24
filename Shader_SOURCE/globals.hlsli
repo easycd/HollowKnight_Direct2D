@@ -27,6 +27,7 @@ cbuffer Animator : register(b3)
     float2 AtlasSize;
     uint animationType;
     float3 pad;
+    uint Reverse;
 }
 
 Texture2D albedoTexture : register(t0);

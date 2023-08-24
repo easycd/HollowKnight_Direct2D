@@ -38,8 +38,8 @@ namespace km
 		cs->Create(L"PaintCS.hlsl", "main");
 
 		{
-			GameObject* GrimmStageBG = object::Instantiate<GameObject>(Vector3(16.0f, 0.5f, 10.0f), eLayerType::BG);
-			GrimmStageBG->GetComponent<Transform>()->SetScale(Vector3(50.0f, 6.0f, 0.0f));
+			GameObject* GrimmStageBG = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 10.0f), eLayerType::BG);
+			GrimmStageBG->GetComponent<Transform>()->SetScale(Vector3(8.3f, 1.5f, 0.0f));
 			GrimmStageBG->SetName(L"Grimm_Tent");
 		
 			MeshRenderer* mr = GrimmStageBG->AddComponent<MeshRenderer>();
@@ -110,9 +110,8 @@ namespace km
 			GroundScript* ground = object::Instantiate<GroundScript>(eLayerType::Ground);
 			ground->Initialize();
 			Transform* tr = ground->GetComponent<Transform>();
-			tr->SetPosition(Vector3(0.0f, -1.95f, 0.0f));
+			tr->SetPosition(Vector3(0.0f, -0.8f, 0.0f));
 			tr->SetScale(Vector3(100.0f, 0.5f, 1.0f));
-
 		}
 
 		{

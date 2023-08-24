@@ -86,16 +86,20 @@ namespace km
 		at->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3);
 
 	
-		tr->SetScale(Vector3(0.2f, 0.2f, 0.0f));
+		tr->SetScale(Vector3(0.35f, 0.2f, 0.0f));
 		//at->PlayAnimation(L"Idle_Right", true);
 		Direction = eDirection::Right;
 
 		Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
+		collider->SetSize(Vector2(0.18f, 0.7f));
+		collider->SetCenter(Vector2(0.007f, -0.02f));
+
+
+
 		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		mRigidbody->SetMass(0.1f);
 		VectorR velocity = mRigidbody->GetVelocity();
 		velocity.y -= 0.2f;
-
 		mRigidbody->SetVelocity(velocity);
 		mRigidbody->SetGround(false);
 	}
