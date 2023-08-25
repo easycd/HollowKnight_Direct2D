@@ -233,23 +233,23 @@ namespace km
 	void GrimmScript::OnCollisionEnter(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-
+	
 		if (gd != nullptr)
 		{
 			mRigidbody->SetGround(true);
 		}
 	}
-
+	
 	void GrimmScript::OnCollisionStay(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-
+	
 		if (gd != nullptr)
 		{
 			mRigidbody->SetGround(true);
 		}
 	}
-
+	
 	void GrimmScript::OnCollisionExit(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());

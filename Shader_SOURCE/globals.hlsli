@@ -12,6 +12,8 @@ cbuffer Transform : register(b0)
 //
 ///
 
+
+
 cbuffer Grid : register(b2)
 {
     float4 CameraPosition;
@@ -28,6 +30,13 @@ cbuffer Animator : register(b3)
     uint animationType;
     float3 pad;
     uint Reverse;
+}
+
+// 충돌체 관련 
+cbuffer Col : register(b4)
+{
+    
+    int c_ColCount;
 }
 
 Texture2D albedoTexture : register(t0);

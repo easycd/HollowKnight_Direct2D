@@ -18,7 +18,7 @@
 #include "kmComputeShader.h"
 #include "kmLight.h"
 #include "kmGameObject.h"
-
+#include "kmPlayer.h"
 #include "kmGrimmScript.h"
 
 namespace km
@@ -48,18 +48,10 @@ namespace km
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmStage_BG"));
 		}
 
+		//Ä³¸¯ÅÍ
 		{
-			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
-		
-			player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
+			player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetName(L"Player");
-		
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
-		
-			Animator* at = player->AddComponent<Animator>();
-			player->AddComponent<PlayerScript>();
 		}
 
 		{

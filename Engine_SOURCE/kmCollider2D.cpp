@@ -11,6 +11,7 @@ namespace km
 		, mTransform(nullptr)
 		, mSize(Vector2::One)
 		, mCenter(Vector2::Zero)
+		, mCollisionCount(0)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -31,6 +32,8 @@ namespace km
 
 	void Collider2D::LateUpdate()
 	{
+		assert(0 <= mCollisionCount);
+
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 
 		Vector3 scale = tr->GetScale();
@@ -48,6 +51,7 @@ namespace km
 		mesh.scale = scale;
 		mesh.rotation = tr->GetRotation();
 		mesh.type = eColliderType::Rect;
+		mesh.ColCount = mCollisionCount;
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}
@@ -58,28 +62,36 @@ namespace km
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetComponents<Script>();
-
+		
 		for (Script* script : scripts)
 		{
 			script->OnCollisionEnter(other);
 		}
+
+		mCollisionCount++;
+		GetOwner()->OnCollisionEnter(other);
 	}
 	void Collider2D::OnCollisionStay(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetComponents<Script>();
-
+		
 		for (Script* script : scripts)
 		{
 			script->OnCollisionStay(other);
 		}
+
+		GetOwner()->OnCollisionStay(other);
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetComponents<Script>();
-
+		
 		for (Script* script : scripts)
 		{
 			script->OnCollisionExit(other);
 		}
+
+		mCollisionCount--;
+		GetOwner()->OnCollisionExit(other);
 	}
 }

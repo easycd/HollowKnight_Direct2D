@@ -2,6 +2,7 @@
 #include "kmEntity.h"
 #include "kmComponent.h"
 #include "kmScript.h"
+#include "kmCollider2D.h"
 
 namespace km
 {
@@ -22,6 +23,10 @@ namespace km
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+
+		virtual void OnCollisionEnter(Collider2D* other) {};
+		virtual void OnCollisionStay(Collider2D* other) {};
+		virtual void OnCollisionExit(Collider2D* other) {};
 
 		template <typename T>
 		T* GetComponent()

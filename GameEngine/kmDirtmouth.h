@@ -3,6 +3,7 @@
 
 namespace km
 {
+	class Player;
 	class Dirtmouth : public Scene
 	{
 	public:
@@ -18,7 +19,7 @@ namespace km
 		virtual void OnExit();
 
 	private:
-		GameObject* player;
 		Camera* mCamera;
+		Player* player;
 	};
 }

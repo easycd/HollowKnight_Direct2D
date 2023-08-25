@@ -176,14 +176,14 @@ namespace km
 	{
 		//GroundScript* gd = other->GetOwner()->GetComponent<GroundScript>();
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-
+	
 		if (gd != nullptr)
 		{
 			mRigidbody->SetGround(true);
 		}
 		int a = 0;
 	}
-
+	
 	void PlayerScript::OnCollisionStay(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
@@ -192,7 +192,7 @@ namespace km
 			int a = 0;
 		}
 	}
-
+	
 	void PlayerScript::OnCollisionExit(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());

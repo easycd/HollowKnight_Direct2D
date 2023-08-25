@@ -3,6 +3,7 @@
 
 namespace km
 {
+	class Player;
 	class Boss_Grimm_Stage : public Scene
 	{
 	public:
@@ -18,7 +19,7 @@ namespace km
 		virtual void OnExit();
 
 	private:
-		GameObject* player;
+		Player* player;
 		GameObject* Grimm;
 		Camera* mCamera;
 		

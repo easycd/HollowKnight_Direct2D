@@ -41,6 +41,12 @@ namespace renderer
 		UINT animationType;
 	};
 
+	CBUFFER(ColCB, CBSLOT_COLLISION)
+	{
+		// 충돌 중인지 아닌지
+		int c_ColCount;
+	};
+
 	extern km::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End];
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[];

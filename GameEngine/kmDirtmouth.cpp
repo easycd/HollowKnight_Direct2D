@@ -63,19 +63,8 @@ namespace km
 
 		//Ä³¸¯ÅÍ
 		{
-			//GameObject* player = object::Instantiate<GameObject>(Vector3(6.0f, -1.3f, 0.0f), eLayerType::Player);
-			
-			//player = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
-			
-			Player* player = object::Instantiate<Player>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Player);
-			
+			player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetName(L"Player");
-			
-			//MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			//mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			//mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
-			//Animator* at = player->AddComponent<Animator>();
-			player->AddComponent<PlayerScript>();
 		}
 
 		//Ground
@@ -84,7 +73,8 @@ namespace km
 			ground->SetName(L"Ground");
 			ground->Initialize();
 			Transform* tr = ground->GetComponent<Transform>();
-			tr->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
+			//tr->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
+			tr->SetPosition(Vector3(0.0f, -0.4f, 0.0f));
 			tr->SetScale(Vector3(100.0f, 0.1f, 1.0f));
 
 		}

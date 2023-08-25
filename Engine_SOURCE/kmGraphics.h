@@ -15,6 +15,7 @@
 #define CBSLOT_TRANSFORM		0
 #define CBSLOT_GRID				2
 #define CBSLOT_ANIMATION2D		3
+#define CBSLOT_COLLISION		4
 //#define CBSLOT_PARTICLE			1
 
 namespace km::graphics
@@ -107,6 +108,7 @@ namespace km::graphics
 		math::Vector3 rotation;
 		math::Vector3 scale;
 
+		int ColCount;
 		float radius;
 		float duration;
 		float time;
