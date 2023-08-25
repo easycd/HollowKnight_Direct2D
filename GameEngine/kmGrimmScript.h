@@ -74,12 +74,17 @@ namespace km
 		Animator* mAnimation;
 		Transform* mTransform;
 		Rigidbody* mRigidbody;
-		Vector3 mPos;
+		Vector3 mPlayerPos;
 		GameObject sm;
+
+		PlayerScript* mPlayer;
 
 		float mTime;
 		bool Test;
 
+	private:
+		bool Idle_Check = true;
+		bool AirDash_Start_Check = true;
 	};
 }
 

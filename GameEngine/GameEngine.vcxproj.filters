@@ -41,7 +41,10 @@
       <UniqueIdentifier>{4c0e0106-e6ab-4df1-aaba-95d2879858cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Object">
-      <UniqueIdentifier>{c403c309-fb4d-4016-9a60-34a5bdeff00c}</UniqueIdentifier>
+      <UniqueIdentifier>{38ba7675-2af4-4b9f-9194-a059e88ce44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Object\Player">
+      <UniqueIdentifier>{5951aaba-c676-4ac4-a117-474d57ed39b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +91,10 @@
     <ClInclude Include="kmPlayerScript.h">
       <Filter>Contents\Script\Player\PlayerScript</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="kmPlayer.h">
+      <Filter>Contents\Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -130,5 +137,11 @@
     <ClCompile Include="kmPlayerScript.cpp">
       <Filter>Contents\Script\Player\PlayerScript</Filter>
     </ClCompile>
+    <ClCompile Include="kmPlayer.cpp">
+      <Filter>Contents\Object\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameEngine.rc" />
   </ItemGroup>
 </Project>

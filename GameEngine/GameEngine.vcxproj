@@ -156,12 +156,14 @@
     <ClInclude Include="kmGridScript.h" />
     <ClInclude Include="kmGrimmScript.h" />
     <ClInclude Include="kmGroundScript.h" />
+    <ClInclude Include="kmPlayer.h" />
     <ClInclude Include="kmPlayerEffet.h" />
     <ClInclude Include="kmPlayerScript.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmPureVesselScript.h" />
     <ClInclude Include="kmTitleScene.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine_SOURCE\kmCameraScript.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="kmGridScript.cpp" />
     <ClCompile Include="kmGrimmScript.cpp" />
     <ClCompile Include="kmGroundScript.cpp" />
+    <ClCompile Include="kmPlayer.cpp" />
     <ClCompile Include="kmPlayerEffet.cpp" />
     <ClCompile Include="kmPlayerScript.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
@@ -183,6 +186,9 @@
     <None Update="C:\Users\JAEWON\Desktop\Client\Engine_SOURCE\kmMath.inl">
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameEngine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,6 +8,7 @@
 #include "kmObject.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
+#include "kmPlayerScript.h"
 
 namespace km
 {
@@ -68,64 +69,69 @@ namespace km
 		std::shared_ptr<Texture> Up_Slash_Left = Resources::Load<Texture>(L"Up_Slash_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Left\\Up_Slash_Left.png");
 		std::shared_ptr<Texture> Up_Slash_Right = Resources::Load<Texture>(L"Up_Slash_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Right\\Up_Slash_Right.png");
 
-		mAnimation->Create(L"Idle", Idle, Vector2(0.0f, 0.0f), Vector2(264.0f, 441.0f), 12);
-		mAnimation->Create(L"Death", Death, Vector2(0.0f, 0.0f), Vector2(489.0f, 525.0f), 3);
-		mAnimation->Create(L"Tele_Out", Tele_Out, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6);
-		mAnimation->Create(L"Tele_In", Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5);
-		mAnimation->Create(L"AirDash_Attack_On", AirDash_Attack_On, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6);
-		mAnimation->Create(L"AirDash_Attack1_Left", AirDash_Attack1_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7);
-		mAnimation->Create(L"AirDash_Attack1_Right", AirDash_Attack1_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7);
-		mAnimation->Create(L"AirDash_Attack2_Left", AirDash_Attack2_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3);
-		mAnimation->Create(L"AirDash_Attack2_Right", AirDash_Attack2_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3);
-		mAnimation->Create(L"AirDash_Lend_Left", AirDash_Lend_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4);
-		mAnimation->Create(L"AirDash_Lend_Right", AirDash_Lend_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4);
-		mAnimation->Create(L"AirDash_Attack_Left", AirDash_Attack_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4);
-		mAnimation->Create(L"AirDash_Attack_Right", AirDash_Attack_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4);
-		mAnimation->Create(L"AirDash_Stop_Left", AirDash_Stop_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3);
-		mAnimation->Create(L"AirDash_Stop_Right", AirDash_Stop_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3);
-		mAnimation->Create(L"Balloon_Start", Balloon_Start, Vector2(0.0f, 0.0f), Vector2(521.0f, 576.0f), 5);
-		mAnimation->Create(L"Balloon_Loop", Balloon_Loop, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3);
-		mAnimation->Create(L"CapSpike_Start", CapSpike_Start, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 10);
-		mAnimation->Create(L"CapSpike_Loop", CapSpike_Loop, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 3);
-		mAnimation->Create(L"CapSpike_End", CapSpike_End, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 7);
-		mAnimation->Create(L"Cast_Left", Cast_Left, Vector2(0.0f, 0.0f), Vector2(546.0f, 444.0f), 8);
-		mAnimation->Create(L"Cast_Right", Cast_Right, Vector2(0.0f, 0.0f), Vector2(546.0f, 444.0f), 8);
-		mAnimation->Create(L"Slash_On_Left", Slash_On_Left, Vector2(0.0f, 0.0f), Vector2(342.0f, 438.0f), 4);
-		mAnimation->Create(L"Slash_On_Right", Slash_On_Right, Vector2(0.0f, 0.0f), Vector2(342.0f, 438.0f), 4);
-		mAnimation->Create(L"Slash_Left", Slash_Left, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4);
-		mAnimation->Create(L"Slash_Right", Slash_Right, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4);
-		mAnimation->Create(L"Up_Slash_Left", Up_Slash_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4);
-		mAnimation->Create(L"Up_Slash_Right", Up_Slash_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4);
+		mAnimation->Create(L"Idle", Idle, Vector2(0.0f, 0.0f), Vector2(264.0f, 441.0f), 12, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Death", Death, Vector2(0.0f, 0.0f), Vector2(489.0f, 525.0f), 3, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Tele_Out", Tele_Out, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Tele_In", Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f));
+
+		mAnimation->Create(L"AirDash_Attack_On", AirDash_Attack_On, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack1_Left", AirDash_Attack1_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack1_Right", AirDash_Attack1_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack2_Left", AirDash_Attack2_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack2_Right", AirDash_Attack2_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Lend_Left", AirDash_Lend_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Lend_Right", AirDash_Lend_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack_Left", AirDash_Attack_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Attack_Right", AirDash_Attack_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Stop_Left", AirDash_Stop_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"AirDash_Stop_Right", AirDash_Stop_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, 0.02f));
+
+		mAnimation->Create(L"Balloon_Start", Balloon_Start, Vector2(0.0f, 0.0f), Vector2(521.0f, 576.0f), 5, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Balloon_Loop", Balloon_Loop, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3, Vector2(0.0f, 0.02f));
+
+		mAnimation->Create(L"CapSpike_Start", CapSpike_Start, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 10, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"CapSpike_Loop", CapSpike_Loop, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 3, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"CapSpike_End", CapSpike_End, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 7, Vector2(0.0f, 0.02f));
+
+		mAnimation->Create(L"Cast_Left", Cast_Left, Vector2(0.0f, 0.0f), Vector2(546.0f, 444.0f), 8, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Cast_Right", Cast_Right, Vector2(0.0f, 0.0f), Vector2(546.0f, 444.0f), 8, Vector2(0.0f, 0.02f));
+
+		mAnimation->Create(L"Slash_On_Left", Slash_On_Left, Vector2(0.0f, 0.0f), Vector2(342.0f, 438.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Slash_On_Right", Slash_On_Right, Vector2(0.0f, 0.0f), Vector2(342.0f, 438.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Slash_Left", Slash_Left, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Slash_Right", Slash_Right, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Up_Slash_Left", Up_Slash_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f));
+		mAnimation->Create(L"Up_Slash_Right", Up_Slash_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f));
 
 
-		mAnimation->CompleteEvent(L"AirDash_Attack_On") = std::bind(&GrimmScript::AirDash_Start, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack1_Left") = std::bind(&GrimmScript::AirDash_Loop, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack1_Right") = std::bind(&GrimmScript::AirDash_Loop, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack2_Left") = std::bind(&GrimmScript::AirDash_Land, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack2_Right") = std::bind(&GrimmScript::AirDash_Land, this);
-		mAnimation->CompleteEvent(L"AirDash_Lend_Left") = std::bind(&GrimmScript::AirDash_Attack, this);
-		mAnimation->CompleteEvent(L"AirDash_Lend_Right") = std::bind(&GrimmScript::AirDash_Attack, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack_Left") = std::bind(&GrimmScript::AirDash_Stop, this);
-		mAnimation->CompleteEvent(L"AirDash_Attack_Right") = std::bind(&GrimmScript::AirDash_Stop, this);
-		mAnimation->CompleteEvent(L"AirDash_Stop_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		mAnimation->CompleteEvent(L"AirDash_Stop_Right") = std::bind(&GrimmScript::Tele_Out, this);
-
-		mAnimation->CompleteEvent(L"Balloon_Start") = std::bind(&GrimmScript::Balloon_Loop, this);
-		mAnimation->CompleteEvent(L"Balloon_Loop") = std::bind(&GrimmScript::Tele_Out, this);
-
-		mAnimation->CompleteEvent(L"CapSpike_Start") = std::bind(&GrimmScript::Capspike_Loop, this);
-		mAnimation->CompleteEvent(L"CapSpike_Loop") = std::bind(&GrimmScript::Capspike_End, this);
-		mAnimation->CompleteEvent(L"CapSpike_End") = std::bind(&GrimmScript::Tele_Out, this);
-
-		mAnimation->CompleteEvent(L"Cast_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		mAnimation->CompleteEvent(L"Cast_Right") = std::bind(&GrimmScript::Tele_Out, this);
-
-		mAnimation->CompleteEvent(L"Slash_On_Left") = std::bind(&GrimmScript::Slash, this);
-		mAnimation->CompleteEvent(L"Slash_On_Right") = std::bind(&GrimmScript::Slash, this);
-		mAnimation->CompleteEvent(L"Slash_Left") = std::bind(&GrimmScript::Up_Slash, this);
-		mAnimation->CompleteEvent(L"Slash_Right") = std::bind(&GrimmScript::Up_Slash, this);
-		mAnimation->CompleteEvent(L"Up_Slash_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		mAnimation->CompleteEvent(L"Up_Slash_Right") = std::bind(&GrimmScript::Tele_Out, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack_On") = std::bind(&GrimmScript::AirDash_Start, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack1_Left") = std::bind(&GrimmScript::AirDash_Loop, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack1_Right") = std::bind(&GrimmScript::AirDash_Loop, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack2_Left") = std::bind(&GrimmScript::AirDash_Land, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack2_Right") = std::bind(&GrimmScript::AirDash_Land, this);
+		//mAnimation->CompleteEvent(L"AirDash_Lend_Left") = std::bind(&GrimmScript::AirDash_Attack, this);
+		//mAnimation->CompleteEvent(L"AirDash_Lend_Right") = std::bind(&GrimmScript::AirDash_Attack, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack_Left") = std::bind(&GrimmScript::AirDash_Stop, this);
+		//mAnimation->CompleteEvent(L"AirDash_Attack_Right") = std::bind(&GrimmScript::AirDash_Stop, this);
+		//mAnimation->CompleteEvent(L"AirDash_Stop_Left") = std::bind(&GrimmScript::Tele_Out, this);
+		//mAnimation->CompleteEvent(L"AirDash_Stop_Right") = std::bind(&GrimmScript::Tele_Out, this);
+		//
+		//mAnimation->CompleteEvent(L"Balloon_Start") = std::bind(&GrimmScript::Balloon_Loop, this);
+		//mAnimation->CompleteEvent(L"Balloon_Loop") = std::bind(&GrimmScript::Tele_Out, this);
+		//
+		//mAnimation->CompleteEvent(L"CapSpike_Start") = std::bind(&GrimmScript::Capspike_Loop, this);
+		//mAnimation->CompleteEvent(L"CapSpike_Loop") = std::bind(&GrimmScript::Capspike_End, this);
+		//mAnimation->CompleteEvent(L"CapSpike_End") = std::bind(&GrimmScript::Tele_Out, this);
+		//
+		//mAnimation->CompleteEvent(L"Cast_Left") = std::bind(&GrimmScript::Tele_Out, this);
+		//mAnimation->CompleteEvent(L"Cast_Right") = std::bind(&GrimmScript::Tele_Out, this);
+		//
+		//mAnimation->CompleteEvent(L"Slash_On_Left") = std::bind(&GrimmScript::Slash, this);
+		//mAnimation->CompleteEvent(L"Slash_On_Right") = std::bind(&GrimmScript::Slash, this);
+		//mAnimation->CompleteEvent(L"Slash_Left") = std::bind(&GrimmScript::Up_Slash, this);
+		//mAnimation->CompleteEvent(L"Slash_Right") = std::bind(&GrimmScript::Up_Slash, this);
+		//mAnimation->CompleteEvent(L"Up_Slash_Left") = std::bind(&GrimmScript::Tele_Out, this);
+		//mAnimation->CompleteEvent(L"Up_Slash_Right") = std::bind(&GrimmScript::Tele_Out, this);
 
 
 		mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
@@ -138,12 +144,25 @@ namespace km
 		mRigidbody->SetVelocity(velocity);
 		mRigidbody->SetGround(false);
 
-		mState = eGrimmState::Idle;
+		//mState = eGrimmState::Idle;
+		mState = eGrimmState::AirDashOn;
 		mDirection = eDirection::Left;
 	}
 
 	void GrimmScript::Update()
 	{
+
+		VectorR Player_Direction = VectorR(mPlayerPos.x, mPlayerPos.y);
+		VectorR Grimm_Direction = VectorR(mTransform->GetPosition().x, mTransform->GetPosition().y);
+		VectorR dr = rigidmath::Direction(Grimm_Direction, Player_Direction);
+		if (dr.x > 0.0f)
+		{
+			mDirection = eDirection::Right;
+		}
+		else
+		{
+			mDirection = eDirection::Left;
+		}
 
 		switch (mState)
 		{
@@ -242,84 +261,125 @@ namespace km
 
 	void GrimmScript::Idle()
 	{
-		if (Test)
+		if (Idle_Check)
 		{
 			mState = eGrimmState::Idle;
 			mAnimation->PlayAnimation(L"Idle", true);
-			Test = false;
+			Idle_Check = false;
+		}
+		mTime += Time::DeltaTime();
+		if (mTime > 3.0f)
+		{
+			Tele_In();
 		}
 	}
 
 	void GrimmScript::AirDash_On()
 	{
+		mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
 	}
 
 	void GrimmScript::AirDash_Start()
 	{
+		if (mDirection == eDirection::Left && AirDash_Start_Check)
+		{
+			mAnimation->PlayAnimation(L"AirDash_Attack1_Left", true);
+			AirDash_Start_Check = false;
+		}
+
+		if (mDirection == eDirection::Right && AirDash_Start_Check)
+		{
+			mAnimation->PlayAnimation(L"AirDash_Attack1_Right", true);
+			AirDash_Start_Check = false;
+		}
 	}
 
 	void GrimmScript::AirDash_Loop()
 	{
+		mAnimation->PlayAnimation(L"AirDash_Attack2_Left", true);
+		mAnimation->PlayAnimation(L"AirDash_Attack2_Right", true);
 	}
 
 	void GrimmScript::AirDash_Land()
 	{
+		mAnimation->PlayAnimation(L"AirDash_Lend_Left", true);
+		mAnimation->PlayAnimation(L"AirDash_Lend_Right", true);
 	}
 
 	void GrimmScript::AirDash_Attack()
 	{
+		mAnimation->PlayAnimation(L"AirDash_Attack_Left", true);
+		mAnimation->PlayAnimation(L"AirDash_Attack_Right", true);
 	}
 
 	void GrimmScript::AirDash_Stop()
 	{
+		mAnimation->PlayAnimation(L"AirDash_Stop_Left", true);
+		mAnimation->PlayAnimation(L"AirDash_Stop_Right", true);
 	}
 
 	void GrimmScript::Balloon_Start()
 	{
+		mAnimation->PlayAnimation(L"Balloon_Start", true);
 	}
 
 	void GrimmScript::Balloon_Loop()
 	{
+		mAnimation->PlayAnimation(L"Balloon_Loop", true);
 	}
 
 	void GrimmScript::Capspike_On()
 	{
+		mAnimation->PlayAnimation(L"CapSpike_Start", true);
 	}
 
 	void GrimmScript::Capspike_Loop()
 	{
+		mAnimation->PlayAnimation(L"CapSpike_Loop", true);
 	}
 
 	void GrimmScript::Capspike_End()
 	{
+		mAnimation->PlayAnimation(L"CapSpike_End", true);
 	}
 
 	void GrimmScript::Cast()
 	{
+		mAnimation->PlayAnimation(L"Cast_Left", true);
+		mAnimation->PlayAnimation(L"Cast_Right", true);
 	}
 
 	void GrimmScript::Slash_On()
 	{
+		mAnimation->PlayAnimation(L"Slash_On_Left", true);
+		mAnimation->PlayAnimation(L"Slash_On_Right", true);
 	}
 
 	void GrimmScript::Slash()
 	{
+		mAnimation->PlayAnimation(L"Slash_Left", true);
+		mAnimation->PlayAnimation(L"Slash_Right", true);
 	}
 
 	void GrimmScript::Up_Slash()
 	{
+		mAnimation->PlayAnimation(L"Up_Slash_Left", true);
+		mAnimation->PlayAnimation(L"Up_Slash_Right", true);
 	}
 
 	void GrimmScript::Tele_In()
 	{
+		mAnimation->PlayAnimation(L"Idle", true);
 	}
 
 	void GrimmScript::Tele_Out()
 	{
+		mAnimation->PlayAnimation(L"Idle", true);
 	}
 
 	void GrimmScript::Death()
 	{
+		mAnimation->PlayAnimation(L"Idle", true);
 	}
 
 

@@ -63,7 +63,7 @@ namespace km
 		}
 
 		{
-			Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Boss);
+			Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.1f), eLayerType::Boss);
 			Grimm->SetName(L"Grimm");
 		
 			MeshRenderer* mr = Grimm->AddComponent<MeshRenderer>();

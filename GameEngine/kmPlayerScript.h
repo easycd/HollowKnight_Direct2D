@@ -44,7 +44,6 @@ namespace km
 		virtual void Update() override;
 
 		void Complete();
-		//PlayerState GetPlayerState() { return mState; }
 		Vector3 GetPlayerPos() { return pos; }
 
 		virtual void OnCollisionEnter(Collider2D* other) override;
