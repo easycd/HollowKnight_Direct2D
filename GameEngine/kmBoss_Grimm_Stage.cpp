@@ -33,6 +33,7 @@ namespace km
 	{
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Boss, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
+		CollisionManager::SetLayer(eLayerType::Boss, eLayerType::Ground, true);
 
 		ComputeShader* cs = new ComputeShader();
 		cs->Create(L"PaintCS.hlsl", "main");
@@ -62,7 +63,7 @@ namespace km
 		}
 
 		{
-			Grimm = object::Instantiate<GameObject>(Vector3(5.0f, 0.0f, 0.0f), eLayerType::Boss);
+			Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Boss);
 			Grimm->SetName(L"Grimm");
 		
 			MeshRenderer* mr = Grimm->AddComponent<MeshRenderer>();

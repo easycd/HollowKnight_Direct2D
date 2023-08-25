@@ -42,6 +42,11 @@ namespace km
 		virtual void Initialize() override;
 		virtual void Update() override;
 
+		virtual void OnCollisionEnter(Collider2D* other) override;
+		virtual void OnCollisionStay(Collider2D* other) override;
+		virtual void OnCollisionExit(Collider2D* other) override;
+
+
 	public:
 		void Idle();
 		void AirDash_On();
@@ -68,6 +73,7 @@ namespace km
 		eDirection mDirection;
 		Animator* mAnimation;
 		Transform* mTransform;
+		Rigidbody* mRigidbody;
 		Vector3 mPos;
 		GameObject sm;
 

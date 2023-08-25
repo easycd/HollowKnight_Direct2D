@@ -6,6 +6,8 @@
 #include "kmResources.h"
 #include "kmGroundScript.h"
 #include "kmObject.h"
+#include "kmRigidbody.h"
+#include "kmGroundScript.h"
 
 namespace km
 {
@@ -125,7 +127,16 @@ namespace km
 		mAnimation->CompleteEvent(L"Up_Slash_Left") = std::bind(&GrimmScript::Tele_Out, this);
 		mAnimation->CompleteEvent(L"Up_Slash_Right") = std::bind(&GrimmScript::Tele_Out, this);
 
+
+		mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 		Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
+
+		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
+		mRigidbody->SetMass(0.1f);
+		VectorR velocity = mRigidbody->GetVelocity();
+		velocity.y -= 0.1f;
+		mRigidbody->SetVelocity(velocity);
+		mRigidbody->SetGround(false);
 
 		mState = eGrimmState::Idle;
 		mDirection = eDirection::Left;
@@ -197,6 +208,35 @@ namespace km
 			break;
 		default:
 			break;
+		}
+	}
+
+	void GrimmScript::OnCollisionEnter(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(true);
+		}
+	}
+
+	void GrimmScript::OnCollisionStay(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(true);
+		}
+	}
+
+	void GrimmScript::OnCollisionExit(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(false);
 		}
 	}
 
