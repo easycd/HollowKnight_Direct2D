@@ -13,7 +13,10 @@ namespace km
 
 	void Scene::Initialize()
 	{
-
+		for (Layer& layer : mLayers)
+		{
+			layer.Initialize();
+		}
 	}
 
 	void Scene::Update()
@@ -54,6 +57,11 @@ namespace km
 
 	void Scene::OnExit()
 	{
+	}
+
+	Player* Scene::GetPlayer()
+	{
+		return nullptr;
 	}
 
 	void Scene::AddGameObject(eLayerType type, GameObject* gameObj)

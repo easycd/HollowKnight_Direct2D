@@ -3,6 +3,8 @@
 
 namespace km
 {
+	class Player;
+
 	class SceneManager
 	{
 	public:
@@ -32,6 +34,7 @@ namespace km
 
 		static Scene* LoadScene(std::wstring name);
 		static Scene* GetActiveScene() { return mActiveScene; }
+		static Player* GetPlayer();
 
 	private:
 		static Scene* mActiveScene;

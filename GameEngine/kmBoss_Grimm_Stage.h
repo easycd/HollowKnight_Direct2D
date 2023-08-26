@@ -4,6 +4,8 @@
 namespace km
 {
 	class Player;
+	class Grimm;
+
 	class Boss_Grimm_Stage : public Scene
 	{
 	public:
@@ -15,12 +17,14 @@ namespace km
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		virtual void OnEnter();
-		virtual void OnExit();
+		virtual void OnEnter () override;
+		virtual void OnExit() override;
+
+		virtual Player* GetPlayer() override { return mPlayer; };
 
 	private:
-		Player* player;
-		GameObject* Grimm;
+		Player* mPlayer;
+		Grimm* mGrimm;
 		Camera* mCamera;
 		
 	};

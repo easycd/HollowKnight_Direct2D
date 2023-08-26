@@ -52,4 +52,9 @@ namespace km
 
 		return iter->second;
 	}
+
+	Player* SceneManager::GetPlayer()
+	{
+		return mActiveScene->GetPlayer();
+	}
 }

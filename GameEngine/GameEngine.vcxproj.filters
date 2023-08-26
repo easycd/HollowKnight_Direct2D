@@ -46,6 +46,9 @@
     <Filter Include="Contents\Object\Player">
       <UniqueIdentifier>{5951aaba-c676-4ac4-a117-474d57ed39b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Object\Grimm">
+      <UniqueIdentifier>{660d94bb-5cce-4125-92aa-66ca3a21c5dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="kmPlayer.h">
       <Filter>Contents\Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="kmGrimm.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -140,6 +144,7 @@
     <ClCompile Include="kmPlayer.cpp">
       <Filter>Contents\Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="kmGrimm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

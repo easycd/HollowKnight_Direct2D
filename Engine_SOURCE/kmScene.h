@@ -19,6 +19,8 @@ namespace km
 		virtual void OnEnter();
 		virtual void OnExit();
 
+		virtual class Player* GetPlayer();
+
 		void AddGameObject(eLayerType type, GameObject* gameObj);
 
 		template <typename T>

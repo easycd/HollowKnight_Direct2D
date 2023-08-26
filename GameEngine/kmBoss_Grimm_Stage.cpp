@@ -19,6 +19,7 @@
 #include "kmLight.h"
 #include "kmGameObject.h"
 #include "kmPlayer.h"
+#include "kmGrimm.h"
 #include "kmGrimmScript.h"
 
 namespace km
@@ -50,21 +51,27 @@ namespace km
 
 		//캐릭터
 		{
-			player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetName(L"Player");
+			mPlayer = object::Instantiate<Player>(eLayerType::Player);
+			mPlayer->SetName(L"Player");
 		}
 
+		//캐릭터
 		{
-			Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.1f), eLayerType::Boss);
-			Grimm->SetName(L"Grimm");
-		
-			MeshRenderer* mr = Grimm->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
-
-			Animator* at = Grimm->AddComponent<Animator>();
-			Grimm->AddComponent<GrimmScript>();
+			mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
+			mGrimm->SetName(L"Grimm");
 		}
+
+		//{
+		//	Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.1f), eLayerType::Boss);
+		//	Grimm->SetName(L"Grimm");
+		//
+		//	MeshRenderer* mr = Grimm->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
+		//
+		//	Animator* at = Grimm->AddComponent<Animator>();
+		//	Grimm->AddComponent<GrimmScript>();
+		//}
 
 		{
 			GameObject* camera = object::Instantiate<GameObject>(Vector3(1.0f, 0.0f, 0.0f), eLayerType::Camera);
@@ -73,7 +80,7 @@ namespace km
 			mCamera->TurnLayerMask(eLayerType::UI, false);
 
 			CameraScript* camerscript = camera->AddComponent<CameraScript>();
-			camerscript->SetTarget(player);
+			camerscript->SetTarget(mPlayer);
 		}
 
 
@@ -146,6 +153,7 @@ namespace km
 	}
 	void Boss_Grimm_Stage::OnEnter()
 	{
+		mGrimm->Pattern();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()

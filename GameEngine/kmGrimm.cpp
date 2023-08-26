@@ -1,4 +1,4 @@
-#include "kmGrimmScript.h"
+#include "kmGrimm.h"
 #include "kmTransform.h"
 #include "kmGameObject.h"
 #include "kmTime.h"
@@ -8,25 +8,27 @@
 #include "kmObject.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
-#include "kmPlayerScript.h"
 #include "kmPlayer.h"
-
+#include "kmMeshRenderer.h"
 
 namespace km
 {
-	GrimmScript::GrimmScript()
+	Grimm::Grimm()
 		:mTime(0.0f)
-		,Test(true)
+		, Test(true)
 	{
 	}
-	GrimmScript::~GrimmScript()
+	Grimm::~Grimm()
 	{
 	}
+	void Grimm::Initialize()
+	{
+		mAnimation = AddComponent<Animator>();
+		mTransform = GetComponent<Transform>();
 
-	void GrimmScript::Initialize()
-	{
-		mAnimation = GetOwner()->GetComponent<Animator>();
-		mTransform = GetOwner()->GetComponent<Transform>();
+		MeshRenderer* mr = AddComponent<MeshRenderer>();
+		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
 		std::shared_ptr<Texture> Idle = Resources::Load<Texture>(L"Idle", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Idle\\Idle.png");
 		std::shared_ptr<Texture> Death = Resources::Load<Texture>(L"Death", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Death\\Death.png");
@@ -106,40 +108,40 @@ namespace km
 		mAnimation->Create(L"Up_Slash_Right", Up_Slash_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f));
 
 
-		//mAnimation->CompleteEvent(L"AirDash_Attack_On") = std::bind(&GrimmScript::AirDash_Start, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack1_Left") = std::bind(&GrimmScript::AirDash_Loop, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack1_Right") = std::bind(&GrimmScript::AirDash_Loop, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack2_Left") = std::bind(&GrimmScript::AirDash_Land, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack2_Right") = std::bind(&GrimmScript::AirDash_Land, this);
-		//mAnimation->CompleteEvent(L"AirDash_Lend_Left") = std::bind(&GrimmScript::AirDash_Attack, this);
-		//mAnimation->CompleteEvent(L"AirDash_Lend_Right") = std::bind(&GrimmScript::AirDash_Attack, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack_Left") = std::bind(&GrimmScript::AirDash_Stop, this);
-		//mAnimation->CompleteEvent(L"AirDash_Attack_Right") = std::bind(&GrimmScript::AirDash_Stop, this);
-		//mAnimation->CompleteEvent(L"AirDash_Stop_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		//mAnimation->CompleteEvent(L"AirDash_Stop_Right") = std::bind(&GrimmScript::Tele_Out, this);
-		//
-		//mAnimation->CompleteEvent(L"Balloon_Start") = std::bind(&GrimmScript::Balloon_Loop, this);
-		//mAnimation->CompleteEvent(L"Balloon_Loop") = std::bind(&GrimmScript::Tele_Out, this);
-		//
-		//mAnimation->CompleteEvent(L"CapSpike_Start") = std::bind(&GrimmScript::Capspike_Loop, this);
-		//mAnimation->CompleteEvent(L"CapSpike_Loop") = std::bind(&GrimmScript::Capspike_End, this);
-		//mAnimation->CompleteEvent(L"CapSpike_End") = std::bind(&GrimmScript::Tele_Out, this);
-		//
-		//mAnimation->CompleteEvent(L"Cast_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		//mAnimation->CompleteEvent(L"Cast_Right") = std::bind(&GrimmScript::Tele_Out, this);
-		//
-		//mAnimation->CompleteEvent(L"Slash_On_Left") = std::bind(&GrimmScript::Slash, this);
-		//mAnimation->CompleteEvent(L"Slash_On_Right") = std::bind(&GrimmScript::Slash, this);
-		//mAnimation->CompleteEvent(L"Slash_Left") = std::bind(&GrimmScript::Up_Slash, this);
-		//mAnimation->CompleteEvent(L"Slash_Right") = std::bind(&GrimmScript::Up_Slash, this);
-		//mAnimation->CompleteEvent(L"Up_Slash_Left") = std::bind(&GrimmScript::Tele_Out, this);
-		//mAnimation->CompleteEvent(L"Up_Slash_Right") = std::bind(&GrimmScript::Tele_Out, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack_On") = std::bind(&Grimm::AirDash_Start, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack1_Left") = std::bind(&Grimm::AirDash_Loop, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack1_Right") = std::bind(&Grimm::AirDash_Loop, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack2_Left") = std::bind(&Grimm::AirDash_Land, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack2_Right") = std::bind(&Grimm::AirDash_Land, this);
+		mAnimation->CompleteEvent(L"AirDash_Lend_Left") = std::bind(&Grimm::AirDash_Attack, this);
+		mAnimation->CompleteEvent(L"AirDash_Lend_Right") = std::bind(&Grimm::AirDash_Attack, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack_Left") = std::bind(&Grimm::AirDash_Stop, this);
+		mAnimation->CompleteEvent(L"AirDash_Attack_Right") = std::bind(&Grimm::AirDash_Stop, this);
+		mAnimation->CompleteEvent(L"AirDash_Stop_Left") = std::bind(&Grimm::Tele_Out, this);
+		mAnimation->CompleteEvent(L"AirDash_Stop_Right") = std::bind(&Grimm::Tele_Out, this);
+		
+		mAnimation->CompleteEvent(L"Balloon_Start") = std::bind(&Grimm::Balloon_Loop, this);
+		mAnimation->CompleteEvent(L"Balloon_Loop") = std::bind(&Grimm::Tele_Out, this);
+		
+		mAnimation->CompleteEvent(L"CapSpike_Start") = std::bind(&Grimm::Capspike_Loop, this);
+		mAnimation->CompleteEvent(L"CapSpike_Loop") = std::bind(&Grimm::Capspike_End, this);
+		mAnimation->CompleteEvent(L"CapSpike_End") = std::bind(&Grimm::Tele_Out, this);
+		
+		mAnimation->CompleteEvent(L"Cast_Left") = std::bind(&Grimm::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Cast_Right") = std::bind(&Grimm::Tele_Out, this);
+		
+		mAnimation->CompleteEvent(L"Slash_On_Left") = std::bind(&Grimm::Slash, this);
+		mAnimation->CompleteEvent(L"Slash_On_Right") = std::bind(&Grimm::Slash, this);
+		mAnimation->CompleteEvent(L"Slash_Left") = std::bind(&Grimm::Up_Slash, this);
+		mAnimation->CompleteEvent(L"Slash_Right") = std::bind(&Grimm::Up_Slash, this);
+		mAnimation->CompleteEvent(L"Up_Slash_Left") = std::bind(&Grimm::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Up_Slash_Right") = std::bind(&Grimm::Tele_Out, this);
 
 
 		mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
-		Collider2D* collider = GetOwner()->AddComponent<Collider2D>();
+		Collider2D* collider = AddComponent<Collider2D>();
 
-		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
+		mRigidbody = AddComponent<Rigidbody>();
 		mRigidbody->SetMass(0.1f);
 		VectorR velocity = mRigidbody->GetVelocity();
 		velocity.y -= 0.1f;
@@ -147,19 +149,50 @@ namespace km
 		mRigidbody->SetGround(false);
 
 		//mState = eGrimmState::Idle;
-		mState = eGrimmState::AirDashStart;
+		mState = eGrimmState::AirDashOn;
 		mDirection = eDirection::Left;
-	}
 
-	void GrimmScript::Update()
+		GameObject::Initialize();
+	}
+	void Grimm::Update()
 	{
-		//mPlayer = SceneManager::GetPlayer();
+		Pattern();
+		GameObject::Update();
+	}
+	void Grimm::OnCollisionEnter(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(true);
+		}
+	}
+	void Grimm::OnCollisionStay(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(true);
+		}
+	}
+	void Grimm::OnCollisionExit(Collider2D* other)
+	{
+		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+		if (gd != nullptr)
+		{
+			mRigidbody->SetGround(false);
+		}
+	}
+	void Grimm::Pattern()
+	{
+		mPlayer = SceneManager::GetPlayer();
 		Vector3 mPlayerPos = mPlayer->GetComponent<Transform>()->GetPosition();
 
 		VectorR Player_Direction = VectorR(mPlayerPos.x, mPlayerPos.y);
 		VectorR Grimm_Direction = VectorR(mTransform->GetPosition().x, mTransform->GetPosition().y);
 		VectorR dr = rigidmath::Direction(Grimm_Direction, Player_Direction);
-
 
 		if (dr.x > 0.0f)
 		{
@@ -170,102 +203,76 @@ namespace km
 			mDirection = eDirection::Left;
 		}
 
+		//Check();
+
 		switch (mState)
 		{
-		case km::GrimmScript::eGrimmState::Idle:
+		case km::Grimm::eGrimmState::Idle:
 			Idle();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashOn:
+		case km::Grimm::eGrimmState::AirDashOn:
 			AirDash_On();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashStart:
+		case km::Grimm::eGrimmState::AirDashStart:
 			AirDash_Start();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashLoop:
+		case km::Grimm::eGrimmState::AirDashLoop:
 			AirDash_Loop();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashLand:
+		case km::Grimm::eGrimmState::AirDashLand:
 			AirDash_Land();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashAttack:
+		case km::Grimm::eGrimmState::AirDashAttack:
 			AirDash_Attack();
 			break;
-		case km::GrimmScript::eGrimmState::AirDashStop:
+		case km::Grimm::eGrimmState::AirDashStop:
 			AirDash_Stop();
 			break;
-		case km::GrimmScript::eGrimmState::BalloonStart:
+		case km::Grimm::eGrimmState::BalloonStart:
 			Balloon_Start();
 			break;
-		case km::GrimmScript::eGrimmState::BalloonLoop:
+		case km::Grimm::eGrimmState::BalloonLoop:
 			Balloon_Loop();
 			break;
-		case km::GrimmScript::eGrimmState::CapSpikeOn:
+		case km::Grimm::eGrimmState::CapSpikeOn:
 			Capspike_On();
 			break;
-		case km::GrimmScript::eGrimmState::CapSpikeLoop:
+		case km::Grimm::eGrimmState::CapSpikeLoop:
 			Capspike_Loop();
 			break;
-		case km::GrimmScript::eGrimmState::CapSpikeEnd:
+		case km::Grimm::eGrimmState::CapSpikeEnd:
 			Capspike_End();
 			break;
-		case km::GrimmScript::eGrimmState::Cast:
+		case km::Grimm::eGrimmState::Cast:
 			Cast();
 			break;
-		case km::GrimmScript::eGrimmState::SlashOn:
+		case km::Grimm::eGrimmState::SlashOn:
 			Slash_On();
 			break;
-		case km::GrimmScript::eGrimmState::Slash:
+		case km::Grimm::eGrimmState::Slash:
 			Slash();
 			break;
-		case km::GrimmScript::eGrimmState::UpSlash:
+		case km::Grimm::eGrimmState::UpSlash:
 			Up_Slash();
 			break;
-		case km::GrimmScript::eGrimmState::Tele_In:
+		case km::Grimm::eGrimmState::Tele_In:
 			Tele_In();
 			break;
-		case km::GrimmScript::eGrimmState::Tele_Out:
+		case km::Grimm::eGrimmState::Tele_Out:
 			Tele_Out();
 			break;
-		case km::GrimmScript::eGrimmState::Death:
+		case km::Grimm::eGrimmState::Death:
 			Death();
 			break;
-		case km::GrimmScript::eGrimmState::End:
+		case km::Grimm::eGrimmState::End:
 			break;
 		default:
 			break;
 		}
-	}
 
-	void GrimmScript::OnCollisionEnter(Collider2D* other)
-	{
-		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-	
-		if (gd != nullptr)
-		{
-			mRigidbody->SetGround(true);
-		}
+		GameObject::Update();
 	}
-	
-	void GrimmScript::OnCollisionStay(Collider2D* other)
-	{
-		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-	
-		if (gd != nullptr)
-		{
-			mRigidbody->SetGround(true);
-		}
-	}
-	
-	void GrimmScript::OnCollisionExit(Collider2D* other)
-	{
-		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-		if (gd != nullptr)
-		{
-			mRigidbody->SetGround(false);
-		}
-	}
-
-	void GrimmScript::Idle()
+	void Grimm::Idle()
 	{
 		if (Idle_Check)
 		{
@@ -279,13 +286,15 @@ namespace km
 			Tele_In();
 		}
 	}
-
-	void GrimmScript::AirDash_On()
+	void Grimm::AirDash_On()
 	{
-		mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
+		if (AirDash_On_Check)
+		{
+			mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
+			AirDash_On_Check = false;
+		}
 	}
-
-	void GrimmScript::AirDash_Start()
+	void Grimm::AirDash_Start()
 	{
 		if (mDirection == eDirection::Left && AirDash_Start_Check)
 		{
@@ -299,94 +308,81 @@ namespace km
 			AirDash_Start_Check = false;
 		}
 	}
-
-	void GrimmScript::AirDash_Loop()
+	void Grimm::AirDash_Loop()
 	{
 		mAnimation->PlayAnimation(L"AirDash_Attack2_Left", true);
 		mAnimation->PlayAnimation(L"AirDash_Attack2_Right", true);
 	}
-
-	void GrimmScript::AirDash_Land()
+	void Grimm::AirDash_Land()
 	{
 		mAnimation->PlayAnimation(L"AirDash_Lend_Left", true);
 		mAnimation->PlayAnimation(L"AirDash_Lend_Right", true);
 	}
-
-	void GrimmScript::AirDash_Attack()
+	void Grimm::AirDash_Attack()
 	{
 		mAnimation->PlayAnimation(L"AirDash_Attack_Left", true);
 		mAnimation->PlayAnimation(L"AirDash_Attack_Right", true);
 	}
-
-	void GrimmScript::AirDash_Stop()
+	void Grimm::AirDash_Stop()
 	{
 		mAnimation->PlayAnimation(L"AirDash_Stop_Left", true);
 		mAnimation->PlayAnimation(L"AirDash_Stop_Right", true);
 	}
-
-	void GrimmScript::Balloon_Start()
+	void Grimm::Balloon_Start()
 	{
 		mAnimation->PlayAnimation(L"Balloon_Start", true);
 	}
-
-	void GrimmScript::Balloon_Loop()
+	void Grimm::Balloon_Loop()
 	{
 		mAnimation->PlayAnimation(L"Balloon_Loop", true);
 	}
-
-	void GrimmScript::Capspike_On()
+	void Grimm::Capspike_On()
 	{
 		mAnimation->PlayAnimation(L"CapSpike_Start", true);
 	}
-
-	void GrimmScript::Capspike_Loop()
+	void Grimm::Capspike_Loop()
 	{
 		mAnimation->PlayAnimation(L"CapSpike_Loop", true);
 	}
-
-	void GrimmScript::Capspike_End()
+	void Grimm::Capspike_End()
 	{
 		mAnimation->PlayAnimation(L"CapSpike_End", true);
 	}
-
-	void GrimmScript::Cast()
+	void Grimm::Cast()
 	{
 		mAnimation->PlayAnimation(L"Cast_Left", true);
 		mAnimation->PlayAnimation(L"Cast_Right", true);
 	}
-
-	void GrimmScript::Slash_On()
+	void Grimm::Slash_On()
 	{
 		mAnimation->PlayAnimation(L"Slash_On_Left", true);
 		mAnimation->PlayAnimation(L"Slash_On_Right", true);
 	}
-
-	void GrimmScript::Slash()
+	void Grimm::Slash()
 	{
 		mAnimation->PlayAnimation(L"Slash_Left", true);
 		mAnimation->PlayAnimation(L"Slash_Right", true);
 	}
-
-	void GrimmScript::Up_Slash()
+	void Grimm::Up_Slash()
 	{
 		mAnimation->PlayAnimation(L"Up_Slash_Left", true);
 		mAnimation->PlayAnimation(L"Up_Slash_Right", true);
 	}
-
-	void GrimmScript::Tele_In()
+	void Grimm::Tele_In()
 	{
 		mAnimation->PlayAnimation(L"Idle", true);
 	}
-
-	void GrimmScript::Tele_Out()
+	void Grimm::Tele_Out()
 	{
 		mAnimation->PlayAnimation(L"Idle", true);
 	}
-
-	void GrimmScript::Death()
+	void Grimm::Death()
 	{
 		mAnimation->PlayAnimation(L"Idle", true);
 	}
-
-
+	void Grimm::Check()
+	{
+		Idle_Check = true;
+		AirDash_Start_Check = true;
+	}
 }

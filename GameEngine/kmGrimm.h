@@ -1,10 +1,10 @@
 #pragma once
-#include <kmScript.h>
+#include "kmGameObject.h"
 
 namespace km
 {
 	class Player;
-	class GrimmScript : public Script
+	class Grimm : public GameObject
 	{
 	public:
 		enum class eGrimmState
@@ -37,8 +37,8 @@ namespace km
 			Right
 		};
 
-		GrimmScript();
-		~GrimmScript();
+		Grimm();
+		~Grimm();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -49,6 +49,7 @@ namespace km
 
 
 	public:
+		void Pattern();
 		void Idle();
 		void AirDash_On();
 		void AirDash_Start();
@@ -68,6 +69,7 @@ namespace km
 		void Tele_In();
 		void Tele_Out();
 		void Death();
+		void Check();
 
 	private:
 		eGrimmState mState;
@@ -75,7 +77,6 @@ namespace km
 		Animator* mAnimation;
 		Transform* mTransform;
 		Rigidbody* mRigidbody;
-		Vector3 mPlayerPos;
 		GameObject sm;
 
 		Player* mPlayer;
@@ -85,7 +86,9 @@ namespace km
 
 	private:
 		bool Idle_Check = true;
+		bool AirDash_On_Check = true;
 		bool AirDash_Start_Check = true;
 	};
 }
+
 
