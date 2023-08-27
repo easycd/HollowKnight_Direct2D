@@ -14,7 +14,7 @@ namespace km
 		{
 			Transform* GetPos = mTarget->GetComponent<Transform>();
 			Vector3 PlayerPos = GetPos->GetPosition();
-			tr->SetPosition(Vector3(PlayerPos.x, PlayerPos.y + 0.2f, 0.0f));
+			tr->SetPosition(Vector3(PlayerPos.x, PlayerPos.y + 0.3f, 0.0f));
 		}
 		else
 		{

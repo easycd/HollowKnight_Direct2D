@@ -55,7 +55,7 @@ namespace km
 			mPlayer->SetName(L"Player");
 		}
 
-		//캐릭터
+		//보스
 		{
 			mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
 			mGrimm->SetName(L"Grimm");
