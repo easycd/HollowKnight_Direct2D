@@ -13,6 +13,15 @@ namespace km
 			DisPattern,
 		};
 
+		enum class ePatternType
+		{
+			AirDash,
+			Balloon,
+			CapSpike,
+			Cast,
+			Slash,
+		};
+
 		enum class eGrimmState
 		{
 			Idle,
@@ -76,16 +85,22 @@ namespace km
 		void UP_Slash_Ready();
 		void Up_Slash();
 		void Tele_In();
+		void Tele_In_State();
 		void Tele_Out();
+		void Tele_Out_State();
 		void AirDash_Loop_Move();
 		void AirDash_Attack_Move();
 		void Death();
 		void Check();
 
+
 	private:
 		ePatternState mPattern_State;
+		ePatternType mPatternType;
 		eGrimmState mState;
 		eDirection mDirection;
+		eDirection mGetDirection;
+
 		Animator* mAnimation;
 		Transform* mTransform;
 		Collider2D* mCollider;
@@ -93,8 +108,11 @@ namespace km
 		GameObject sm;
 
 		Player* mPlayer;
+		Vector3 mGrimm_Live_Pos;
 		Vector3 mGrimmPos;
 		Vector3 mPlayerPos;
+		Vector3 mGetPlayerPos;
+		Vector3 mGetGimmPos;
 
 		VectorR mPlayer_Direction;
 		VectorR mGrimm_Direction;
@@ -102,11 +120,32 @@ namespace km
 		VectorR Dash_Locate;
 
 		int attack_pattern;
-		int mDr;
-		float mTime;
-		float AirDash_Attack_Delay;
+
 		bool Test;
 		bool Ground_Check = false;
+
+	private:
+		bool AirDash_Loop_Move_Check = false;
+		bool AirDash_Attack_Move_Check = false;
+
+		
+	private:
+		bool Slash_On_Tele_In = false;
+
+	private:
+		bool Balloon_Loop_Delay_Check = false;
+		bool CapSpike_Loop_Delay_Check = false;
+		bool Cast_Loop_Delay_Check = false;
+		bool Slash_On_Delay_Check = false;
+
+	private:
+		float mTime;
+		float AirDash_Attack_Delay;
+		float Balloon_Loop_Delay;
+		float CapSpike_Loop_Delay;
+		float Cast_Loop_Delay;
+		float Slash_On_Delay;
+
 
 	private:
 		bool Idle_Check                = true;
@@ -127,8 +166,6 @@ namespace km
 		bool Up_Slash_Check            = true;
         bool Tele_In_Check             = true;
         bool Tele_Out_Check            = true;
-		bool AirDash_Loop_Move_Check   = false;
-		bool AirDash_Attack_Move_Check = false;
         bool Death_Check               = true;
 	};
 }

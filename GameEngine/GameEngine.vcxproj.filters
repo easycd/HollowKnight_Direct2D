@@ -98,7 +98,9 @@
     <ClInclude Include="kmPlayer.h">
       <Filter>Contents\Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="kmGrimm.h" />
+    <ClInclude Include="kmGrimm.h">
+      <Filter>Contents\Object\Grimm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -144,7 +146,9 @@
     <ClCompile Include="kmPlayer.cpp">
       <Filter>Contents\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="kmGrimm.cpp" />
+    <ClCompile Include="kmGrimm.cpp">
+      <Filter>Contents\Object\Grimm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />
