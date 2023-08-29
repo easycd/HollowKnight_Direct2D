@@ -21,6 +21,9 @@ namespace km
 		, CapSpike_Loop_Delay(0.0f)
 		, Cast_Loop_Delay(0.0f)
 		, Slash_On_Delay(0.0f)
+		, Pattern_Delay(0.0f)
+		, Cast_Delay(0.0f)
+		, AirDash_On_Location(0)
 
 
 		, Test(true)
@@ -259,8 +262,31 @@ namespace km
 				Slash_On_Delay = 0.0f;
 				Slash();
 			}
-
 		}
+
+		if (Cast_Delay_Check)
+		{
+			Cast_Delay += Time::DeltaTime();
+			if (Cast_Delay > 5.0f)
+			{
+				Cast_Delay = 0.0;
+				Tele_Out();
+			}
+		}
+
+		if (Slash_Move_Check && mDirection == eDirection::Left)
+		{
+			mGetGimmPos.x -= 2.0f * Time::DeltaTime();
+			mTransform->SetPosition(mGetGimmPos);
+		}
+		else if (Slash_Move_Check && mDirection == eDirection::Right)
+		{
+			mGetGimmPos.x += 2.0f * Time::DeltaTime();
+			mTransform->SetPosition(mGetGimmPos);
+		}
+
+		if (Pattern_Delay_Check)
+			Pattern_Delay += Time::DeltaTime();
 
 
 		switch (mPattern_State)
@@ -394,25 +420,29 @@ namespace km
 			break;
 		}*/
 
-		switch (attack_pattern)
+		if (Pattern_Delay > 1.0f)
 		{
-		case 0:
-			AirDash_Tele_In();
-			break;
-		case 1:
-			Balloon_Tele_In();
-			break;
-		case 2:
-			Capspike_Tele_In();
-			break;
-		case 3:
-			Cast_Tele_In();
-			break;
-		case 4:
-			Slash_Tele_In();
-			break;
+			Pattern_Delay = 0.0f;
+			Pattern_Delay_Check = false;
+			switch (attack_pattern)
+			{
+			case 0:
+				AirDash_Tele_In();
+				break;
+			case 1:
+				Balloon_Tele_In();
+				break;
+			case 2:
+				Capspike_Tele_In();
+				break;
+			case 3:
+				Cast_Tele_In();
+				break;
+			case 4:
+				Slash_Tele_In();
+				break;
+			}
 		}
-
 	}
 	void Grimm::Idle()
 	{
@@ -439,6 +469,21 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			AirDash_Tele_In_Check = false;
+			if (AirDash_On_Location == 0)
+			{
+				mTransform->SetPosition(Vector3(-0.25f, 0.0f, 0.0f));
+				AirDash_On_Location++;
+			}
+			else if (AirDash_On_Location == 1)
+			{
+				mTransform->SetPosition(Vector3(-0.4f, 0.0f, 0.0f));
+				AirDash_On_Location++;
+			}
+			else if (AirDash_On_Location == 2)
+			{
+				mTransform->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
+				AirDash_On_Location = 0;
+			}
 		}
 	}
 
@@ -448,7 +493,6 @@ namespace km
 		{
 			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
-			mTransform->SetPosition(Vector3(-0.25f, 0.0f, 0.0f));
 			AirDash_On_Check = false;
 		}
 	}
@@ -496,7 +540,6 @@ namespace km
 			mCollider->SetSize(Vector2(0.1f, 0.8f));
 			AirDash_Loop_Check = false;
 		}
-
 	}
 
 	void Grimm::AirDash_Land()
@@ -511,6 +554,7 @@ namespace km
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
 			mTransform->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
+			mTransform->SetPosition(Vector3(mGrimm_Live_Pos.x, -0.45f, 0.0f));
 			mGrimmPos = mTransform->GetPosition();
 			AirDash_Loop_Move_Check = false;
 			AirDash_Land_Check = false;
@@ -523,6 +567,7 @@ namespace km
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
 			mTransform->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
+			mTransform->SetPosition(Vector3(mGrimm_Live_Pos.x, -0.45f, 0.0f));
 			mGrimmPos = mTransform->GetPosition();
 			AirDash_Loop_Move_Check = false;
 			AirDash_Land_Check = false;
@@ -556,7 +601,6 @@ namespace km
 
 	void Grimm::AirDash_Stop()
 	{
-
 		if (mGetDirection == eDirection::Left && AirDash_Stop_Check)
 		{
 			mPattern_State = ePatternState::DisPattern;
@@ -587,6 +631,7 @@ namespace km
 			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"Balloon_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
+			mTransform->SetPosition(Vector3(-0.25f, -0.1f, 0.0f));
 			Balloon_Tele_In_Check = false;
 		}
 	}
@@ -623,6 +668,7 @@ namespace km
 			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"CapSpike_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
+			mTransform->SetPosition(Vector3(0.35f, -0.35f, 0.0f));
 			Capspike_Tele_In_Check = false;
 		}
 	}
@@ -684,6 +730,7 @@ namespace km
 			mAnimation->PlayAnimation(L"Cast_Left", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(0.46f, -0.35f, 0.0f));
+			Cast_Delay_Check = true;
 			Cast_Check = false;
 		}
 
@@ -693,26 +740,33 @@ namespace km
 			mAnimation->PlayAnimation(L"Cast_Right", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.72f, -0.35f, 0.0f));
+			Cast_Delay_Check = true;
 			Cast_Check = false;
 		}
 	}
 
 	void Grimm::Slash_Tele_In()
 	{
+		if (Slash_On_Check)
+			mGetDirection = mDirection;
+
 		if (Slash_Tele_In_Check)
 		{
 			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"Slash_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Slash_Tele_In_Check = false;
+
+			if (mGetDirection == eDirection::Left)
+				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.5 , -0.35f, 0.0f));
+
+			if (mGetDirection == eDirection::Right)
+				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.5 , -0.35f, 0.0f));
 		}
 	}
 
 	void Grimm::Slash_On()
 	{
-		if (Slash_On_Check)
-			mGetDirection = mDirection;
-
 		if (mGetDirection == eDirection::Left && Slash_On_Check)
 		{
 			mGetPlayerPos = mPlayerPos;
@@ -721,6 +775,7 @@ namespace km
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
 			Slash_On_Check = false;
+			mGetGimmPos = mGrimm_Live_Pos;
 		}
 
 		if (mGetDirection == eDirection::Right && Slash_On_Check)
@@ -731,6 +786,7 @@ namespace km
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
 			Slash_On_Check = false;
+			mGetGimmPos = mGrimm_Live_Pos;
 		}
 	}
 
@@ -743,6 +799,7 @@ namespace km
 			mAnimation->PlayAnimation(L"Slash_Left", true);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			Slash_Check = false;
+			Slash_Move_Check = true;
 		}
 
 		if (mGetDirection == eDirection::Right && Slash_Check)
@@ -752,11 +809,14 @@ namespace km
 			mAnimation->PlayAnimation(L"Slash_Right", true);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			Slash_Check = false;
+			Slash_Move_Check = true;
 		}
 	}
 
 	void Grimm::UP_Slash_Ready()
 	{
+		Slash_Move_Check = false;
+
 		if (mGetDirection == eDirection::Left && AirDash_Stop_Check)
 		{
 			mPattern_State = ePatternState::DisPattern;
@@ -813,6 +873,7 @@ namespace km
 		mPattern_State = ePatternState::DisPattern;
 		Check();
 		attack_pattern = rand() % 5;
+		Pattern_Delay_Check = true;
 		Pattern();
 	}
 
@@ -824,15 +885,19 @@ namespace km
 		{
 			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Tele_Out", true);
+			if (mGrimm_Live_Pos.y < -0.2)
+			{
+				mTransform->SetPosition(Vector3(mGrimm_Live_Pos.x, -0.37f, 0.0f));
+			}
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Tele_Out_Check = false;
 		}
-
 	}
 
 	void Grimm::Tele_Out_State()
 	{
 		mPattern_State = ePatternState::DisPattern;
+		mTransform->SetPosition(Vector3(100.0f, 0.0f, 0.0f));
 		Tele_In_State();
 	}
 

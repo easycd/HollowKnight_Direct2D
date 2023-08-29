@@ -131,20 +131,28 @@ namespace km
 	private:
 		bool AirDash_Loop_Move_Check = false;
 		bool AirDash_Attack_Move_Check = false;
+		bool Slash_Move_Check = false;
 
 	private:
+		bool Pattern_Delay_Check = true;
 		bool Balloon_Loop_Delay_Check = false;
 		bool CapSpike_Loop_Delay_Check = false;
 		bool Cast_Loop_Delay_Check = false;
 		bool Slash_On_Delay_Check = false;
+		bool Cast_Delay_Check = false;
+	private:
+		int AirDash_On_Location;
+		int Slash_On_Location;
 
 	private:
 		float mTime;
+		float Pattern_Delay;
 		float AirDash_Attack_Delay;
 		float Balloon_Loop_Delay;
 		float CapSpike_Loop_Delay;
 		float Cast_Loop_Delay;
 		float Slash_On_Delay;
+		float Cast_Delay;
 
 
 	private:

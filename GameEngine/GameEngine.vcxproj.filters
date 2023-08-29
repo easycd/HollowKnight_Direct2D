@@ -49,6 +49,9 @@
     <Filter Include="Contents\Object\Grimm">
       <UniqueIdentifier>{660d94bb-5cce-4125-92aa-66ca3a21c5dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object">
+      <UniqueIdentifier>{cc152a27-8b42-42f9-a108-800220d43d2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -101,6 +104,7 @@
     <ClInclude Include="kmGrimm.h">
       <Filter>Contents\Object\Grimm</Filter>
     </ClInclude>
+    <ClInclude Include="kmSpike_Object.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -149,6 +153,7 @@
     <ClCompile Include="kmGrimm.cpp">
       <Filter>Contents\Object\Grimm</Filter>
     </ClCompile>
+    <ClCompile Include="kmSpike_Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

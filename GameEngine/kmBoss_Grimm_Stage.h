@@ -5,6 +5,7 @@ namespace km
 {
 	class Player;
 	class Grimm;
+	class Spike_Object;
 
 	class Boss_Grimm_Stage : public Scene
 	{
@@ -26,6 +27,6 @@ namespace km
 		Player* mPlayer;
 		Grimm* mGrimm;
 		Camera* mCamera;
-		
+		Spike_Object* sp;
 	};
 }

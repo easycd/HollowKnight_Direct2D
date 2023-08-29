@@ -22,6 +22,8 @@
 #include "kmGrimm.h"
 #include "kmGrimmScript.h"
 
+#include "kmSpike_Object.h"
+
 namespace km
 {
 	Boss_Grimm_Stage::Boss_Grimm_Stage()
@@ -60,6 +62,12 @@ namespace km
 			mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
 			mGrimm->SetName(L"Grimm");
 		}
+
+		{
+			sp = object::Instantiate<Spike_Object>(eLayerType::Boss);
+			sp->SetName(L"Spike");
+		}
+		
 
 		//{
 		//	Grimm = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.1f), eLayerType::Boss);
@@ -154,6 +162,7 @@ namespace km
 	void Boss_Grimm_Stage::OnEnter()
 	{
 		mGrimm->Idle();
+		sp->Spike_On_Delay();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()
