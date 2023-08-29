@@ -153,7 +153,7 @@ namespace km
 	}
 	void Boss_Grimm_Stage::OnEnter()
 	{
-		mGrimm->Pattern();
+		mGrimm->Idle();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()

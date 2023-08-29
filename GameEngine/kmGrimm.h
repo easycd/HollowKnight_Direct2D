@@ -68,18 +68,23 @@ namespace km
 	public:
 		void Pattern();
 		void Idle();
+		void AirDash_Tele_In();
 		void AirDash_On();
 		void AirDash_Start();
 		void AirDash_Loop();
 		void AirDash_Land();
 		void AirDash_Attack();
 		void AirDash_Stop();
+		void Balloon_Tele_In();
 		void Balloon_Start();
 		void Balloon_Loop();
+		void Capspike_Tele_In();
 		void Capspike_On();
 		void Capspike_Loop();
 		void Capspike_End();
+		void Cast_Tele_In();
 		void Cast();
+		void Slash_Tele_In();
 		void Slash_On();
 		void Slash();
 		void UP_Slash_Ready();
@@ -89,7 +94,6 @@ namespace km
 		void Tele_Out();
 		void Tele_Out_State();
 		void AirDash_Loop_Move();
-		void AirDash_Attack_Move();
 		void Death();
 		void Check();
 
@@ -128,10 +132,6 @@ namespace km
 		bool AirDash_Loop_Move_Check = false;
 		bool AirDash_Attack_Move_Check = false;
 
-		
-	private:
-		bool Slash_On_Tele_In = false;
-
 	private:
 		bool Balloon_Loop_Delay_Check = false;
 		bool CapSpike_Loop_Delay_Check = false;
@@ -167,6 +167,11 @@ namespace km
         bool Tele_In_Check             = true;
         bool Tele_Out_Check            = true;
         bool Death_Check               = true;
+		bool AirDash_Tele_In_Check = true;
+		bool Balloon_Tele_In_Check = true;
+		bool Capspike_Tele_In_Check = true;
+		bool Cast_Tele_In_Check = true;
+		bool Slash_Tele_In_Check = true;
 	};
 }
 
