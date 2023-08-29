@@ -367,13 +367,21 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"GrimmTown", material);
 
-		//Boss Grimm Stage
+		//Boss Grimm Stage BackGround
 		texture = Resources::Load<Texture>(L"GrimmStageBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Grimm_Tent.png");
 		material = std::make_shared<Material>();
 		material->SetShader(spriteShader);
 		material->SetTexture(texture);
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"GrimmStage_BG", material);
+
+		//Boss Grimm Stage Ground
+		texture = Resources::Load<Texture>(L"GrimmStageGround", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Tent_Ground.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GrimmStage_Ground", material);
 
 		//GodHome
 		texture = Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");

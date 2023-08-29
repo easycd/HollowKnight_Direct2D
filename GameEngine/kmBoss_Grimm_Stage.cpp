@@ -23,6 +23,7 @@
 #include "kmGrimmScript.h"
 
 #include "kmSpike_Object.h"
+#include "kmFlameBat.h"
 
 namespace km
 {
@@ -41,6 +42,7 @@ namespace km
 		ComputeShader* cs = new ComputeShader();
 		cs->Create(L"PaintCS.hlsl", "main");
 
+		//ÅÙÆ® ¹è°æ
 		{
 			GameObject* GrimmStageBG = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 10.0f), eLayerType::BG);
 			GrimmStageBG->GetComponent<Transform>()->SetScale(Vector3(8.3f, 1.5f, 0.0f));
@@ -49,6 +51,17 @@ namespace km
 			MeshRenderer* mr = GrimmStageBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmStage_BG"));
+		}
+
+		//¹Ù´Ú
+		{
+			GameObject* GrimmStageGround = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 8.0f), eLayerType::BG);
+			GrimmStageGround->GetComponent<Transform>()->SetScale(Vector3(8.3f, 1.5f, 0.0f));
+			GrimmStageGround->SetName(L"Grimm_Ground");
+
+			MeshRenderer* mr = GrimmStageGround->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"GrimmStage_Ground"));
 		}
 
 		//Ä³¸¯ÅÍ
@@ -63,10 +76,17 @@ namespace km
 			mGrimm->SetName(L"Grimm");
 		}
 
-		{
-			sp = object::Instantiate<Spike_Object>(eLayerType::Boss);
-			sp->SetName(L"Spike");
-		}
+		////Spike Object Test
+		//{
+		//	sp = object::Instantiate<Spike_Object>(eLayerType::Boss);
+		//	sp->SetName(L"Spike");
+		//}
+
+		////FlameBat Test
+		//{
+		//	fb = object::Instantiate<FlameBat>(eLayerType::Boss);
+		//	fb->SetName(L"FlameBat");
+		//}
 		
 
 		//{
@@ -162,7 +182,8 @@ namespace km
 	void Boss_Grimm_Stage::OnEnter()
 	{
 		mGrimm->Idle();
-		sp->Spike_On_Delay();
+		//sp->Spike_On_Delay();
+		//fb->On();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()

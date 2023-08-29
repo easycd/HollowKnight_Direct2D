@@ -22,7 +22,6 @@ namespace km
 	{
 		mTransform = GetComponent<Transform>();
 		mAnimation = AddComponent<Animator>();
-		mCollider = AddComponent<Collider2D>();
 
 		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -35,23 +34,22 @@ namespace km
 		std::shared_ptr<Texture> Spike_Remove = Resources::Load<Texture>(L"Spike_Remove", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Object\\Spike\\Spkile_Remove\\Spike_Remove.png");
 		std::shared_ptr<Texture> Spike_End = Resources::Load<Texture>(L"Spike_End", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Object\\Spike\\Spike_End\\Spike_End.png");
 		
-		mAnimation->Create(L"Spike_On_Delay", Spike_On_Delay, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 3, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Spike_On", Spike_On, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 4, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Spike_Shot", Spike_Shot, Vector2(0.0f, 0.0f), Vector2(148.0f, 1313.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Spike_Loop", Spike_Loop, Vector2(0.0f, 0.0f), Vector2(148.0f, 941.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Spike_Remove", Spike_Remove, Vector2(0.0f, 0.0f), Vector2(148.0f, 793.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Spike_End", Spike_End, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Spike_On_Delay", Spike_On_Delay, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 3, Vector2(0.0f, 0.0f), 0.06f);
+		mAnimation->Create(L"Spike_On", Spike_On, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 4, Vector2(0.0f, 0.0f), 0.06f);
+		mAnimation->Create(L"Spike_Shot", Spike_Shot, Vector2(0.0f, 0.0f), Vector2(148.0f, 1313.0f), 1, Vector2(0.0f, 0.25f), 0.1f);
+		mAnimation->Create(L"Spike_Loop", Spike_Loop, Vector2(0.0f, 0.0f), Vector2(148.0f, 941.0f), 1, Vector2(0.0f, 0.13f), 0.1f);
+		mAnimation->Create(L"Spike_Remove", Spike_Remove, Vector2(0.0f, 0.0f), Vector2(148.0f, 793.0f), 1, Vector2(0.0f, 0.13f), 0.1f);
+		mAnimation->Create(L"Spike_End", Spike_End, Vector2(0.0f, 0.0f), Vector2(148.0f, 569.0f), 4, Vector2(0.0f, 0.0f), 0.06f);
 
-		//mAnimation->CompleteEvent(L"Spike_On") = std::bind(&Spike_Object::Spike_Shot, this);
-		//mAnimation->CompleteEvent(L"Spike_Shot") = std::bind(&Spike_Object::Spike_Loop, this);
-		//mAnimation->CompleteEvent(L"Spike_Remove") = std::bind(&Spike_Object::Spike_End, this);
-		//mAnimation->CompleteEvent(L"Spike_End") = std::bind(&Spike_Object::Destroy, this);
+		mAnimation->CompleteEvent(L"Spike_On") = std::bind(&Spike_Object::Spike_Shot, this);
+		mAnimation->CompleteEvent(L"Spike_Shot") = std::bind(&Spike_Object::Spike_Loop, this);
+		mAnimation->CompleteEvent(L"Spike_Remove") = std::bind(&Spike_Object::Spike_End, this);
+		mAnimation->CompleteEvent(L"Spike_End") = std::bind(&Spike_Object::Destroy, this);
 
 
-		mTransform->SetPosition(Vector3(0.0f, -0.25f, 0.1f));
+		mTransform->SetPosition(Vector3(0.0f, -0.25f, 9.0f));
 		mTransform->SetScale(Vector3(0.1f, 0.7f, 0.0f));
 
-		mCollider->SetSize(Vector2(0.7f, 0.8f));
 		GameObject::Initialize();
 	}
 
@@ -61,7 +59,7 @@ namespace km
 		{
 			mSpike_On_Delay += Time::DeltaTime();
 
-			if (mSpike_On_Delay > 1.0f)
+			if (mSpike_On_Delay > 2.0f)
 			{
 				mSpike_On_Delay = 0.0f;
 				Spike_On();
@@ -98,6 +96,8 @@ namespace km
 
 		if (Spike_On_Check)
 		{
+			mCollider = AddComponent<Collider2D>();
+			mCollider->SetSize(Vector2(0.7f, 0.8f));
 			mAnimation->PlayAnimation(L"Spike_On", true);
 			Spike_On_Check = false;
 		}

@@ -4,6 +4,9 @@
 namespace km
 {
 	class Player;
+	class Spike_Object;
+	class FlameBat;
+
 	class Grimm : public GameObject
 	{
 	public:
@@ -97,6 +100,8 @@ namespace km
 		void Death();
 		void Check();
 
+		//Object 생성클래스
+		void Spike_Obj();
 
 	private:
 		ePatternState mPattern_State;
@@ -123,10 +128,13 @@ namespace km
 		VectorR dr;
 		VectorR Dash_Locate;
 
-		int attack_pattern;
+		int attack_pattern = 3;
 
 		bool Test;
 		bool Ground_Check = false;
+
+	private:
+		bool Spike_Object_Check = false;
 
 	private:
 		bool AirDash_Loop_Move_Check = false;
@@ -140,6 +148,7 @@ namespace km
 		bool Cast_Loop_Delay_Check = false;
 		bool Slash_On_Delay_Check = false;
 		bool Cast_Delay_Check = false;
+
 	private:
 		int AirDash_On_Location;
 		int Slash_On_Location;
@@ -180,6 +189,32 @@ namespace km
 		bool Capspike_Tele_In_Check = true;
 		bool Cast_Tele_In_Check = true;
 		bool Slash_Tele_In_Check = true;
+
+	private:
+		Spike_Object* Spike0;
+		Spike_Object* Spike1;
+		Spike_Object* Spike2;
+		Spike_Object* Spike3;
+		Spike_Object* Spike4;
+		Spike_Object* Spike5;
+		Spike_Object* Spike6;
+		Spike_Object* Spike7;
+		Spike_Object* Spike8;
+		Spike_Object* Spike9;
+		Spike_Object* Spike10;
+		Spike_Object* Spike11;
+		Spike_Object* Spike12;
+
+		FlameBat* Bat0;
+		FlameBat* Bat1;
+		FlameBat* Bat2;
+
+	private:
+		float FlameBat_Delay;
+		bool FlameBat_Obj_Play = false;
+		bool Bat0_Play = true;;
+		bool Bat1_Play = false;
+		bool Bat2_Play = false;
 	};
 }
 

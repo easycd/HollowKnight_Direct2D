@@ -12,6 +12,10 @@
 #include "kmMeshRenderer.h"
 #include "kmRigidbodyMath.h"
 
+//Object
+#include "kmSpike_Object.h"
+#include "kmFlameBat.h"
+
 namespace km
 {
 	Grimm::Grimm()
@@ -24,6 +28,7 @@ namespace km
 		, Pattern_Delay(0.0f)
 		, Cast_Delay(0.0f)
 		, AirDash_On_Location(0)
+		, FlameBat_Delay(0.0f)
 
 
 		, Test(true)
@@ -95,8 +100,8 @@ namespace km
 
 		mAnimation->Create(L"Idle", Idle, Vector2(0.0f, 0.0f), Vector2(264.0f, 441.0f), 12, Vector2(0.0f, 0.02f), 0.2f);
 		mAnimation->Create(L"Death", Death, Vector2(0.0f, 0.0f), Vector2(489.0f, 525.0f), 3, Vector2(0.0f, 0.02f), 0.15f);
-		mAnimation->Create(L"Tele_Out", Tele_Out, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Tele_In", Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Tele_Out", Tele_Out, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f), 0.05f);
+		mAnimation->Create(L"Tele_In", Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.05f);
 
 		mAnimation->Create(L"AirDash_Tele_In", AirDash_Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"AirDash_Attack_On", AirDash_Attack_On, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
@@ -245,7 +250,12 @@ namespace km
 		{
 			CapSpike_Loop_Delay += Time::DeltaTime();
 
-			if (CapSpike_Loop_Delay > 5.0f)
+			if (Spike_Object_Check)
+			{
+				Spike_Obj();
+			}
+
+			if (CapSpike_Loop_Delay > 6.0f)
 			{
 				CapSpike_Loop_Delay = 0.0f;
 
@@ -267,12 +277,69 @@ namespace km
 		if (Cast_Delay_Check)
 		{
 			Cast_Delay += Time::DeltaTime();
+
 			if (Cast_Delay > 5.0f)
 			{
 				Cast_Delay = 0.0;
 				Tele_Out();
 			}
 		}
+
+		if (FlameBat_Obj_Play)
+		{
+			FlameBat_Delay += Time::DeltaTime();
+
+			if (Bat0_Play && FlameBat_Delay > 1.0f)
+			{
+				Bat0 = object::Instantiate<FlameBat>(eLayerType::BossObj);
+				Bat0->On();
+				if (mGetDirection == eDirection::Left)
+				{
+					Bat0->SetDirection(0);
+				}
+				if (mGetDirection == eDirection::Right)
+				{
+					Bat0->SetDirection(1);
+				}
+
+				Bat0_Play = false;
+				Bat1_Play = true;
+			}
+
+			if (Bat1_Play && FlameBat_Delay > 2.0f)
+			{
+				Bat1 = object::Instantiate<FlameBat>(eLayerType::BossObj);
+				Bat1->On();
+				if (mGetDirection == eDirection::Left)
+				{
+					Bat1->SetDirection(0);
+				}
+				if (mGetDirection == eDirection::Right)
+				{
+					Bat1->SetDirection(1);
+				}
+
+				Bat1_Play = false;
+				Bat2_Play = true;
+			}
+
+			if (Bat2_Play && FlameBat_Delay > 3.0f)
+			{
+				Bat2 = object::Instantiate<FlameBat>(eLayerType::BossObj);
+				Bat2->On();
+				if (mGetDirection == eDirection::Left)
+				{
+					Bat2->SetDirection(0);
+				}
+				if (mGetDirection == eDirection::Right)
+				{
+					Bat2->SetDirection(1);
+				}
+
+				Bat2_Play = false;
+			}
+		}
+
 
 		if (Slash_Move_Check && mDirection == eDirection::Left)
 		{
@@ -693,6 +760,8 @@ namespace km
 			mTransform->SetScale(Vector3(0.35f, 0.4f, 0.0f));
 			CapSpike_Loop_Delay_Check = true;
 			Capspike_Loop_Check = false;
+
+			Spike_Object_Check = true;
 		}
 	}
 
@@ -730,6 +799,7 @@ namespace km
 			mAnimation->PlayAnimation(L"Cast_Left", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(0.46f, -0.35f, 0.0f));
+			FlameBat_Obj_Play = true;
 			Cast_Delay_Check = true;
 			Cast_Check = false;
 		}
@@ -740,6 +810,7 @@ namespace km
 			mAnimation->PlayAnimation(L"Cast_Right", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.72f, -0.35f, 0.0f));
+			FlameBat_Obj_Play = true;
 			Cast_Delay_Check = true;
 			Cast_Check = false;
 		}
@@ -948,5 +1019,52 @@ namespace km
 		Capspike_Tele_In_Check = true;
 		Cast_Tele_In_Check = true;
 		Slash_Tele_In_Check = true;
+	}
+
+	void Grimm::Spike_Obj()
+	{
+		Spike_Object_Check = false;
+
+		Spike0 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike1 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike2 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike3 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike4 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike5 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike6 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike7 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike8 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike9 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike10 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike11 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		Spike12 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+
+		Spike0->GetComponent<Transform>()->SetPosition(Vector3(-1.1f, -0.25f, 9.0f));
+		Spike1->GetComponent<Transform>()->SetPosition(Vector3(-0.95f, -0.25f, 9.0f));
+		Spike2->GetComponent<Transform>()->SetPosition(Vector3(-0.8f, -0.25f, 9.0f));
+		Spike3->GetComponent<Transform>()->SetPosition(Vector3(-0.65f, -0.25f, 9.0f));
+		Spike4->GetComponent<Transform>()->SetPosition(Vector3(-0.5f, -0.25f, 9.0f));
+		Spike5->GetComponent<Transform>()->SetPosition(Vector3(-0.35f, -0.25f, 9.0f));
+		Spike6->GetComponent<Transform>()->SetPosition(Vector3(-0.2f, -0.25f, 9.0f));
+		Spike7->GetComponent<Transform>()->SetPosition(Vector3(-0.05f, -0.25f, 9.0f));
+		Spike8->GetComponent<Transform>()->SetPosition(Vector3(0.1f, -0.25f, 9.0f));
+		Spike9->GetComponent<Transform>()->SetPosition(Vector3(0.25f, -0.25f, 9.0f));
+		Spike10->GetComponent<Transform>()->SetPosition(Vector3(0.4f, -0.25f, 9.0f));
+		Spike11->GetComponent<Transform>()->SetPosition(Vector3(0.55f, -0.25f, 9.0f));
+		Spike12->GetComponent<Transform>()->SetPosition(Vector3(0.7f, -0.25f, 9.0f));
+
+		Spike0->Spike_On_Delay();
+		Spike1->Spike_On_Delay();
+		Spike2->Spike_On_Delay();
+		Spike3->Spike_On_Delay();
+		Spike4->Spike_On_Delay();
+		Spike5->Spike_On_Delay();
+		Spike6->Spike_On_Delay();
+		Spike7->Spike_On_Delay();
+		Spike8->Spike_On_Delay();
+		Spike9->Spike_On_Delay();
+		Spike10->Spike_On_Delay();
+		Spike11->Spike_On_Delay();
+		Spike12->Spike_On_Delay();
 	}
 }

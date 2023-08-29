@@ -52,6 +52,12 @@
     <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object">
       <UniqueIdentifier>{cc152a27-8b42-42f9-a108-800220d43d2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\Spike">
+      <UniqueIdentifier>{dd9bd514-d4f8-4ff5-abaa-bb4e2629de4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\FlameBat">
+      <UniqueIdentifier>{33aa80ea-8118-4239-807a-4d33011cfa27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -104,7 +110,12 @@
     <ClInclude Include="kmGrimm.h">
       <Filter>Contents\Object\Grimm</Filter>
     </ClInclude>
-    <ClInclude Include="kmSpike_Object.h" />
+    <ClInclude Include="kmSpike_Object.h">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Spike</Filter>
+    </ClInclude>
+    <ClInclude Include="kmFlameBat.h">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -153,7 +164,12 @@
     <ClCompile Include="kmGrimm.cpp">
       <Filter>Contents\Object\Grimm</Filter>
     </ClCompile>
-    <ClCompile Include="kmSpike_Object.cpp" />
+    <ClCompile Include="kmSpike_Object.cpp">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Spike</Filter>
+    </ClCompile>
+    <ClCompile Include="kmFlameBat.cpp">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

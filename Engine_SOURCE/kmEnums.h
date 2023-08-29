@@ -27,6 +27,7 @@ namespace km::enums
 		Effect,
 		Monster,
 		Boss,
+		BossObj,
 		Camera,
 		Light,
 		UI,

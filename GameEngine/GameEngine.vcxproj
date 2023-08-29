@@ -152,6 +152,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="kmBoss_Grimm_Stage.h" />
     <ClInclude Include="kmDirtmouth.h" />
+    <ClInclude Include="kmFlameBat.h" />
     <ClInclude Include="kmGodhome.h" />
     <ClInclude Include="kmGridScript.h" />
     <ClInclude Include="kmGrimm.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="kmBoss_Grimm_Stage.cpp" />
     <ClCompile Include="kmDirtmouth.cpp" />
+    <ClCompile Include="kmFlameBat.cpp" />
     <ClCompile Include="kmGodhome.cpp" />
     <ClCompile Include="kmGridScript.cpp" />
     <ClCompile Include="kmGrimm.cpp" />
