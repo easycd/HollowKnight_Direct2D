@@ -37,6 +37,7 @@ namespace km
 	private:
 		//사출 방향: 0 왼쪽 / 1 오른쪽
 		int mDirection;
+		int mLoopDr;
 		float mExport_Timing;
 	};
 }

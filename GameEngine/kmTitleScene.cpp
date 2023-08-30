@@ -7,6 +7,8 @@
 #include "kmCamera.h"
 #include "kmSceneManager.h"
 #include "kmInput.h"
+#include "kmLight.h"
+
 
 namespace km
 {
@@ -47,6 +49,15 @@ namespace km
 			Camera* cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(eLayerType::Player, false);
 			//camera->AddComponent<CameraScript>();
+		}
+
+		{
+			GameObject* light = new GameObject();
+			light->SetName(L"Sun");
+			AddGameObject(eLayerType::Light, light);
+			Light* lightComp = light->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 	}
 

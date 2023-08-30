@@ -165,6 +165,7 @@
     <ClInclude Include="kmPureVesselScript.h" />
     <ClInclude Include="kmSpike_Object.h" />
     <ClInclude Include="kmTitleScene.h" />
+    <ClInclude Include="kmTrumpNpc.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -187,6 +188,7 @@
     <ClCompile Include="kmPureVesselScript.cpp" />
     <ClCompile Include="kmSpike_Object.cpp" />
     <ClCompile Include="kmTitleScene.cpp" />
+    <ClCompile Include="kmTrumpNpc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="C:\Users\JAEWON\Desktop\Client\Engine_SOURCE\kmMath.inl">

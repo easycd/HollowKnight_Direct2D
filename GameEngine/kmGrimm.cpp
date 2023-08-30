@@ -31,6 +31,9 @@ namespace km
 		, FlameBat_Delay(0.0f)
 
 
+
+		, attack_pattern(0)
+
 		, Test(true)
 	{
 	}
@@ -98,7 +101,7 @@ namespace km
 		std::shared_ptr<Texture> Up_Slash_Left = Resources::Load<Texture>(L"Up_Slash_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Left\\Up_Slash_Left.png");
 		std::shared_ptr<Texture> Up_Slash_Right = Resources::Load<Texture>(L"Up_Slash_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Right\\Up_Slash_Right.png");
 
-		mAnimation->Create(L"Idle", Idle, Vector2(0.0f, 0.0f), Vector2(264.0f, 441.0f), 12, Vector2(0.0f, 0.02f), 0.2f);
+		mAnimation->Create(L"Idle", Idle, Vector2(0.0f, 0.0f), Vector2(264.0f, 441.0f), 12, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Death", Death, Vector2(0.0f, 0.0f), Vector2(489.0f, 525.0f), 3, Vector2(0.0f, 0.02f), 0.15f);
 		mAnimation->Create(L"Tele_Out", Tele_Out, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f), 0.05f);
 		mAnimation->Create(L"Tele_In", Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.05f);
@@ -185,7 +188,7 @@ namespace km
 		//mRigidbody->SetGround(false);
 
 		mState = eGrimmState::Idle;
-		mPattern_State = ePatternState::Pattern;
+		mPattern_State = ePatternState::DisPattern;
 		mDirection = eDirection::Left;
 
 		GameObject::Initialize();
@@ -337,6 +340,7 @@ namespace km
 				}
 
 				Bat2_Play = false;
+				FlameBat_Delay = 0.0f;
 			}
 		}
 
@@ -380,6 +384,16 @@ namespace km
 		else
 		{
 			mDirection = eDirection::Left;
+		}
+
+		if (mPlayerPos.x > -1.26f && Pattern_Start == false)
+		{
+			mTime += Time::DeltaTime();
+			if (mTime > 3.0f)
+			{
+				Pattern_Start = true;
+				Tele_Out();
+			}
 		}
 
 		GameObject::Update();
@@ -515,16 +529,11 @@ namespace km
 	{
 		if (Idle_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
+			//mPattern_State = ePatternState::Pattern;
 			mState = eGrimmState::Idle;
 			mAnimation->PlayAnimation(L"Idle", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Idle_Check = false;
-		}
-		mTime += Time::DeltaTime();
-		if (mTime > 3.0f)
-		{
-			Tele_Out();
 		}
 	}
 
@@ -611,9 +620,6 @@ namespace km
 
 	void Grimm::AirDash_Land()
 	{
-		//if (AirDash_Land_Check)
-		//	mGetDirection = mDirection;
-
 		if (mGetDirection == eDirection::Left && AirDash_Land_Check)
 		{
 			mPattern_State = ePatternState::DisPattern;
@@ -802,6 +808,7 @@ namespace km
 			FlameBat_Obj_Play = true;
 			Cast_Delay_Check = true;
 			Cast_Check = false;
+			Bat0_Play = true;
 		}
 
 		if (mGetDirection == eDirection::Right && Cast_Check)
@@ -813,6 +820,7 @@ namespace km
 			FlameBat_Obj_Play = true;
 			Cast_Delay_Check = true;
 			Cast_Check = false;
+			Bat0_Play = true;
 		}
 	}
 

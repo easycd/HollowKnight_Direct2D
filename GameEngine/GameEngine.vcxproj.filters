@@ -58,6 +58,9 @@
     <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\FlameBat">
       <UniqueIdentifier>{33aa80ea-8118-4239-807a-4d33011cfa27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Object\Grimm\Npc">
+      <UniqueIdentifier>{cf2a858b-93e8-4a8f-a24e-7973de749cf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -116,6 +119,9 @@
     <ClInclude Include="kmFlameBat.h">
       <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
     </ClInclude>
+    <ClInclude Include="kmTrumpNpc.h">
+      <Filter>Contents\Object\Grimm\Npc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="kmFlameBat.cpp">
       <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
+    </ClCompile>
+    <ClCompile Include="kmTrumpNpc.cpp">
+      <Filter>Contents\Object\Grimm\Npc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

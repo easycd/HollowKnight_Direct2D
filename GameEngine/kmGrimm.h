@@ -128,10 +128,11 @@ namespace km
 		VectorR dr;
 		VectorR Dash_Locate;
 
-		int attack_pattern = 3;
+		int attack_pattern;
 
 		bool Test;
 		bool Ground_Check = false;
+		bool Pattern_Start = false;
 
 	private:
 		bool Spike_Object_Check = false;

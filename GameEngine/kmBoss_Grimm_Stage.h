@@ -7,6 +7,7 @@ namespace km
 	class Grimm;
 	class Spike_Object;
 	class FlameBat;
+	class TrumpNpc;
 
 	class Boss_Grimm_Stage : public Scene
 	{
@@ -30,6 +31,6 @@ namespace km
 		Camera* mCamera;
 		Spike_Object* sp;
 		FlameBat* fb;
-
+		TrumpNpc* mNpc;
 	};
 }

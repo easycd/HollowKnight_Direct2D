@@ -1,1 +1,3 @@
-Gimm보스 패턴 중 Right Slash 이미지 수정해야함
+Grimm 보스
+slash 이동하는 포지션 이상함
+시간 지날수록 Object들 타이밍 이상하게 나오거나 안나옴

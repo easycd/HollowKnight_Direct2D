@@ -25,6 +25,8 @@
 #include "kmSpike_Object.h"
 #include "kmFlameBat.h"
 
+#include "kmTrumpNpc.h"
+
 namespace km
 {
 	Boss_Grimm_Stage::Boss_Grimm_Stage()
@@ -68,12 +70,22 @@ namespace km
 		{
 			mPlayer = object::Instantiate<Player>(eLayerType::Player);
 			mPlayer->SetName(L"Player");
+
+			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.3f, 0.1f, 0.0f));
 		}
 
 		//보스
 		{
 			mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
 			mGrimm->SetName(L"Grimm");
+		}
+
+		//보스
+		{
+			mNpc = object::Instantiate<TrumpNpc>(eLayerType::Npc);
+			mNpc->SetName(L"Trump");
+			mNpc->GetComponent<Transform>()->SetPosition(Vector3(-2.05f, -0.43f, 0.5f));
+			mNpc->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.3f, 0.0f));
 		}
 
 		////Spike Object Test
@@ -182,6 +194,7 @@ namespace km
 	void Boss_Grimm_Stage::OnEnter()
 	{
 		mGrimm->Idle();
+		mNpc->Initialize();
 		//sp->Spike_On_Delay();
 		//fb->On();
 		renderer::mainCamera = mCamera;

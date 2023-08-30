@@ -65,6 +65,7 @@ namespace km
 		{
 			player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetName(L"Player");
+			player->GetComponent<Transform>()->SetPosition(Vector3(-2.0f, 0.0f, 0.0f));
 		}
 
 		//Ground
@@ -73,8 +74,8 @@ namespace km
 			ground->SetName(L"Ground");
 			ground->Initialize();
 			Transform* tr = ground->GetComponent<Transform>();
-			//tr->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
-			tr->SetPosition(Vector3(0.0f, -0.4f, 0.0f));
+			tr->SetPosition(Vector3(0.0f, -0.48f, 0.0f));
+			//tr->SetPosition(Vector3(0.0f, -0.4f, 0.0f));
 			tr->SetScale(Vector3(100.0f, 0.1f, 1.0f));
 
 		}
