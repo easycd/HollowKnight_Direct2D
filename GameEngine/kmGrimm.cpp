@@ -196,8 +196,10 @@ namespace km
 
 	void Grimm::Update()
 	{
+		//실시간 그림 위치 받아옴
 		mGrimm_Live_Pos = mTransform->GetPosition();
 
+		//에어대쉬 방향회전 및 돌진
 		if (AirDash_Loop_Move_Check)
 		{
 			if (Ground_Check == false)
@@ -213,6 +215,7 @@ namespace km
 			}
 		}
 
+		//땅에서 돌진할때 체크
 		if (AirDash_Attack_Move_Check && mDirection == eDirection::Left)
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
@@ -238,6 +241,7 @@ namespace km
 			}
 		}
 
+		//Balloon 패턴 지속시간 체크
 		if (Balloon_Loop_Delay_Check)
 		{
 			Balloon_Loop_Delay += Time::DeltaTime();
@@ -249,6 +253,8 @@ namespace km
 			}
 		}
 
+
+		//CapSpike 패턴 오브젝트 생성 및 소멸
 		if (CapSpike_Loop_Delay_Check)
 		{
 			CapSpike_Loop_Delay += Time::DeltaTime();
@@ -266,6 +272,7 @@ namespace km
 			}
 		}
 
+		//Slash 패턴 하기 전 딜레이
 		if (Slash_On_Delay_Check)
 		{
 			Slash_On_Delay += Time::DeltaTime();
@@ -277,6 +284,7 @@ namespace km
 			}
 		}
 
+		//Cast 패턴 유지시간 체크
 		if (Cast_Delay_Check)
 		{
 			Cast_Delay += Time::DeltaTime();
@@ -288,6 +296,7 @@ namespace km
 			}
 		}
 
+		//Cast 패턴 중 FlameBat 생성타이밍 체크
 		if (FlameBat_Obj_Play)
 		{
 			FlameBat_Delay += Time::DeltaTime();
@@ -344,7 +353,7 @@ namespace km
 			}
 		}
 
-
+		//Slash 패턴 돌진 방향 및 위치이동
 		if (Slash_Move_Check && mDirection == eDirection::Left)
 		{
 			mGetGimmPos.x -= 2.0f * Time::DeltaTime();
