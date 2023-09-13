@@ -71,7 +71,8 @@ namespace km
 			mPlayer = object::Instantiate<Player>(eLayerType::Player);
 			mPlayer->SetName(L"Player");
 
-			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.3f, 0.1f, 0.0f));
+			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
+			//mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.3f, 0.1f, 0.0f));
 		}
 
 		//º¸½º

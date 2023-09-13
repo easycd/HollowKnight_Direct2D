@@ -143,7 +143,7 @@ namespace km
 		mAnimation->Create(L"Up_Slash_Right", Up_Slash_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 
-		mAnimation->CompleteEvent(L"AirDash_Tele_In") = std::bind(&Grimm::AirDash_On, this);
+		//mAnimation->CompleteEvent(L"AirDash_Tele_In") = std::bind(&Grimm::AirDash_On, this);
 		mAnimation->CompleteEvent(L"AirDash_Attack_On") = std::bind(&Grimm::AirDash_Start, this);
 		mAnimation->CompleteEvent(L"AirDash_Attack1_Left") = std::bind(&Grimm::AirDash_Loop, this);
 		mAnimation->CompleteEvent(L"AirDash_Attack1_Right") = std::bind(&Grimm::AirDash_Loop, this);
@@ -199,46 +199,55 @@ namespace km
 		//실시간 그림 위치 받아옴
 		mGrimm_Live_Pos = mTransform->GetPosition();
 
+
 		//에어대쉬 방향회전 및 돌진
 		if (AirDash_Loop_Move_Check)
 		{
 			if (Ground_Check == false)
 			{
-				mGrimmPos = mTransform->GetPosition();
-				mGrimmPos.x += Dash_Locate.x * Time::DeltaTime();
-				mGrimmPos.y += Dash_Locate.y * Time::DeltaTime();
-				mTransform->SetPosition(mGrimmPos);
+				mGrimm_Live_Pos = mTransform->GetPosition();
+				mGrimm_Live_Pos.x += Dash_Locate.x * Time::DeltaTime();
+				mGrimm_Live_Pos.y += Dash_Locate.y * Time::DeltaTime();
+				//mTransform->SetPosition(mGrimm_Live_Pos);
 			}
 			else if (Ground_Check)
 			{
+				AirDash_Loop_Move_Check = false;
 				AirDash_Land();
 			}
 		}
 
 		//땅에서 돌진할때 체크
-		if (AirDash_Attack_Move_Check && mDirection == eDirection::Left)
+		if (AirDash_Attack_Move_Check && mGetDirection == eDirection::Left)
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
-			mGetGimmPos.x -= 2.0f * Time::DeltaTime();
-			mTransform->SetPosition(mGetGimmPos);
-		
-			if (AirDash_Attack_Delay > 0.5f)
-			{
-				AirDash_Attack_Delay = 0.0f;
-				AirDash_Attack_Move_Check = false;
-			}
-		}
-		else if (AirDash_Attack_Move_Check && mDirection == eDirection::Right)
-		{
-			AirDash_Attack_Delay += Time::DeltaTime();
-			mGetGimmPos.x += 2.0f * Time::DeltaTime();
-			mTransform->SetPosition(mGetGimmPos);
+			mGrimm_Live_Pos.x -= 2.0f * Time::DeltaTime();
+			//mTransform->SetPosition(mGrimm_Live_Pos);
 
-			if (AirDash_Attack_Delay > 0.5f)
-			{
-				AirDash_Attack_Delay = 0.0f;
-				AirDash_Attack_Move_Check = false;
-			}
+			//if (AirDash_Attack_Delay > 0.5f)
+			//{
+			//	AirDash_Attack_Delay = 0.0f;
+			//	AirDash_Attack_Move_Check = false;
+			//}
+		}
+		else if (AirDash_Attack_Move_Check && mGetDirection == eDirection::Right)
+		{
+			AirDash_Attack_Delay += Time::DeltaTime();
+			mGrimm_Live_Pos.x += 2.0f * Time::DeltaTime();
+			//mTransform->SetPosition(mGrimm_Live_Pos);
+
+			//if (AirDash_Attack_Delay > 0.5f)
+			//{
+			//	AirDash_Attack_Delay = 0.0f;
+			//	AirDash_Attack_Move_Check = false;
+			//}
+		}
+		mTransform->SetPosition(mGrimm_Live_Pos);
+
+		if (AirDash_Attack_Delay > 0.5f)
+		{
+			AirDash_Attack_Delay = 0.0f;
+			AirDash_Attack_Move_Check = false;
 		}
 
 		//Balloon 패턴 지속시간 체크
@@ -368,18 +377,6 @@ namespace km
 		if (Pattern_Delay_Check)
 			Pattern_Delay += Time::DeltaTime();
 
-
-		switch (mPattern_State)
-		{
-		case km::Grimm::ePatternState::Pattern:
-			Pattern();
-			break;
-		case km::Grimm::ePatternState::DisPattern:
-			break;
-		default:
-			break;
-		}
-
 		mPlayer = SceneManager::GetPlayer();
 		mPlayerPos = mPlayer->GetComponent<Transform>()->GetPosition();
 
@@ -411,7 +408,7 @@ namespace km
 	void Grimm::OnCollisionEnter(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-		
+
 		if (gd != nullptr)
 		{
 			//mRigidbody->SetGround(true);
@@ -421,7 +418,7 @@ namespace km
 	void Grimm::OnCollisionStay(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
-		
+
 		if (gd != nullptr)
 		{
 			//mRigidbody->SetGround(true);
@@ -439,77 +436,6 @@ namespace km
 
 	void Grimm::Pattern()
 	{
-		/*switch (mState)
-		{
-		case km::Grimm::eGrimmState::Idle:
-			Idle();
-			break;
-		case km::Grimm::eGrimmState::AirDashOn:
-			AirDash_On();
-			break;
-		case km::Grimm::eGrimmState::AirDashStart:
-			AirDash_Start();
-			break;
-		case km::Grimm::eGrimmState::AirDashLoop:
-			AirDash_Loop();
-			break;
-		case km::Grimm::eGrimmState::AirDashLand:
-			AirDash_Land();
-			break;
-		case km::Grimm::eGrimmState::AirDashAttack:
-			AirDash_Attack();
-			break;
-		case km::Grimm::eGrimmState::AirDashStop:
-			AirDash_Stop();
-			break;
-		case km::Grimm::eGrimmState::BalloonStart:
-			Balloon_Start();
-			break;
-		case km::Grimm::eGrimmState::BalloonLoop:
-			Balloon_Loop();
-			break;
-		case km::Grimm::eGrimmState::CapSpikeOn:
-			Capspike_On();
-			break;
-		case km::Grimm::eGrimmState::CapSpikeLoop:
-			Capspike_Loop();
-			break;
-		case km::Grimm::eGrimmState::CapSpikeEnd:
-			Capspike_End();
-			break;
-		case km::Grimm::eGrimmState::Cast:
-			Cast();
-			break;
-		case km::Grimm::eGrimmState::SlashOn:
-			Slash_On();
-			break;
-		case km::Grimm::eGrimmState::Slash:
-			Slash();
-			break;
-		case km::Grimm::eGrimmState::UpSlashReady:
-			UP_Slash_Ready();
-			break;
-		case km::Grimm::eGrimmState::UpSlash:
-			Up_Slash();
-			break;
-		case km::Grimm::eGrimmState::Tele_In:
-			Tele_In();
-			break;
-		case km::Grimm::eGrimmState::Tele_Out:
-			Tele_Out();
-			break;
-		case km::Grimm::eGrimmState::AirDashMove:
-			AirDash_Loop_Move();
-			break;
-		case km::Grimm::eGrimmState::Death:
-			Death();
-			break;
-		case km::Grimm::eGrimmState::End:
-			break;
-		default:
-			break;
-		}*/
-
 		if (Pattern_Delay > 1.0f)
 		{
 			Pattern_Delay = 0.0f;
@@ -538,22 +464,21 @@ namespace km
 	{
 		if (Idle_Check)
 		{
-			//mPattern_State = ePatternState::Pattern;
-			mState = eGrimmState::Idle;
 			mAnimation->PlayAnimation(L"Idle", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Idle_Check = false;
 		}
+		mTime += Time::DeltaTime();
+		if (mTime > 3.0f)
+			Pattern();
 	}
 
 	void Grimm::AirDash_Tele_In()
 	{
 		if (AirDash_Tele_In_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
-			mAnimation->PlayAnimation(L"AirDash_Tele_In", true);
+			mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
-			AirDash_Tele_In_Check = false;
 			if (AirDash_On_Location == 0)
 			{
 				mTransform->SetPosition(Vector3(-0.25f, 0.0f, 0.0f));
@@ -569,18 +494,20 @@ namespace km
 				mTransform->SetPosition(Vector3(0.2f, 0.0f, 0.0f));
 				AirDash_On_Location = 0;
 			}
+
+			AirDash_Tele_In_Check = false;
 		}
 	}
 
-	void Grimm::AirDash_On()
-	{
-		if (AirDash_On_Check)
-		{
-			mPattern_State = ePatternState::DisPattern;
-			mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
-			AirDash_On_Check = false;
-		}
-	}
+	//void Grimm::AirDash_On()
+	//{
+	//	if (AirDash_On_Check)
+	//	{
+	//		mPattern_State = ePatternState::DisPattern;
+	//		mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
+	//		AirDash_On_Check = false;
+	//	}
+	//}
 
 	void Grimm::AirDash_Start()
 	{
@@ -589,19 +516,19 @@ namespace km
 
 		if (mGetDirection == eDirection::Left && AirDash_Start_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack1_Left", true);
-			AirDash_Start_Check = false;
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.3f, 0.8f));
+
+			AirDash_Start_Check = false;
 		}
 
 		if (mGetDirection == eDirection::Right && AirDash_Start_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack1_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.3f, 0.8f));
+
 			AirDash_Start_Check = false;
 		}
 	}
@@ -610,19 +537,19 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && AirDash_Loop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack2_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.1f, 0.8f));
+
 			AirDash_Loop_Check = false;
 		}
 
 		if (mGetDirection == eDirection::Right && AirDash_Loop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack2_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.1f, 0.8f));
+
 			AirDash_Loop_Check = false;
 		}
 	}
@@ -631,27 +558,25 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && AirDash_Land_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Lend_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
 			mTransform->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
 			mTransform->SetPosition(Vector3(mGrimm_Live_Pos.x, -0.45f, 0.0f));
 			mGrimmPos = mTransform->GetPosition();
-			AirDash_Loop_Move_Check = false;
+
 			AirDash_Land_Check = false;
 		}
 
 		if (mGetDirection == eDirection::Right && AirDash_Land_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Lend_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
 			mTransform->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
 			mTransform->SetPosition(Vector3(mGrimm_Live_Pos.x, -0.45f, 0.0f));
 			mGrimmPos = mTransform->GetPosition();
-			AirDash_Loop_Move_Check = false;
+
 			AirDash_Land_Check = false;
 		}
 	}
@@ -660,22 +585,22 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && AirDash_Attack_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
-			mGetGimmPos = mGrimmPos;
+			//mGetGimmPos = mGrimm_Live_Pos;
+
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
 		}
 
 		if (mGetDirection == eDirection::Right && AirDash_Attack_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
-			mGetGimmPos = mGrimmPos;
+			//mGetGimmPos = mGrimm_Live_Pos;
+
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
 		}
@@ -685,24 +610,20 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && AirDash_Stop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack_Stop_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
-			AirDash_Stop_Check = false;
 
-			AirDash_Attack_Move_Check = false;
+			AirDash_Stop_Check = false;
 		}
 
 		if (mGetDirection == eDirection::Right && AirDash_Stop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"AirDash_Attack_Stop_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.4f, 0.5f));
-			AirDash_Stop_Check = false;
 
-			AirDash_Attack_Move_Check = false;
+			AirDash_Stop_Check = false;
 		}
 	}
 
@@ -846,10 +767,10 @@ namespace km
 			Slash_Tele_In_Check = false;
 
 			if (mGetDirection == eDirection::Left)
-				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.5 , -0.35f, 0.0f));
+				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.5, -0.35f, 0.0f));
 
 			if (mGetDirection == eDirection::Right)
-				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.5 , -0.35f, 0.0f));
+				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.5, -0.35f, 0.0f));
 		}
 	}
 
@@ -960,7 +881,7 @@ namespace km
 	{
 		mPattern_State = ePatternState::DisPattern;
 		Check();
-		attack_pattern = rand() % 5;
+		//attack_pattern = rand() % 5;
 		Pattern_Delay_Check = true;
 		Pattern();
 	}
@@ -991,12 +912,13 @@ namespace km
 
 	void Grimm::AirDash_Loop_Move()
 	{
-		mPattern_State = ePatternState::DisPattern;
-		if(AirDash_Loop_Move_Check == false)
+		if (AirDash_Loop_Move_Check == false)
+		{
 			Dash_Locate = rigidmath::Direction(mGrimm_Direction, mPlayer_Direction);
+			mTransform->SetRotation(Vector3(Dash_Locate.x, Dash_Locate.y, 0.0f));
 
-		mTransform->SetRotation(Vector3(Dash_Locate.x, Dash_Locate.y, 0.0f));
-		AirDash_Loop_Move_Check = true;
+			AirDash_Loop_Move_Check = true;
+		}
 	}
 
 	void Grimm::Death()
@@ -1012,25 +934,25 @@ namespace km
 
 	void Grimm::Check()
 	{
-		Idle_Check           = true;
-		AirDash_On_Check     = true;
-		AirDash_Start_Check  = true;
-		AirDash_Loop_Check   = true;
-		AirDash_Land_Check   = true;
+		Idle_Check = true;
+		AirDash_On_Check = true;
+		AirDash_Start_Check = true;
+		AirDash_Loop_Check = true;
+		AirDash_Land_Check = true;
 		AirDash_Attack_Check = true;
-		AirDash_Stop_Check   = true;
-		Balloon_Start_Check  = true;
-		Balloon_Loop_Check   = true;
-		Capspike_On_Check    = true;
-		Capspike_Loop_Check  = true;
-		Capspike_End_Check  = true;
-		Cast_Check          = true;
-		Slash_On_Check      = true;
-		Slash_Check         = true;
-		Up_Slash_Check      = true;
-		Tele_In_Check       = true;
-		Tele_Out_Check      = true;
-		Death_Check         = true;
+		AirDash_Stop_Check = true;
+		Balloon_Start_Check = true;
+		Balloon_Loop_Check = true;
+		Capspike_On_Check = true;
+		Capspike_Loop_Check = true;
+		Capspike_End_Check = true;
+		Cast_Check = true;
+		Slash_On_Check = true;
+		Slash_Check = true;
+		Up_Slash_Check = true;
+		Tele_In_Check = true;
+		Tele_Out_Check = true;
+		Death_Check = true;
 		AirDash_Tele_In_Check = true;
 		Balloon_Tele_In_Check = true;
 		Capspike_Tele_In_Check = true;
