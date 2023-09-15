@@ -72,6 +72,126 @@ namespace km::object
 		return gameObj;
 	}
 
+
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate0(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+ 		gameObj->Set0();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate1(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set1();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate2(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set2();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate3(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set3();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate4(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set4();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate5(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set5();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate6(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set6();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate7(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set7();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate8(Vector3 pos, enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Transform* tr = gameObj->GetComponent<Transform>();
+		tr->SetPosition(pos);
+
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Set8();
+		return gameObj;
+	}
+
+
 	static __forceinline void Destroy(GameObject* gameObj)
 	{
 		gameObj->SetState(km::GameObject::eState::Dead);

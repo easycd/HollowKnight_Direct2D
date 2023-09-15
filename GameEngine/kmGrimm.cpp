@@ -15,6 +15,7 @@
 //Object
 #include "kmSpike_Object.h"
 #include "kmFlameBat.h"
+#include "kmFIreBall.h"
 
 namespace km
 {
@@ -29,10 +30,11 @@ namespace km
 		, Cast_Delay(0.0f)
 		, AirDash_On_Location(0)
 		, FlameBat_Delay(0.0f)
+		, FireBall_Delay_time(0.0f)
 
 
 
-		, attack_pattern(0)
+		, attack_pattern(1)
 
 		, Test(true)
 	{
@@ -108,8 +110,8 @@ namespace km
 
 		mAnimation->Create(L"AirDash_Tele_In", AirDash_Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.05f);
 		mAnimation->Create(L"AirDash_Attack_On", AirDash_Attack_On, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 6, Vector2(0.0f, 0.02f), 0.05f);
-		mAnimation->Create(L"AirDash_Attack1_Left", AirDash_Attack1_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"AirDash_Attack1_Right", AirDash_Attack1_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"AirDash_Attack1_Left", AirDash_Attack1_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f), 0.05f);
+		mAnimation->Create(L"AirDash_Attack1_Right", AirDash_Attack1_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 7, Vector2(0.0f, 0.02f), 0.05f);
 		mAnimation->Create(L"AirDash_Attack2_Left", AirDash_Attack2_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"AirDash_Attack2_Right", AirDash_Attack2_Right, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"AirDash_Lend_Left", AirDash_Lend_Left, Vector2(0.0f, 0.0f), Vector2(900.0f, 525.0f), 4, Vector2(0.0f, -0.15f), 0.1f);
@@ -199,15 +201,14 @@ namespace km
 		//실시간 그림 위치 받아옴
 		mGrimm_Live_Pos = mTransform->GetPosition();
 
-
 		//에어대쉬 방향회전 및 돌진
 		if (AirDash_Loop_Move_Check)
 		{
 			if (Ground_Check == false)
 			{
 				mGrimm_Live_Pos = mTransform->GetPosition();
-				mGrimm_Live_Pos.x += Dash_Locate.x * Time::DeltaTime() * 1.8f;
-				mGrimm_Live_Pos.y += Dash_Locate.y * Time::DeltaTime() * 1.8f;
+				mGrimm_Live_Pos.x += Dash_Locate.x * Time::DeltaTime() * 2.5f;
+				mGrimm_Live_Pos.y += Dash_Locate.y * Time::DeltaTime() * 2.5f;
 				//mTransform->SetPosition(mGrimm_Live_Pos);
 			}
 			else if (Ground_Check)
@@ -244,6 +245,13 @@ namespace km
 		if (Balloon_Loop_Delay_Check)
 		{
 			Balloon_Loop_Delay += Time::DeltaTime();
+			FireBall_Delay_time += Time::DeltaTime();
+
+			if (FireBall_Delay_time > 0.5f)
+			{
+				FireBall_Obj();
+				FireBall_Delay_time = 0.0f;
+			}
 
 			if (Balloon_Loop_Delay > 5.0f)
 			{
@@ -979,5 +987,17 @@ namespace km
 		Spike10->Spike_On_Delay();
 		Spike11->Spike_On_Delay();
 		Spike12->Spike_On_Delay();
+	}
+	void Grimm::FireBall_Obj()
+	{
+		object::FireBall_Instantiate0<FIreBall>(Vector3(-0.3f, -0.08f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate1<FIreBall>(Vector3(-0.2f, -0.08f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate2<FIreBall>(Vector3(-0.3f, -0.15f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate3<FIreBall>(Vector3(-0.2f, -0.15, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate4<FIreBall>(Vector3(-0.32f, -0.2f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate5<FIreBall>(Vector3(-0.3f, -0.25f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate6<FIreBall>(Vector3(-0.25f, -0.27f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate7<FIreBall>(Vector3(-0.2f, -0.25f, 0.0f), eLayerType::BossObj);
+		object::FireBall_Instantiate8<FIreBall>(Vector3(-0.18f, -0.2f, 0.0f), eLayerType::BossObj);
 	}
 }

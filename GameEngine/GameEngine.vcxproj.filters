@@ -61,6 +61,9 @@
     <Filter Include="Contents\Object\Grimm\Npc">
       <UniqueIdentifier>{cf2a858b-93e8-4a8f-a24e-7973de749cf4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\Fileball">
+      <UniqueIdentifier>{2462eaa2-f2c1-4754-91d3-2c828ec5d3f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -122,6 +125,9 @@
     <ClInclude Include="kmTrumpNpc.h">
       <Filter>Contents\Object\Grimm\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="kmFIreBall.h">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -178,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="kmTrumpNpc.cpp">
       <Filter>Contents\Object\Grimm\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="kmFIreBall.cpp">
+      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

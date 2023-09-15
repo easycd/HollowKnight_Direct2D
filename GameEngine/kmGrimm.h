@@ -6,6 +6,7 @@ namespace km
 	class Player;
 	class Spike_Object;
 	class FlameBat;
+	class FIreBall;
 
 	class Grimm : public GameObject
 	{
@@ -72,7 +73,6 @@ namespace km
 		void Pattern();
 		void Idle();
 		void AirDash_Tele_In();
-		void AirDash_On();
 		void AirDash_Start();
 		void AirDash_Loop();
 		void AirDash_Land();
@@ -102,6 +102,7 @@ namespace km
 
 		//Object 생성클래스
 		void Spike_Obj();
+		void FireBall_Obj();
 
 	private:
 		ePatternState mPattern_State;
@@ -216,6 +217,8 @@ namespace km
 		bool Bat0_Play = true;;
 		bool Bat1_Play = false;
 		bool Bat2_Play = false;
+
+		float FireBall_Delay_time;
 	};
 }
 

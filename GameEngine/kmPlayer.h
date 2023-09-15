@@ -21,7 +21,7 @@ namespace km
 			UpAttack,
 			Attack,
 			DownAttack,
-			FireBall,
+			ShootBall,
 			FocusStart,
 			Focus,
 			FocusOn,
