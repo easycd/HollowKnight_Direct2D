@@ -99,8 +99,8 @@ namespace km
 		std::shared_ptr<Texture> Slash_On_Right = Resources::Load<Texture>(L"Slash_On_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\On\\Right\\Slash_On_Right.png");
 		std::shared_ptr<Texture> Slash_Left = Resources::Load<Texture>(L"Slash_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Slash\\Left\\Slash_Left.png");
 		std::shared_ptr<Texture> Slash_Right = Resources::Load<Texture>(L"Slash_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Slash\\Right\\Slash_Right.png");
-		std::shared_ptr<Texture> AirDash_Stop_Left = Resources::Load<Texture>(L"Up_Slash_Ready_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\AirDash\\Dash\\3_Stop\\Left\\AirDash_Stop_Left.png");
-		std::shared_ptr<Texture> AirDash_Stop_Right = Resources::Load<Texture>(L"Up_Slash_Ready_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\AirDash\\Dash\\3_Stop\\Right\\AirDash_Stop_Right.png");
+		std::shared_ptr<Texture> Up_Slash_Ready_Left = Resources::Load<Texture>(L"Up_Slash_Ready_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack_Delay\\Left\\Up_Attack_Delay_Left.png");
+		std::shared_ptr<Texture> Up_Slash_Ready_Right = Resources::Load<Texture>(L"Up_Slash_Ready_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack_Delay\\Right\\Up_Attack_Delay_Right.png");
 		std::shared_ptr<Texture> Up_Slash_Left = Resources::Load<Texture>(L"Up_Slash_Left", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Left\\Up_Slash_Left.png");
 		std::shared_ptr<Texture> Up_Slash_Right = Resources::Load<Texture>(L"Up_Slash_Right", L"..\\Resources\\Boss_Grimm\\Boss_Grimm\\Grimm_Pattern\\Attack\\Slash\\Up_Attack\\Right\\Up_Slash_Right.png");
 
@@ -140,8 +140,8 @@ namespace km
 		mAnimation->Create(L"Slash_On_Right", Slash_On_Right, Vector2(0.0f, 0.0f), Vector2(342.0f, 438.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Slash_Left", Slash_Left, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Slash_Right", Slash_Right, Vector2(0.0f, 0.0f), Vector2(792.0f, 438.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Up_Slash_Ready_Left", AirDash_Stop_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, -0.02f), 0.12f);
-		mAnimation->Create(L"Up_Slash_Ready_Right", AirDash_Stop_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, -0.02f), 0.12f);
+		mAnimation->Create(L"Up_Slash_Ready_Left", Up_Slash_Ready_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, -0.02f), 0.12f);
+		mAnimation->Create(L"Up_Slash_Ready_Right", Up_Slash_Ready_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 3, Vector2(0.0f, -0.02f), 0.12f);
 		mAnimation->Create(L"Up_Slash_Left", Up_Slash_Left, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Up_Slash_Right", Up_Slash_Right, Vector2(0.0f, 0.0f), Vector2(662.0f, 786.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
@@ -210,7 +210,6 @@ namespace km
 				mGrimm_Live_Pos = mTransform->GetPosition();
 				mGrimm_Live_Pos.x += Dash_Locate.x * Time::DeltaTime() * 2.5f;
 				mGrimm_Live_Pos.y += Dash_Locate.y * Time::DeltaTime() * 2.5f;
-				//mTransform->SetPosition(mGrimm_Live_Pos);
 			}
 			else if (Ground_Check)
 			{
@@ -224,19 +223,16 @@ namespace km
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
 
-			//if(mGrimm_Live_Pos.x > -1.13f)
 			if (Wall_Check == false)
-			mGrimm_Live_Pos.x -= 2.5f * Time::DeltaTime();
+				mGrimm_Live_Pos.x -= 2.5f * Time::DeltaTime();
 		}
 		else if (AirDash_Attack_Move_Check && mGetDirection == eDirection::Right)
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
 
-			//if (mGrimm_Live_Pos.x < 0.94f)
 			if (Wall_Check == false)
-			mGrimm_Live_Pos.x += 2.5f * Time::DeltaTime();
+				mGrimm_Live_Pos.x += 2.5f * Time::DeltaTime();
 		}
-		//mTransform->SetPosition(mGrimm_Live_Pos);
 
 		if (AirDash_Attack_Delay > 0.5f)
 		{
@@ -279,18 +275,6 @@ namespace km
 				CapSpike_Loop_Delay = 0.0f;
 
 				Capspike_End();
-			}
-		}
-
-		//Slash 패턴 하기 전 딜레이
-		if (Slash_On_Delay_Check)
-		{
-			Slash_On_Delay += Time::DeltaTime();
-
-			if (Slash_On_Delay > 1.0f)
-			{
-				Slash_On_Delay = 0.0f;
-				Slash();
 			}
 		}
 
@@ -362,14 +346,26 @@ namespace km
 			}
 		}
 
+		//Slash 패턴 하기 전 딜레이
+		if (Slash_On_Delay_Check)
+		{
+			Slash_On_Delay += Time::DeltaTime();
+
+			if (Slash_On_Delay > 1.0f)
+			{
+				Slash_On_Delay = 0.0f;
+				Slash();
+			}
+		}
+
 		//Slash 패턴 돌진 방향 및 위치이동
-		if (Slash_Move_Check && mDirection == eDirection::Left)
+		if (Slash_Move_Check && mGetDirection == eDirection::Left)
 		{
 			if (Wall_Check == false)
 				mGrimm_Live_Pos.x -= 2.0f * Time::DeltaTime();
 			//	mTransform->SetPosition(mGetGimmPos);
 		}
-		else if (Slash_Move_Check && mDirection == eDirection::Right)
+		else if (Slash_Move_Check && mGetDirection == eDirection::Right)
 		{
 			if (Wall_Check == false)
 				mGrimm_Live_Pos.x += 2.0f * Time::DeltaTime();
@@ -770,10 +766,28 @@ namespace km
 			Slash_Tele_In_Check = false;
 
 			if (mGetDirection == eDirection::Left)
-				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.5, -0.35f, 0.0f));
+			{
+				if (mPlayerPos.x < 0.241f)
+				{
+					mTransform->SetPosition(Vector3(mPlayerPos.x + 0.5, -0.35f, 0.0f));
+				}
+				else
+				{
+					mTransform->SetPosition(Vector3(0.756f, -0.35f, 0.0f));
+				}
+			}
 
 			if (mGetDirection == eDirection::Right)
-				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.5, -0.35f, 0.0f));
+			{
+				if (mPlayerPos.x > -0.493f)
+				{
+					mTransform->SetPosition(Vector3(mPlayerPos.x - 0.5, -0.35f, 0.0f));
+				}
+				else
+				{
+					mTransform->SetPosition(Vector3(-1.0f, -0.35f, 0.0f));
+				}
+			}
 		}
 	}
 
