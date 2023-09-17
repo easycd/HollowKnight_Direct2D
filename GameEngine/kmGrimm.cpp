@@ -8,6 +8,7 @@
 #include "kmObject.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
+#include "kmWall.h"
 #include "kmPlayer.h"
 #include "kmMeshRenderer.h"
 #include "kmRigidbodyMath.h"
@@ -34,7 +35,7 @@ namespace km
 
 
 
-		, attack_pattern(1)
+		, attack_pattern(4)
 
 		, Test(true)
 	{
@@ -125,10 +126,10 @@ namespace km
 		mAnimation->Create(L"Balloon_Start", Balloon_Start, Vector2(0.0f, 0.0f), Vector2(521.0f, 576.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Balloon_Loop", Balloon_Loop, Vector2(0.0f, 0.0f), Vector2(521.0f, 576.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 
-		mAnimation->Create(L"CapSpike_Tele_In", CapSpike_Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"CapSpike_Start", CapSpike_Start, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 10, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"CapSpike_Loop", CapSpike_Loop, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"CapSpike_End", CapSpike_End, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 7, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"CapSpike_Tele_In", CapSpike_Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.05f);
+		mAnimation->Create(L"CapSpike_Start", CapSpike_Start, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 10, Vector2(0.0f, 0.02f), 0.08f);
+		mAnimation->Create(L"CapSpike_Loop", CapSpike_Loop, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 3, Vector2(0.0f, 0.02f), 0.08f);
+		mAnimation->Create(L"CapSpike_End", CapSpike_End, Vector2(0.0f, 0.0f), Vector2(394.0f, 445.0f), 7, Vector2(0.0f, 0.02f), 0.08f);
 
 		mAnimation->Create(L"Cast_Tele_In", Cast_Tele_In, Vector2(0.0f, 0.0f), Vector2(315.0f, 444.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Cast_Left", Cast_Left, Vector2(0.0f, 0.0f), Vector2(546.0f, 444.0f), 8, Vector2(0.0f, 0.02f), 0.1f);
@@ -223,17 +224,19 @@ namespace km
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
 
-			if(mGrimm_Live_Pos.x > -1.13f)
+			//if(mGrimm_Live_Pos.x > -1.13f)
+			if (Wall_Check == false)
 			mGrimm_Live_Pos.x -= 2.5f * Time::DeltaTime();
 		}
 		else if (AirDash_Attack_Move_Check && mGetDirection == eDirection::Right)
 		{
 			AirDash_Attack_Delay += Time::DeltaTime();
 
-			if (mGrimm_Live_Pos.x < 0.94f)
+			//if (mGrimm_Live_Pos.x < 0.94f)
+			if (Wall_Check == false)
 			mGrimm_Live_Pos.x += 2.5f * Time::DeltaTime();
 		}
-		mTransform->SetPosition(mGrimm_Live_Pos);
+		//mTransform->SetPosition(mGrimm_Live_Pos);
 
 		if (AirDash_Attack_Delay > 0.5f)
 		{
@@ -271,7 +274,7 @@ namespace km
 				Spike_Obj();
 			}
 
-			if (CapSpike_Loop_Delay > 6.0f)
+			if (CapSpike_Loop_Delay > 2.5f)
 			{
 				CapSpike_Loop_Delay = 0.0f;
 
@@ -310,15 +313,14 @@ namespace km
 
 			if (Bat0_Play && FlameBat_Delay > 1.0f)
 			{
-				Bat0 = object::Instantiate<FlameBat>(eLayerType::BossObj);
-				Bat0->On();
+				Bat0 = object::Instantiate<FlameBat>(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f), eLayerType::BossObj);
 				if (mGetDirection == eDirection::Left)
 				{
-					Bat0->SetDirection(0);
+					Bat0->On_Left();
 				}
 				if (mGetDirection == eDirection::Right)
 				{
-					Bat0->SetDirection(1);
+					Bat0->On_Right();
 				}
 
 				Bat0_Play = false;
@@ -327,15 +329,14 @@ namespace km
 
 			if (Bat1_Play && FlameBat_Delay > 2.0f)
 			{
-				Bat1 = object::Instantiate<FlameBat>(eLayerType::BossObj);
-				Bat1->On();
+				Bat1 = object::Instantiate<FlameBat>(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f), eLayerType::BossObj);
 				if (mGetDirection == eDirection::Left)
 				{
-					Bat1->SetDirection(0);
+					Bat1->On_Left();
 				}
 				if (mGetDirection == eDirection::Right)
 				{
-					Bat1->SetDirection(1);
+					Bat1->On_Right();
 				}
 
 				Bat1_Play = false;
@@ -344,35 +345,38 @@ namespace km
 
 			if (Bat2_Play && FlameBat_Delay > 3.0f)
 			{
-				Bat2 = object::Instantiate<FlameBat>(eLayerType::BossObj);
-				Bat2->On();
+				Bat2 = object::Instantiate<FlameBat>(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f), eLayerType::BossObj);
 				if (mGetDirection == eDirection::Left)
 				{
-					Bat2->SetDirection(0);
+					Bat2->On_Left();
 				}
 				if (mGetDirection == eDirection::Right)
 				{
-					Bat2->SetDirection(1);
+					Bat2->On_Right();
 				}
 
 				Bat2_Play = false;
+				FlameBat_Obj_Play = false;
 				FlameBat_Delay = 0.0f;
+
 			}
 		}
 
 		//Slash 패턴 돌진 방향 및 위치이동
 		if (Slash_Move_Check && mDirection == eDirection::Left)
 		{
-			mGetGimmPos.x -= 2.0f * Time::DeltaTime();
-			mTransform->SetPosition(mGetGimmPos);
+			if (Wall_Check == false)
+				mGrimm_Live_Pos.x -= 2.0f * Time::DeltaTime();
+			//	mTransform->SetPosition(mGetGimmPos);
 		}
 		else if (Slash_Move_Check && mDirection == eDirection::Right)
 		{
-			mGetGimmPos.x += 2.0f * Time::DeltaTime();
-			mTransform->SetPosition(mGetGimmPos);
+			if (Wall_Check == false)
+				mGrimm_Live_Pos.x += 2.0f * Time::DeltaTime();
+			//	mTransform->SetPosition(mGetGimmPos);
 		}
 
-
+		//캐릭터 위치 받아오는 함수
 		mPlayer = SceneManager::GetPlayer();
 		mPlayerPos = mPlayer->GetComponent<Transform>()->GetPosition();
 
@@ -388,6 +392,7 @@ namespace km
 			mDirection = eDirection::Left;
 		}
 
+		//패턴 시작
 		if (mPlayerPos.x > -1.26f && Pattern_Start == false)
 		{
 			mTime += Time::DeltaTime();
@@ -398,18 +403,27 @@ namespace km
 			}
 		}
 
+		mTransform->SetPosition(mGrimm_Live_Pos);
 		GameObject::Update();
 	}
 
 	void Grimm::OnCollisionEnter(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+		Wall* wall = dynamic_cast<Wall*>(other->GetOwner());
 
 		if (gd != nullptr)
 		{
 			//mRigidbody->SetGround(true);
 			Ground_Check = true;
 		}
+
+		if (wall != nullptr)
+		{
+			Wall_Check = true;
+		}
+
+
 	}
 	void Grimm::OnCollisionStay(Collider2D* other)
 	{
@@ -423,10 +437,17 @@ namespace km
 	void Grimm::OnCollisionExit(Collider2D* other)
 	{
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
+		Wall* wall = dynamic_cast<Wall*>(other->GetOwner());
+
 		if (gd != nullptr)
 		{
 			//mRigidbody->SetGround(false);
 			Ground_Check = false;
+		}
+
+		if (wall != nullptr)
+		{
+			Wall_Check = false;
 		}
 	}
 
@@ -579,7 +600,6 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
-			//mGetGimmPos = mGrimm_Live_Pos;
 
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
@@ -590,7 +610,6 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
-			//mGetGimmPos = mGrimm_Live_Pos;
 
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
@@ -622,7 +641,6 @@ namespace km
 	{
 		if (Balloon_Tele_In_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"Balloon_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.25f, -0.1f, 0.0f));
@@ -634,7 +652,6 @@ namespace km
 	{
 		if (Balloon_Start_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Balloon_Start", true);
 			mTransform->SetScale(Vector3(0.45f, 0.45f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.25f, -0.1f, 0.0f));
@@ -646,7 +663,6 @@ namespace km
 	{
 		if (Balloon_Loop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Balloon_Loop", true);
 			mTransform->SetScale(Vector3(0.45f, 0.45f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.25f, -0.1f, 0.0f));
@@ -659,7 +675,6 @@ namespace km
 	{
 		if (Capspike_Tele_In_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"CapSpike_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(0.35f, -0.35f, 0.0f));
@@ -671,7 +686,6 @@ namespace km
 	{
 		if (Capspike_On_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"CapSpike_Start", true);
 			mTransform->SetScale(Vector3(0.35f, 0.4f, 0.0f));
 			Capspike_On_Check = false;
@@ -682,7 +696,6 @@ namespace km
 	{
 		if (Capspike_Loop_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"CapSpike_Loop", true);
 			mTransform->SetScale(Vector3(0.35f, 0.4f, 0.0f));
 			CapSpike_Loop_Delay_Check = true;
@@ -696,7 +709,6 @@ namespace km
 	{
 		if (Capspike_End_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"CapSpike_End", true);
 			mTransform->SetScale(Vector3(0.35f, 0.4f, 0.0f));
 			CapSpike_Loop_Delay_Check = false;
@@ -708,7 +720,6 @@ namespace km
 	{
 		if (Cast_Tele_In_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"Cast_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Cast_Tele_In_Check = false;
@@ -717,15 +728,17 @@ namespace km
 
 	void Grimm::Cast()
 	{
-		if (Cast_Check)
-			mGetDirection = mDirection;
+		if (mPlayerPos.x > -0.2f && Cast_Check)
+			mGetDirection = eDirection::Right;
+
+		if (mPlayerPos.x < -0.2f && Cast_Check)
+			mGetDirection = eDirection::Left;
 
 		if (mGetDirection == eDirection::Left && Cast_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Cast_Left", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
-			mTransform->SetPosition(Vector3(0.46f, -0.35f, 0.0f));
+			mTransform->SetPosition(Vector3(0.5f, -0.35f, 0.0f));
 			FlameBat_Obj_Play = true;
 			Cast_Delay_Check = true;
 			Cast_Check = false;
@@ -734,7 +747,6 @@ namespace km
 
 		if (mGetDirection == eDirection::Right && Cast_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Cast_Right", false);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
 			mTransform->SetPosition(Vector3(-0.72f, -0.35f, 0.0f));
@@ -775,7 +787,6 @@ namespace km
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
 			Slash_On_Check = false;
-			mGetGimmPos = mGrimm_Live_Pos;
 		}
 
 		if (mGetDirection == eDirection::Right && Slash_On_Check)
@@ -786,7 +797,6 @@ namespace km
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
 			Slash_On_Check = false;
-			mGetGimmPos = mGrimm_Live_Pos;
 		}
 	}
 

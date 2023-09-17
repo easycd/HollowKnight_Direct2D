@@ -64,6 +64,9 @@
     <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\Fileball">
       <UniqueIdentifier>{2462eaa2-f2c1-4754-91d3-2c828ec5d3f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Script\Wall">
+      <UniqueIdentifier>{fe21a6e3-e50f-4f1f-878a-6f807b7a0db5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -128,6 +131,9 @@
     <ClInclude Include="kmFIreBall.h">
       <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
     </ClInclude>
+    <ClInclude Include="kmWall.h">
+      <Filter>Contents\Script\Wall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -187,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="kmFIreBall.cpp">
       <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
+    </ClCompile>
+    <ClCompile Include="kmWall.cpp">
+      <Filter>Contents\Script\Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -59,7 +59,7 @@ namespace km
 		{
 			mSpike_On_Delay += Time::DeltaTime();
 
-			if (mSpike_On_Delay > 2.0f)
+			if (mSpike_On_Delay > 0.5f)
 			{
 				mSpike_On_Delay = 0.0f;
 				Spike_On();
@@ -70,7 +70,7 @@ namespace km
 		{
 			mSpike_Loop_Delay += Time::DeltaTime();
 
-			if (mSpike_Loop_Delay > 3.0f)
+			if (mSpike_Loop_Delay > 1.0f)
 			{
 				mSpike_Loop_Delay = 0.0f;
 				Spike_Remove();

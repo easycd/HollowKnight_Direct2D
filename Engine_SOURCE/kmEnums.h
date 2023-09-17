@@ -23,6 +23,7 @@ namespace km::enums
 	{
 		Grid,
 		Ground,
+		Wall,
 		Player,
 		Effect,
 		Monster,

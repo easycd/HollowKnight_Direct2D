@@ -6,6 +6,7 @@
 #include "kmTime.h"
 #include "kmObject.h"
 #include "kmCollider2D.h"
+#include "kmCollisionManager.h"
 
 namespace km
 {
@@ -13,6 +14,7 @@ namespace km
 		: mDirection(0)
 		, mTime(0.0f)
 		, mExport_Timing(0.0f)
+		, mGetDir(0)
 	{
 	}
 	FlameBat::~FlameBat()
@@ -40,15 +42,20 @@ namespace km
 
 		mAnimation->CompleteEvent(L"Flame_Left_On") = std::bind(&FlameBat::Loop, this);
 		mAnimation->CompleteEvent(L"Flame_Right_On") = std::bind(&FlameBat::Loop, this);
+
+		//mAnimation->CompleteEvent(L"Flame_Left_Loop") = std::bind(&FlameBat::Destroy, this);
+		//mAnimation->CompleteEvent(L"Flame_Right_Loop") = std::bind(&FlameBat::Destroy, this);
 		
 		mTransform->SetScale(Vector3(0.15f, 0.15f, 0.0f));
 		mCollider->SetSize(Vector2(0.6f, 0.5f));
 
 		GameObject::Initialize();
 	}
+
 	void FlameBat::Update()
 	{
-		//mTime += Time::DeltaTime();
+		mTime += Time::DeltaTime();
+
 		if (mDirection == 0)
 		{
 			mFlamePos = mTransform->GetPosition();
@@ -63,33 +70,53 @@ namespace km
 			mTransform->SetPosition(mFlamePos);
 		}
 
+		if (mTime > 3.0f)
+			Destroy();
+
 		GameObject::Update();
 	}
-	void FlameBat::On()
+	void FlameBat::OnCollisionEnter(Collider2D* other)
 	{
-		if (On_Check && mDirection == 0)
+
+	}
+	void FlameBat::OnCollisionStay(Collider2D* other)
+	{
+
+	}
+
+	void FlameBat::OnCollisionExit(Collider2D* other)
+	{
+
+	}
+
+	void FlameBat::On_Left()
+	{
+		if (On_Check)
 		{
 			mAnimation->PlayAnimation(L"Flame_Left_On", true);
 			On_Check = false;
-			mLoopDr = 0;
+			mDirection = 0;
 		}
-
-		if (On_Check && mDirection == 1)
+	}
+	void FlameBat::On_Right()
+	{
+		if (On_Check)
 		{
 			mAnimation->PlayAnimation(L"Flame_Right_On", true);
 			On_Check = false;
-			mLoopDr = 1;
+			mDirection = 1;
 		}
 	}
+
 	void FlameBat::Loop()
 	{
-		if (Loop_Check && mLoopDr == 0)
+		if (Loop_Check && mDirection == 0)
 		{
 			mAnimation->PlayAnimation(L"Flame_Left_Loop", true);
 			Loop_Check = false;
 		}
 
-		if (Loop_Check && mLoopDr == 1)
+		if (Loop_Check && mDirection == 1)
 		{
 			mAnimation->PlayAnimation(L"Flame_Right_Loop", true);
 			Loop_Check = false;

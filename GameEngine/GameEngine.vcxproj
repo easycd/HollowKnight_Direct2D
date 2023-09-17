@@ -167,6 +167,7 @@
     <ClInclude Include="kmSpike_Object.h" />
     <ClInclude Include="kmTitleScene.h" />
     <ClInclude Include="kmTrumpNpc.h" />
+    <ClInclude Include="kmWall.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -191,6 +192,7 @@
     <ClCompile Include="kmSpike_Object.cpp" />
     <ClCompile Include="kmTitleScene.cpp" />
     <ClCompile Include="kmTrumpNpc.cpp" />
+    <ClCompile Include="kmWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="C:\Users\JAEWON\Desktop\Client\Engine_SOURCE\kmMath.inl">

@@ -15,6 +15,7 @@
 #include "kmAnimator.h"
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
+#include "kmWall.h"
 #include "kmComputeShader.h"
 #include "kmLight.h"
 #include "kmGameObject.h"
@@ -40,6 +41,7 @@ namespace km
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Boss, true);
 		CollisionManager::SetLayer(eLayerType::Player, eLayerType::Ground, true);
 		CollisionManager::SetLayer(eLayerType::Boss, eLayerType::Ground, true);
+		CollisionManager::SetLayer(eLayerType::Boss, eLayerType::Wall, true);
 
 		ComputeShader* cs = new ComputeShader();
 		cs->Create(L"PaintCS.hlsl", "main");
@@ -153,6 +155,28 @@ namespace km
 			Transform* tr = ground->GetComponent<Transform>();
 			tr->SetPosition(Vector3(0.0f, -0.8f, 0.0f));
 			tr->SetScale(Vector3(100.0f, 0.5f, 1.0f));
+		}
+
+		//LeftWall
+		{
+			{
+				Wall* LeftWall = object::Instantiate<Wall>(eLayerType::Wall);
+				LeftWall->Initialize();
+				Transform* tr = LeftWall->GetComponent<Transform>();
+				tr->SetPosition(Vector3(-1.25f, 0.0f, 0.0f));
+				tr->SetScale(Vector3(0.1f, 2.0f, 1.0f));
+			}
+		}
+
+		//RightWall
+		{
+			{
+				Wall* RightWall = object::Instantiate<Wall>(eLayerType::Wall);
+				RightWall->Initialize();
+				Transform* tr = RightWall->GetComponent<Transform>();
+				tr->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+				tr->SetScale(Vector3(0.1f, 2.0f, 1.0f));
+			}
 		}
 
 		{

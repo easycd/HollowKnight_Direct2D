@@ -133,6 +133,7 @@ namespace km
 
 		bool Test;
 		bool Ground_Check = false;
+		bool Wall_Check = false;
 		bool Pattern_Start = false;
 
 	private:

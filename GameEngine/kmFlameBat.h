@@ -13,14 +13,19 @@ namespace km
 
 		virtual void Initialize();
 		virtual void Update();
+		virtual void OnCollisionEnter(Collider2D* other) override;
+		virtual void OnCollisionStay(Collider2D* other) override;
+		virtual void OnCollisionExit(Collider2D* other) override;
 
-		void On();
+		void On_Left();
+		void On_Right();
 		void Loop();
 		void Destroy();
 
-		void SetDirection(int mdirection) { mDirection = mdirection; }
+		void SetDirection(int mdirection) { mGetDir = mdirection; }
 
 		void SetExportTiming(float mtime) { mExport_Timing = mtime; }
+
 
 	private:
 		Animator* mAnimation;
@@ -36,6 +41,7 @@ namespace km
 
 	private:
 		//사출 방향: 0 왼쪽 / 1 오른쪽
+		int mGetDir;
 		int mDirection;
 		int mLoopDr;
 		float mExport_Timing;
