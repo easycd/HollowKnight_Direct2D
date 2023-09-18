@@ -40,32 +40,47 @@
     <Filter Include="Contents\Script\Player\PlayerScript">
       <UniqueIdentifier>{4c0e0106-e6ab-4df1-aaba-95d2879858cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Object">
-      <UniqueIdentifier>{38ba7675-2af4-4b9f-9194-a059e88ce44e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Player">
-      <UniqueIdentifier>{5951aaba-c676-4ac4-a117-474d57ed39b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm">
-      <UniqueIdentifier>{660d94bb-5cce-4125-92aa-66ca3a21c5dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object">
-      <UniqueIdentifier>{cc152a27-8b42-42f9-a108-800220d43d2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\Spike">
-      <UniqueIdentifier>{dd9bd514-d4f8-4ff5-abaa-bb4e2629de4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\FlameBat">
-      <UniqueIdentifier>{33aa80ea-8118-4239-807a-4d33011cfa27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm\Npc">
-      <UniqueIdentifier>{cf2a858b-93e8-4a8f-a24e-7973de749cf4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Object\Grimm\Gimm_Skill_Object\Fileball">
-      <UniqueIdentifier>{2462eaa2-f2c1-4754-91d3-2c828ec5d3f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Script\Wall">
       <UniqueIdentifier>{fe21a6e3-e50f-4f1f-878a-6f807b7a0db5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject">
+      <UniqueIdentifier>{38ba7675-2af4-4b9f-9194-a059e88ce44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player">
+      <UniqueIdentifier>{5951aaba-c676-4ac4-a117-474d57ed39b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Npc">
+      <UniqueIdentifier>{cf2a858b-93e8-4a8f-a24e-7973de749cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss">
+      <UniqueIdentifier>{e72f5357-e7f3-4921-9435-62de8b2798ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm">
+      <UniqueIdentifier>{660d94bb-5cce-4125-92aa-66ca3a21c5dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object">
+      <UniqueIdentifier>{cc152a27-8b42-42f9-a108-800220d43d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Spike">
+      <UniqueIdentifier>{dd9bd514-d4f8-4ff5-abaa-bb4e2629de4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\FlameBat">
+      <UniqueIdentifier>{33aa80ea-8118-4239-807a-4d33011cfa27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel">
+      <UniqueIdentifier>{5d1a25a7-cd5c-4e54-9ea3-2848a78d9d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Effect">
+      <UniqueIdentifier>{82482a6b-5f3e-4608-8c29-5dc51d721f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Fireball">
+      <UniqueIdentifier>{2462eaa2-f2c1-4754-91d3-2c828ec5d3f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object">
+      <UniqueIdentifier>{110ac316-5077-40d5-93ee-6c6f2d949150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Effect">
+      <UniqueIdentifier>{ae509abd-3133-424c-9794-dd72ca681ac9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -114,25 +129,28 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="kmPlayer.h">
-      <Filter>Contents\Object\Player</Filter>
+      <Filter>Contents\GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="kmGrimm.h">
-      <Filter>Contents\Object\Grimm</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm</Filter>
     </ClInclude>
     <ClInclude Include="kmSpike_Object.h">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Spike</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Spike</Filter>
     </ClInclude>
     <ClInclude Include="kmFlameBat.h">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\FlameBat</Filter>
     </ClInclude>
     <ClInclude Include="kmTrumpNpc.h">
-      <Filter>Contents\Object\Grimm\Npc</Filter>
+      <Filter>Contents\GameObject\Npc</Filter>
     </ClInclude>
     <ClInclude Include="kmFIreBall.h">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Fireball</Filter>
     </ClInclude>
     <ClInclude Include="kmWall.h">
       <Filter>Contents\Script\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="kmPureVessel.h">
+      <Filter>Contents\GameObject\Boss\PureVessel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,25 +195,28 @@
       <Filter>Contents\Script\Player\PlayerScript</Filter>
     </ClCompile>
     <ClCompile Include="kmPlayer.cpp">
-      <Filter>Contents\Object\Player</Filter>
+      <Filter>Contents\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="kmGrimm.cpp">
-      <Filter>Contents\Object\Grimm</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm</Filter>
     </ClCompile>
     <ClCompile Include="kmSpike_Object.cpp">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Spike</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Spike</Filter>
     </ClCompile>
     <ClCompile Include="kmFlameBat.cpp">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\FlameBat</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\FlameBat</Filter>
     </ClCompile>
     <ClCompile Include="kmTrumpNpc.cpp">
-      <Filter>Contents\Object\Grimm\Npc</Filter>
+      <Filter>Contents\GameObject\Npc</Filter>
     </ClCompile>
     <ClCompile Include="kmFIreBall.cpp">
-      <Filter>Contents\Object\Grimm\Gimm_Skill_Object\Fileball</Filter>
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Fireball</Filter>
     </ClCompile>
     <ClCompile Include="kmWall.cpp">
       <Filter>Contents\Script\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPureVessel.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
