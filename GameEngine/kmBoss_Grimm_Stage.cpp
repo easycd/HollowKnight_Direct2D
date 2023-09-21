@@ -179,6 +179,7 @@ namespace km
 			}
 		}
 
+		//Light
 		{
 			GameObject* light = new GameObject();
 			light->SetName(L"Sun");

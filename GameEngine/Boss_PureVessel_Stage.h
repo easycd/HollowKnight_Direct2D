@@ -3,6 +3,8 @@
 
 namespace km
 {
+	class Player;
+
 	class Boss_PureVessel_Stage : public Scene
 	{
 	public:
@@ -14,7 +16,13 @@ namespace km
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-	private:
+		virtual void OnEnter() override;
+		virtual void OnExit() override;
 
+		virtual Player* GetPlayer() override { return mPlayer; };
+
+	private:
+		Player* mPlayer;
+		Camera* mCamera;
 	};
 }

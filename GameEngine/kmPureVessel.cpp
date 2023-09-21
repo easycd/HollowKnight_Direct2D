@@ -26,6 +26,20 @@ namespace km
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
+		std::shared_ptr<Texture> Idle = Resources::Load<Texture>(L"Idle", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Idle\\Idle.png");
+		
+		//Intro
+		std::shared_ptr<Texture> Intro00 = Resources::Load<Texture>(L"Intro00", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro00\\Intro00.png");
+		std::shared_ptr<Texture> Intro01 = Resources::Load<Texture>(L"Intro01", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro01\\Intro01.png");
+		std::shared_ptr<Texture> Intro02 = Resources::Load<Texture>(L"Intro02", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro02\\Intro02.png");
+		std::shared_ptr<Texture> Intro03 = Resources::Load<Texture>(L"Intro03", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro03\\Intro03.png");
+		std::shared_ptr<Texture> Intro04 = Resources::Load<Texture>(L"Intro04", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro04\\Intro04.png");
+		std::shared_ptr<Texture> Intro05 = Resources::Load<Texture>(L"Intro05", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro05\\Intro05.png");
+		std::shared_ptr<Texture> Intro06 = Resources::Load<Texture>(L"Intro06", L"..\\Resources\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro06\\Intro06.png");
+
+
+
+
 		GameObject::Initialize();
 	}
 	void PureVessel::Update()
