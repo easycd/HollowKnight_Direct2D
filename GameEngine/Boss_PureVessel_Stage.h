@@ -4,6 +4,7 @@
 namespace km
 {
 	class Player;
+	class PureVessel;
 
 	class Boss_PureVessel_Stage : public Scene
 	{
@@ -23,6 +24,7 @@ namespace km
 
 	private:
 		Player* mPlayer;
+		PureVessel* mPureVessel;
 		Camera* mCamera;
 	};
 }

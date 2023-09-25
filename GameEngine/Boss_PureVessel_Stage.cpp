@@ -19,7 +19,9 @@
 #include "kmComputeShader.h"
 #include "kmLight.h"
 #include "kmGameObject.h"
+
 #include "kmPlayer.h"
+#include "kmPureVessel.h"
 
 namespace km
 {
@@ -53,6 +55,11 @@ namespace km
 		
 			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
 			//mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.3f, 0.1f, 0.0f));
+		}
+
+		{
+			mPureVessel = object::Instantiate<PureVessel>(eLayerType::Boss);
+			mPureVessel->SetName(L"PureVessel");
 		}
 
 		//Camera
@@ -113,6 +120,7 @@ namespace km
 	}
 	void Boss_PureVessel_Stage::OnEnter()
 	{
+		mPureVessel->Initialize();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_PureVessel_Stage::OnExit()
