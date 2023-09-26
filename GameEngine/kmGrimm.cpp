@@ -788,7 +788,6 @@ namespace km
 		if (mGetDirection == eDirection::Left && Slash_On_Check)
 		{
 			mGetPlayerPos = mPlayerPos;
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Slash_On_Left", false);
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
@@ -798,7 +797,6 @@ namespace km
 		if (mGetDirection == eDirection::Right && Slash_On_Check)
 		{
 			mGetPlayerPos = mPlayerPos;
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Slash_On_Right", false);
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
@@ -891,7 +889,6 @@ namespace km
 		Balloon_Loop_Delay_Check = false;
 		if (Tele_Out_Check)
 		{
-			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Tele_Out", true);
 			if (mGrimm_Live_Pos.y < -0.2)
 			{
