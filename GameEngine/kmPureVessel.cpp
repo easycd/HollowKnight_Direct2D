@@ -6,10 +6,15 @@
 #include "kmRigidbody.h"
 #include "kmCollider2D.h"
 #include "kmCollisionManager.h"
+#include "kmTime.h"
 
 namespace km
 {
 	PureVessel::PureVessel()
+		:IntroStart(0.0f)
+		, Intro02_Start(0.0f)
+		, Intro03_Start(0.0f)
+		, Intro_End(0.0f)
 	{
 	}
 	PureVessel::~PureVessel()
@@ -27,6 +32,7 @@ namespace km
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 				
 		//Intro Image
+		std::shared_ptr<Texture> Intro_Idle = Resources::Load<Texture>(L"Intro_Idle", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro_Idle\\Intro_Idle.png");
 		std::shared_ptr<Texture> Intro00 = Resources::Load<Texture>(L"Intro00", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro_00\\Intro_00.png");
 		std::shared_ptr<Texture> Intro01 = Resources::Load<Texture>(L"Intro01", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro_01\\Intro_01.png");
 		std::shared_ptr<Texture> Intro02 = Resources::Load<Texture>(L"Intro02", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro_02\\Intro_02.png");
@@ -120,13 +126,14 @@ namespace km
 		std::shared_ptr<Texture> Spike_End_Right = Resources::Load<Texture>(L"Spike_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\SpikeAttack\\End\\Right\\SpikeAttack_End_Right.png");
 
 		//Intro Animation
+		mAnimation->Create(L"Intro_Idle", Intro_Idle, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Intro00", Intro00, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Intro01", Intro01, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Intro02", Intro02, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Intro01", Intro01, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 2, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Intro02", Intro02, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 3, Vector2(0.06f, 0.02f), 0.07f);
 		mAnimation->Create(L"Intro03", Intro03, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Intro04", Intro04, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 12, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Intro05", Intro05, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Intro06", Intro06, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Intro04", Intro04, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 12, Vector2(0.02f, 0.02f), 0.1f);
+		mAnimation->Create(L"Intro05", Intro05, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.06f, 0.02f), 0.1f);
+		mAnimation->Create(L"Intro06", Intro06, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.06f, 0.02f), 0.1f);
 
 		//Idle Animation
 		mAnimation->Create(L"Idle_Left", Idle_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
@@ -213,10 +220,58 @@ namespace km
 		mAnimation->Create(L"Spike_End_Right", Spike_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 
+
+
+
+		mAnimation->CompleteEvent(L"Intro00") = std::bind(&PureVessel::Intro_01, this);
+		mAnimation->CompleteEvent(L"Intro03") = std::bind(&PureVessel::Intro_04, this);
+		mAnimation->CompleteEvent(L"Intro04") = std::bind(&PureVessel::Intro_05, this);
+		mAnimation->CompleteEvent(L"Intro05") = std::bind(&PureVessel::Intro_06, this);
+
+
+		mTransform->SetScale(Vector3(0.55f, 0.62f, 0.0f));
+		mTransform->SetPosition(Vector3(0.4f, -0.15f, 0.0f));
+		//mCollider->SetSize(Vector2(0.6f, 0.6f));
 		GameObject::Initialize();
 	}
 	void PureVessel::Update()
 	{
+		IntroStart += Time::DeltaTime();
+		if (IntroStart > 2.0f && IntroStart_Check)
+		{
+			IntroStart_Check = false;
+			Intro_00();
+		}
+
+		if (Intro_02_Start_Check)
+		{		
+			Intro02_Start += Time::DeltaTime();
+			if (Intro02_Start > 2.0f)
+			{
+				Intro_02_Start_Check = false;
+				Intro_02();
+			}
+		}
+		if (Intro_03_Start_Check)
+		{
+			Intro03_Start += Time::DeltaTime();
+		
+			if (Intro03_Start > 3.0f)
+			{
+				Intro_03_Start_Check = false;
+				Intro_03();
+			}
+		}
+
+		if (Intro_End_Check)
+		{
+			Intro_End += Time::DeltaTime();
+			if (Intro_End > 3.0f)
+			{
+				Intro_End_Check = false;
+				Idle();
+			}
+		}
 
 		GameObject::Update();
 	}
@@ -233,12 +288,58 @@ namespace km
 	{
 	}
 
+	void PureVessel::Intro_Idle()
+	{
+		mAnimation->PlayAnimation(L"Intro_Idle", true);
+	}
+
+	void PureVessel::Intro_00()
+	{
+		mAnimation->PlayAnimation(L"Intro00", true);
+	}
+
+	void PureVessel::Intro_01()
+	{
+		mAnimation->PlayAnimation(L"Intro01", true);
+		Intro_02_Start_Check = true;
+	}
+
+	void PureVessel::Intro_02()
+	{
+		mAnimation->PlayAnimation(L"Intro02", true);
+		Intro_03_Start_Check = true;
+	}
+
+	void PureVessel::Intro_03()
+	{
+		mAnimation->PlayAnimation(L"Intro03", true);
+	}
+
+	void PureVessel::Intro_04()
+	{
+		mTransform->SetScale(Vector3(0.8f, 1.0f, 0.0f));
+		mTransform->SetPosition(Vector3(0.4f, -0.09f, 0.0f));
+		mAnimation->PlayAnimation(L"Intro04", true);
+	}
+
+	void PureVessel::Intro_05()
+	{
+		mAnimation->PlayAnimation(L"Intro05", true);
+	}
+
+	void PureVessel::Intro_06()
+	{
+		mAnimation->PlayAnimation(L"Intro06", true);
+		Intro_End_Check = true;
+	}
+
 	void PureVessel::Pattern()
 	{
 	}
 
 	void PureVessel::Idle()
 	{
+		mAnimation->PlayAnimation(L"Idle_Left", true);
 	}
 
 	void PureVessel::Counter()
