@@ -82,12 +82,6 @@
     <Filter Include="Contents\GameObject\Boss\PureVessel\Effect">
       <UniqueIdentifier>{ae509abd-3133-424c-9794-dd72ca681ac9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\Boss\Grimm">
-      <UniqueIdentifier>{517b92f1-b440-44ac-a19f-1fb5dd4bd455}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\Boss\Vessel">
-      <UniqueIdentifier>{a4d5088a-3744-42d2-bead-0c9ddf1525ba}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -152,12 +146,6 @@
     <ClInclude Include="kmPureVessel.h">
       <Filter>Contents\GameObject\Boss\PureVessel</Filter>
     </ClInclude>
-    <ClInclude Include="kmGrimmScript.h">
-      <Filter>Contents\Script\Boss\Grimm</Filter>
-    </ClInclude>
-    <ClInclude Include="kmPureVesselScript.h">
-      <Filter>Contents\Script\Boss\Vessel</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -217,12 +205,6 @@
     </ClCompile>
     <ClCompile Include="kmPureVessel.cpp">
       <Filter>Contents\GameObject\Boss\PureVessel</Filter>
-    </ClCompile>
-    <ClCompile Include="kmGrimmScript.cpp">
-      <Filter>Contents\Script\Boss\Grimm</Filter>
-    </ClCompile>
-    <ClCompile Include="kmPureVesselScript.cpp">
-      <Filter>Contents\Script\Boss\Vessel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

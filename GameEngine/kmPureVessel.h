@@ -54,10 +54,11 @@ namespace km
 		void Counter_Loop();
 		void Counter_End();
 
+		void Dash_Tele_In();
 		void Dash_On();
 		void Dash_Shoot();
 		void Dash_End();
-
+		 
 		void Knife_Spike();
 		void Slash();
 		void Knife_Spread();
