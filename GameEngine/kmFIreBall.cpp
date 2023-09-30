@@ -11,6 +11,19 @@ namespace km
 {
 	FIreBall::FIreBall()
 		: mTime(0.0f)
+		, Initialize_Timing(0.0f)
+		, Set_Check0_Count(0)
+		, Set_Check1_Count(0)
+		, Set_Check2_Count(0)
+		, Set_Check3_Count(0)
+		, Set_Check4_Count(0)
+		, Set_Check5_Count(0)
+		, Set_Check6_Count(0)
+		, Set_Check7_Count(0)
+		, Set_Check8_Count(0)
+
+
+
 	{
 	}
 
@@ -39,6 +52,7 @@ namespace km
 	void FIreBall::Update()
 	{
 		mTime += Time::DeltaTime();
+		Initialize_Timing += Time::DeltaTime();
 		Pos = mTransform->GetPosition();
 
 		if (mTime > 3.0f)
@@ -48,7 +62,22 @@ namespace km
 
 		if (Set_Check0)
 		{
-			Pos.x -= 0.3f * Time::DeltaTime();
+			if (Set_Check0_Count == 0)
+			{
+				Pos.x -= 0.3f * Time::DeltaTime();
+				Set_Check0_Count++;
+			}
+			if (Set_Check0_Count == 1)
+			{
+				Pos.x -= 0.3f * Time::DeltaTime();
+				Pos.y += 0.3f * Time::DeltaTime();
+				Set_Check0_Count++;
+			}
+			if (Set_Check0_Count == 2)
+			{
+				Pos.x -= 0.3f * Time::DeltaTime();
+				Pos.y -= 0.3f * Time::DeltaTime();
+			}
 		}
 		if (Set_Check1)
 		{

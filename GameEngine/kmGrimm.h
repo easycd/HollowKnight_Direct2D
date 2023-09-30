@@ -4,9 +4,13 @@
 namespace km
 {
 	class Player;
+
 	class Spike_Object;
 	class FlameBat;
 	class FIreBall;
+
+	class AirDash_Effect;
+	class GroundDash_Effect;
 
 	class Grimm : public GameObject
 	{
@@ -193,6 +197,7 @@ namespace km
 		bool Cast_Tele_In_Check = true;
 		bool Slash_Tele_In_Check = true;
 
+		//SpikeObj
 	private:
 		Spike_Object* Spike0;
 		Spike_Object* Spike1;
@@ -208,6 +213,7 @@ namespace km
 		Spike_Object* Spike11;
 		Spike_Object* Spike12;
 
+		//FlameBatObj
 		FlameBat* Bat0;
 		FlameBat* Bat1;
 		FlameBat* Bat2;
@@ -220,6 +226,12 @@ namespace km
 		bool Bat2_Play = false;
 
 		float FireBall_Delay_time;
+
+		//Effect
+	private:
+		AirDash_Effect* mAirDash_Effect;
+		GroundDash_Effect* mGroundDash_Effect;
+		bool mAirDash_Effect_Check = true;
 	};
 }
 

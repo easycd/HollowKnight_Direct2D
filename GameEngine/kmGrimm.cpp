@@ -18,6 +18,10 @@
 #include "kmFlameBat.h"
 #include "kmFIreBall.h"
 
+//Effect
+#include "kmAirDash_Effect.h"
+#include "kmGroundDash_Effect.h"
+
 namespace km
 {
 	Grimm::Grimm()
@@ -35,7 +39,7 @@ namespace km
 
 
 
-		, attack_pattern(4)
+		, attack_pattern(1)
 
 		, Test(true)
 	{
@@ -202,10 +206,20 @@ namespace km
 				mGrimm_Live_Pos = mTransform->GetPosition();
 				mGrimm_Live_Pos.x += Dash_Locate.x * Time::DeltaTime() * 2.5f;
 				mGrimm_Live_Pos.y += Dash_Locate.y * Time::DeltaTime() * 2.5f;
+				if (mAirDash_Effect_Check)
+				{
+					mAirDash_Effect = object::Instantiate<AirDash_Effect>(eLayerType::Effect);
+					mAirDash_Effect->PlayEffect();
+					mAirDash_Effect->GetComponent<Transform>()->SetPosition(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f));
+					mAirDash_Effect->GetComponent<Transform>()->SetRotation(Vector3(Dash_Locate.x, Dash_Locate.y, 0.0f));
+
+					mAirDash_Effect_Check = false;
+				}
 			}
 			else if (Ground_Check)
 			{
 				AirDash_Loop_Move_Check = false;
+				mAirDash_Effect_Check = true;
 				AirDash_Land();
 			}
 		}
@@ -441,6 +455,9 @@ namespace km
 
 	void Grimm::Pattern()
 	{
+		//srand(time(NULL));
+		//attack_pattern = rand() % 5 + 1;
+
 			switch (attack_pattern)
 			{
 			case 0:
@@ -499,16 +516,6 @@ namespace km
 		}
 	}
 
-	//void Grimm::AirDash_On()
-	//{
-	//	if (AirDash_On_Check)
-	//	{
-	//		mPattern_State = ePatternState::DisPattern;
-	//		mAnimation->PlayAnimation(L"AirDash_Attack_On", true);
-	//		AirDash_On_Check = false;
-	//	}
-	//}
-
 	void Grimm::AirDash_Start()
 	{
 		if (AirDash_Start_Check)
@@ -540,6 +547,10 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack2_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.1f, 0.8f));
+			//mAirDash_Effect = object::Instantiate<AirDash_Effect>(eLayerType::Effect);
+			//mAirDash_Effect->PlayEffect();
+			//mAirDash_Effect->GetComponent<Transform>()->SetPosition(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f));
+			//mAirDash_Effect->GetComponent<Transform>()->SetRotation(Vector3(Dash_Locate.x, Dash_Locate.y, 0.0f));
 
 			AirDash_Loop_Check = false;
 		}
@@ -549,6 +560,10 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack2_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.1f, 0.8f));
+			//mAirDash_Effect = object::Instantiate<AirDash_Effect>(eLayerType::Effect);
+			//mAirDash_Effect->PlayEffect();
+			//mAirDash_Effect->GetComponent<Transform>()->SetPosition(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f));
+			//mAirDash_Effect->GetComponent<Transform>()->SetRotation(Vector3(Dash_Locate.x, Dash_Locate.y, 0.0f));
 
 			AirDash_Loop_Check = false;
 		}
@@ -588,6 +603,9 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack_Left", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
+			mGroundDash_Effect = object::Instantiate<GroundDash_Effect>(eLayerType::Effect);
+			mGroundDash_Effect->PlayEffect_Left();
+			mGroundDash_Effect->GetComponent<Transform>()->SetPosition(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f));
 
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
@@ -598,6 +616,9 @@ namespace km
 			mAnimation->PlayAnimation(L"AirDash_Attack_Right", true);
 			mTransform->SetScale(Vector3(0.6f, 0.5f, 0.0f));
 			mCollider->SetSize(Vector2(0.7f, 0.5f));
+			mGroundDash_Effect = object::Instantiate<GroundDash_Effect>(eLayerType::Effect);
+			mGroundDash_Effect->PlayEffect_Right();
+			mGroundDash_Effect->GetComponent<Transform>()->SetPosition(Vector3(mGrimm_Live_Pos.x, mGrimm_Live_Pos.y, 0.0f));
 
 			AirDash_Attack_Check = false;
 			AirDash_Attack_Move_Check = true;
@@ -972,6 +993,7 @@ namespace km
 		Spike10 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
 		Spike11 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
 		Spike12 = object::Instantiate<Spike_Object>(eLayerType::BossObj);
+		
 
 		Spike0->GetComponent<Transform>()->SetPosition(Vector3(-1.1f, -0.25f, 9.0f));
 		Spike1->GetComponent<Transform>()->SetPosition(Vector3(-0.95f, -0.25f, 9.0f));

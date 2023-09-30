@@ -32,6 +32,8 @@ namespace km
 
 		Vector3 Pos;
 		float mTime;
+		float Initialize_Timing;
+
 	private:
 		bool Set_Check0 = false;
 		bool Set_Check1 = false;
@@ -42,5 +44,16 @@ namespace km
 		bool Set_Check6 = false;
 		bool Set_Check7 = false;
 		bool Set_Check8 = false;
+
+	private:
+		int Set_Check0_Count;
+		int Set_Check1_Count;
+		int Set_Check2_Count;
+		int Set_Check3_Count;
+		int Set_Check4_Count;
+		int Set_Check5_Count;
+		int Set_Check6_Count;
+		int Set_Check7_Count;
+		int Set_Check8_Count;
 	};
 }

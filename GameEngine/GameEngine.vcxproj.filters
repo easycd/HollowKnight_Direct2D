@@ -146,6 +146,10 @@
     <ClInclude Include="kmPureVessel.h">
       <Filter>Contents\GameObject\Boss\PureVessel</Filter>
     </ClInclude>
+    <ClInclude Include="kmAirDash_Effect.h">
+      <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGroundDash_Effect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -206,6 +210,10 @@
     <ClCompile Include="kmPureVessel.cpp">
       <Filter>Contents\GameObject\Boss\PureVessel</Filter>
     </ClCompile>
+    <ClCompile Include="kmAirDash_Effect.cpp">
+      <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGroundDash_Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />
