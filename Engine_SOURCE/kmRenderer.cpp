@@ -359,6 +359,14 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"TitleBG", material);
 
+		//BlackBG
+		texture = Resources::Load<Texture>(L"BlackBG", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\BlackBG.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"Black_BG", material);
+
 		//»Î¿« ∏∂¿ª
 		texture = Resources::Load<Texture>(L"Grimm_Town", L"..\\Resources\\Boss_Grimm\\Grimm_Town\\Grimm_Town.png");
 		material = std::make_shared<Material>();

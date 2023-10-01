@@ -394,16 +394,16 @@ namespace km
 			mDirection = eDirection::Left;
 		}
 
-		//패턴 시작
-		if (mPlayerPos.x > -1.26f && Pattern_Start == false)
-		{
-			mTime += Time::DeltaTime();
-			if (mTime > 3.0f)
-			{
-				Pattern_Start = true;
-				Tele_Out();
-			}
-		}
+		////패턴 시작
+		//if (mPlayerPos.x > -1.26f && Pattern_Start == false)
+		//{
+		//	mTime += Time::DeltaTime();
+		//	if (mTime > 3.0f)
+		//	{
+		//		Pattern_Start = true;
+		//		Tele_Out();
+		//	}
+		//}
 
 		mTransform->SetPosition(mGrimm_Live_Pos);
 		GameObject::Update();

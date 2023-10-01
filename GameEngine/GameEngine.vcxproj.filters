@@ -22,9 +22,6 @@
     <Filter Include="Contents\Scene\TitleScene">
       <UniqueIdentifier>{9d6e9113-6d08-4667-9e0a-95ba74b3d9ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\Boss">
-      <UniqueIdentifier>{6f67b03a-989d-4ccf-8758-36f5b4f1addd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Script\Player">
       <UniqueIdentifier>{b759d439-57d0-4378-ab89-0d626304614f}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,12 @@
     <Filter Include="Contents\GameObject\Boss\PureVessel\Effect">
       <UniqueIdentifier>{ae509abd-3133-424c-9794-dd72ca681ac9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Npc\Trump">
+      <UniqueIdentifier>{a6c29411-d3db-4162-a353-49da4f0644bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Npc\Crowd">
+      <UniqueIdentifier>{cf33352c-954c-46ac-a412-091eac8da589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -134,9 +137,6 @@
     <ClInclude Include="kmFlameBat.h">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\FlameBat</Filter>
     </ClInclude>
-    <ClInclude Include="kmTrumpNpc.h">
-      <Filter>Contents\GameObject\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="kmFIreBall.h">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Fireball</Filter>
     </ClInclude>
@@ -150,6 +150,10 @@
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClInclude>
     <ClInclude Include="kmGroundDash_Effect.h" />
+    <ClInclude Include="kmTrumpNpc.h">
+      <Filter>Contents\GameObject\Npc\Trump</Filter>
+    </ClInclude>
+    <ClInclude Include="kmCrowd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -198,9 +202,6 @@
     <ClCompile Include="kmFlameBat.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\FlameBat</Filter>
     </ClCompile>
-    <ClCompile Include="kmTrumpNpc.cpp">
-      <Filter>Contents\GameObject\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="kmFIreBall.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Fireball</Filter>
     </ClCompile>
@@ -214,6 +215,10 @@
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClCompile>
     <ClCompile Include="kmGroundDash_Effect.cpp" />
+    <ClCompile Include="kmTrumpNpc.cpp">
+      <Filter>Contents\GameObject\Npc\Trump</Filter>
+    </ClCompile>
+    <ClCompile Include="kmCrowd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

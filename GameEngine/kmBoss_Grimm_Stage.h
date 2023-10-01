@@ -8,6 +8,7 @@ namespace km
 	class Spike_Object;
 	class FlameBat;
 	class TrumpNpc;
+	class Crowd;
 
 	class Boss_Grimm_Stage : public Scene
 	{
@@ -32,5 +33,21 @@ namespace km
 		Spike_Object* sp;
 		FlameBat* fb;
 		TrumpNpc* mNpc;
+		//Left
+		Crowd* mCrowd_00;
+		Crowd* mCrowd_01;
+		Crowd* mCrowd_02;
+		Crowd* mCrowd_03;
+		Crowd* mCrowd_04;
+		Crowd* mCrowd_05;
+
+		//Right
+		Crowd* mCrowd_06;
+		Crowd* mCrowd_07;
+		Crowd* mCrowd_08;
+		Crowd* mCrowd_09;
+		Crowd* mCrowd_10;
+
+
 	};
 }
