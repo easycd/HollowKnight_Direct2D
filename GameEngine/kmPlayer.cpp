@@ -1,5 +1,4 @@
 #include "kmPlayer.h"
-#include "kmPlayerScript.h"
 #include "kmMeshRenderer.h"
 #include "kmResources.h"
 #include "kmAnimator.h"
@@ -11,10 +10,9 @@
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
 #include "kmObject.h"
-
 #include "kmPlayerEffet.h"
-
 #include "kmMeshRenderer.h"
+
 namespace km
 {
 	Player::Player()
@@ -32,15 +30,19 @@ namespace km
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
+		//Idle
 		std::shared_ptr<Texture> LeftIdle = Resources::Load<Texture>(L"LeftIdle", L"..\\Resources\\Knight\\Idle\\Knight_Idle_Left.png");
 		std::shared_ptr<Texture> RightIdle = Resources::Load<Texture>(L"RightIdle", L"..\\Resources\\Knight\\Idle\\Knight_Idle_Right.png");
 
+		//Walk
 		std::shared_ptr<Texture> Leftwalk = Resources::Load<Texture>(L"Leftwalk", L"..\\Resources\\Knight\\Walk\\Knight_walk_Left.png");
 		std::shared_ptr<Texture> Rightwalk = Resources::Load<Texture>(L"Rightwalk", L"..\\Resources\\Knight\\Walk\\Knight_walk_Right.png");
 
+		//Double Jump
 		std::shared_ptr<Texture> DoubleJump_Left = Resources::Load<Texture>(L"DoubleJumpLeft", L"..\\Resources\\Knight\\Double_Jump\\Knight_DoubleJump_Left.png");
 		std::shared_ptr<Texture> DoubleJump_Right = Resources::Load<Texture>(L"DoubleJumpRight", L"..\\Resources\\Knight\\Double_Jump\\Knight_DoubleJump_Right.png");
 
+		//Slash
 		std::shared_ptr<Texture> UP_LeftAttack = Resources::Load<Texture>(L"LeftUpAttack", L"..\\Resources\\Knight\\Up_Attack\\Knight_Up_Attack_Left.png");
 		std::shared_ptr<Texture> UP_RightAttack = Resources::Load<Texture>(L"RightUpAttack", L"..\\Resources\\Knight\\Up_Attack\\Knight_Up_Attack_Right.png");
 		std::shared_ptr<Texture> LeftAttack = Resources::Load<Texture>(L"LeftAttack", L"..\\Resources\\Knight\\Attack\\Knight_Attack_Left.png");
@@ -48,9 +50,11 @@ namespace km
 		std::shared_ptr<Texture> Down_LeftAttack = Resources::Load<Texture>(L"LeftDownAttack", L"..\\Resources\\Knight\\Down_Attack\\Knight_Down_Attack_Left.png");
 		std::shared_ptr<Texture> Down_RightAttack = Resources::Load<Texture>(L"RightDownAttack", L"..\\Resources\\Knight\\Down_Attack\\Knight_Down_Attack_Right.png");
 
+		//Dash
 		std::shared_ptr<Texture> LeftDash = Resources::Load<Texture>(L"LeftDash", L"..\\Resources\\Knight\\Dash\\Knight_Dash_Left.png");
 		std::shared_ptr<Texture> RightDash = Resources::Load<Texture>(L"RightDash", L"..\\Resources\\Knight\\Dash\\Knight_Dash_Right.png");
 
+		//Focus
 		std::shared_ptr<Texture> FocusStartLeft = Resources::Load<Texture>(L"FocusStartLeft", L"..\\Resources\\Knight\\Start\\Knight_FocusStart_Left.png");
 		std::shared_ptr<Texture> FocusStartRight = Resources::Load<Texture>(L"FocusStartRight", L"..\\Resources\\Knight\\Start\\Knight_FocusStart_Right.png");
 		std::shared_ptr<Texture> FocusLeft = Resources::Load<Texture>(L"FocusLeft", L"..\\Resources\\Knight\\Loop\\Knight_Focus_Left.png");
@@ -106,10 +110,6 @@ namespace km
 		velocity.y -= 0.2f;
 		mRigidbody->SetVelocity(velocity);
 		mRigidbody->SetGround(false);
-
-
-
-
 
 		GameObject::Initialize();
 	}
@@ -193,7 +193,6 @@ namespace km
 
 	void Player::OnCollisionEnter(Collider2D* other)
 	{
-		//GroundScript* gd = other->GetOwner()->GetComponent<GroundScript>();
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
 
 		if (gd != nullptr)
@@ -586,11 +585,15 @@ namespace km
 			{
 			case eDirection::Left:	// left
 				at->PlayAnimation(L"Up_Attack_Left", false);
+				mEffect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
+				mEffect->UP_Slash_Left();
 				up_attack_Check = true;
 				break;
 
 			case eDirection::Right:	// right
 				at->PlayAnimation(L"Up_Attack_Right", false);
+				mEffect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
+				mEffect->UP_Slash_Right();
 				up_attack_Check = true;
 				break;
 

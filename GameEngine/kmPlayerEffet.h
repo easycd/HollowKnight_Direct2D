@@ -16,10 +16,15 @@ namespace km
 		virtual void Initialize() override;
 		virtual void Update() override;
 
-		//private:
-		void Normal_Attack_Effect();
-		void UP_Attack_Effect();
-		void Down_Attack_Effect();
+		virtual void Slash_Left();
+		virtual void Slash_Right();
+		virtual void UP_Slash_Left();
+		virtual void UP_Slash_Right();
+		virtual void Down_Slash_Left();
+		virtual void Down_Slash_Right();
+
+		void Destroy();
+		
 
 	private:
 		PlayerScript* player;

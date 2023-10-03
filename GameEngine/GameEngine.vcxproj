@@ -163,7 +163,6 @@
     <ClInclude Include="kmGroundScript.h" />
     <ClInclude Include="kmPlayer.h" />
     <ClInclude Include="kmPlayerEffet.h" />
-    <ClInclude Include="kmPlayerScript.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmPureVessel.h" />
     <ClInclude Include="kmSpike_Object.h" />
@@ -190,7 +189,6 @@
     <ClCompile Include="kmGroundScript.cpp" />
     <ClCompile Include="kmPlayer.cpp" />
     <ClCompile Include="kmPlayerEffet.cpp" />
-    <ClCompile Include="kmPlayerScript.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
     <ClCompile Include="kmPureVessel.cpp" />
     <ClCompile Include="kmSpike_Object.cpp" />

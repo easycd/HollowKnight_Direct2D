@@ -10,7 +10,6 @@
 #include "kmObject.h"
 #include "kmRenderer.h"
 #include "kmCollider2D.h"
-#include "kmPlayerScript.h"
 #include "kmCollisionManager.h"
 #include "kmAnimator.h"
 #include "kmRigidbody.h"

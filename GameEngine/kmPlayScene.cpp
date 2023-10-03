@@ -10,7 +10,6 @@
 #include "kmObject.h"
 #include "kmRenderer.h"
 #include "kmCollider2D.h"
-#include "kmPlayerScript.h"
 #include "kmCollisionManager.h"
 #include "kmAnimator.h"
 #include "kmLight.h"
@@ -63,7 +62,6 @@ namespace km
 			//at->CompleteEvent(L"Idle") = std::bind();
 
 			at->PlayAnimation(L"Idle", true);
-			player->AddComponent<PlayerScript>();
 		}
 
 		{

@@ -4,8 +4,8 @@
 #include "kmTransform.h"
 #include "kmGameObject.h"
 #include "kmTime.h"
-#include "kmPlayerScript.h"
 #include "kmMeshRenderer.h"
+#include "kmObject.h"
 
 namespace km
 {
@@ -21,53 +21,83 @@ namespace km
 	void PlayerEffet::Initialize()
 	{
 		mTransform = GetComponent<Transform>();
-		mTransform->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+		at = AddComponent<Animator>();
 
-		MeshRenderer* mr = GetComponent<MeshRenderer>();
+		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
-		at = AddComponent<Animator>();
-		std::shared_ptr<Texture> AttackRight = Resources::Load<Texture>(L"AttackRight", L"..\\Resources\\Knight\\Effect\\Attack\\Attack.png");
-		std::shared_ptr<Texture> AttackLeft = Resources::Load<Texture>(L"AttackLeft", L"..\\Resources\\Knight\\Effect\\Attack\\Attack.png");
+		std::shared_ptr<Texture> Slash_Left = Resources::Load<Texture>(L"Slash_Left", L"..\\Resources\\Knight\\Effect\\Slash\\Left\\Slash_Left.png");
+		std::shared_ptr<Texture> Slash_Right = Resources::Load<Texture>(L"Slash_Right", L"..\\Resources\\Knight\\Effect\\Slash\\Right\\Slash_Right.png");
 
-		std::shared_ptr<Texture> UpAttackRight = Resources::Load<Texture>(L"UpAttackRight", L"..\\Resources\\Knight\\Effect\\Attack\\UPAttack.png");
-		std::shared_ptr<Texture> UpAttackLeft = Resources::Load<Texture>(L"UpAttackLeft", L"..\\Resources\\Knight\\Effect\\Attack\\UPAttack.png");
+		std::shared_ptr<Texture> UP_Slash_Left = Resources::Load<Texture>(L"UP_Slash_Left", L"..\\Resources\\Knight\\Effect\\Up_Slash\\Left\\UP_Slash_Left.png");
+		std::shared_ptr<Texture> UP_Slash_Right = Resources::Load<Texture>(L"UP_Slash_Right", L"..\\Resources\\Knight\\Effect\\Up_Slash\\Right\\UP_Slash_Right.png");
 
-		std::shared_ptr<Texture> DownAttackRight = Resources::Load<Texture>(L"DownAttackRight", L"..\\Resources\\Knight\\Effect\\Attack\\DownAttack.png");
-		std::shared_ptr<Texture> DownAttackLeft = Resources::Load<Texture>(L"DownAttackLeft", L"..\\Resources\\Knight\\Effect\\Attack\\DownAttack.png");
+		std::shared_ptr<Texture> Down_Slash_Left = Resources::Load<Texture>(L"Down_Slash_Left", L"..\\Resources\\Knight\\Effect\\Down_Slash\\Left\\Down_Slash_Left.png");
+		std::shared_ptr<Texture> Down_Slash_Right = Resources::Load<Texture>(L"Down_Slash_Right", L"..\\Resources\\Knight\\Effect\\Down_Slash\\Right\\Down_Slash_Right.png");
 
-		at->Create(L"Attack_Right_Effect", AttackRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15);
-		at->Create(L"Attack_Left", AttackLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 1);
 
-		at->Create(L"Up_Attack_Right", UpAttackRight, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 1);
-		at->Create(L"Up_Attack_Left", UpAttackLeft, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 1);
+		at->Create(L"Slash_Left", Slash_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+		at->Create(L"Slash_Left", Slash_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
 
-		at->Create(L"Down_Attack_Right", DownAttackRight, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 1);
-		at->Create(L"Down_Attack_Left", DownAttackLeft, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 1);
+		at->Create(L"UP_Slash_Left", UP_Slash_Left, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+		at->Create(L"UP_Slash_Left", UP_Slash_Left, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
 
-		at->PlayAnimation(L"Attack_Right_Effect", true);
+		at->Create(L"Down_Slash_Left", Down_Slash_Left, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+		at->Create(L"Down_Slash_Left", Down_Slash_Left, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+
+		at->CompleteEvent(L"Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		at->CompleteEvent(L"Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		at->CompleteEvent(L"UP_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		at->CompleteEvent(L"UP_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		at->CompleteEvent(L"Down_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		at->CompleteEvent(L"Down_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+
+
 		GameObject::Initialize();
 	}
 
 	void PlayerEffet::Update()
 	{
-		Vector3 pos = mTransform->GetPosition();
-		mTransform->SetPosition(pos);
+
 
 		GameObject::Update();
 	}
 
-	void PlayerEffet::Normal_Attack_Effect()
+	void PlayerEffet::Slash_Left()
 	{
-		at->PlayAnimation(L"Attack_Right_Effect", true);
+		at->PlayAnimation(L"Slash_Left", true);
 	}
 
-	void PlayerEffet::UP_Attack_Effect()
+	void PlayerEffet::Slash_Right()
 	{
+		at->PlayAnimation(L"Slash_Right", true);
 	}
 
-	void PlayerEffet::Down_Attack_Effect()
+	void PlayerEffet::UP_Slash_Left()
 	{
+		at->PlayAnimation(L"UP_Slash_Left", true);
+	}
+
+	void PlayerEffet::UP_Slash_Right()
+	{
+		at->PlayAnimation(L"UP_Slash_Left", true);
+	}
+
+	void PlayerEffet::Down_Slash_Left()
+	{
+		at->PlayAnimation(L"Down_Slash_Left", true);
+	}
+
+	void PlayerEffet::Down_Slash_Right()
+	{
+		at->PlayAnimation(L"Down_Slash_Left", true);
+	}
+
+	void PlayerEffet::Destroy()
+	{
+		object::Destroy(this);
 	}
 }
+
+

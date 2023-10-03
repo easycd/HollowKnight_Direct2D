@@ -85,6 +85,9 @@
     <Filter Include="Contents\GameObject\Npc\Crowd">
       <UniqueIdentifier>{cf33352c-954c-46ac-a412-091eac8da589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect">
+      <UniqueIdentifier>{ee3cc869-efff-44e8-8d42-5ce5fbb0f329}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -121,9 +124,6 @@
     <ClInclude Include="kmPlayerEffet.h">
       <Filter>Contents\Script\Player\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="kmPlayerScript.h">
-      <Filter>Contents\Script\Player\PlayerScript</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="kmPlayer.h">
       <Filter>Contents\GameObject\Player</Filter>
@@ -149,11 +149,15 @@
     <ClInclude Include="kmAirDash_Effect.h">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="kmGroundDash_Effect.h" />
     <ClInclude Include="kmTrumpNpc.h">
       <Filter>Contents\GameObject\Npc\Trump</Filter>
     </ClInclude>
-    <ClInclude Include="kmCrowd.h" />
+    <ClInclude Include="kmCrowd.h">
+      <Filter>Contents\GameObject\Npc\Crowd</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGroundDash_Effect.h">
+      <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -187,9 +191,6 @@
     <ClCompile Include="kmPlayerEffet.cpp">
       <Filter>Contents\Script\Player\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="kmPlayerScript.cpp">
-      <Filter>Contents\Script\Player\PlayerScript</Filter>
-    </ClCompile>
     <ClCompile Include="kmPlayer.cpp">
       <Filter>Contents\GameObject\Player</Filter>
     </ClCompile>
@@ -214,11 +215,15 @@
     <ClCompile Include="kmAirDash_Effect.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="kmGroundDash_Effect.cpp" />
     <ClCompile Include="kmTrumpNpc.cpp">
       <Filter>Contents\GameObject\Npc\Trump</Filter>
     </ClCompile>
-    <ClCompile Include="kmCrowd.cpp" />
+    <ClCompile Include="kmCrowd.cpp">
+      <Filter>Contents\GameObject\Npc\Crowd</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGroundDash_Effect.cpp">
+      <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

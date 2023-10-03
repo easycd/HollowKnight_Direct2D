@@ -4,7 +4,6 @@
 #include "kmRigidbody.h"
 #include "kmGameObject.h"
 #include "kmRenderer.h"
-#include "..\GameEngine\kmPlayerScript.h"
 #include "kmScene.h"
 #include "kmSceneManager.h"
 
