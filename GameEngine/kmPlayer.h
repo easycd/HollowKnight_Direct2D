@@ -57,6 +57,7 @@ namespace km
 		Animator* mAnimation;
 		Transform* mTransform;
 		Vector3 mPlayerPos;
+		Vector3 mSavePos;
 
 		VectorR velocity;
 		eDirection mDirection; //0이면 왼쪽 1이면 오른쪽
@@ -70,9 +71,14 @@ namespace km
 	private:
 		bool Dash_Left_Check = false;
 		bool Dash_Right_Check = false;
+		bool Fall_Dash_Check = false; //Fall 상태에서 방향키 + Dash 버튼 누르면 이동하는거랑 겹치기 때문에 bool 함수로 잠금 
+		bool Jump_Delay = false;
+		bool DoubleJump_Delay = false;
 
 		bool Ground_Check = false;
+		bool Fall_Delay = false;
 		bool Fall_Ani_Check = true;
+
 	private:
 		void Idle();
 		void Move();
@@ -94,21 +100,19 @@ namespace km
 		void Jump_End();
 		void DoubleJump_End();
 		void Dash_End();
-		void UpAttack_End();
 		void Attack_End();
-		void DownAttack_End();
 
 		//void Death();
 
 	private:
 		bool Idle_Check        = false;
 		bool Move_Check		   = false;
-		bool Jump_Check		   = false;
-		bool Double_Jump_Check = false;
-		bool Dash_Check		   = false;
+		bool Jump_Check		   = true;
+		bool Double_Jump_Check = true;
+		bool Dash_Check		   = true;
 		bool Fall_Check		   = false;
-		bool UpAttack_Check	   = false;
-		bool Attack_Check	   = false;
-		bool DownAttack_Chekc  = false;
+		bool UpAttack_Check	   = true;
+		bool Attack_Check	   = true;
+		bool DownAttack_Check  = true;
 	};
 }
