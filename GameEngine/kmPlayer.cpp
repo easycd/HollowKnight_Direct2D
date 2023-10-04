@@ -23,8 +23,8 @@ namespace km
 	}
 	void Player::Initialize()
 	{
-		tr = GetComponent<Transform>();
-		at = AddComponent<Animator>();
+		mTransform = GetComponent<Transform>();
+		mAnimation = AddComponent<Animator>();
 
 		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -37,6 +37,10 @@ namespace km
 		//Walk
 		std::shared_ptr<Texture> Leftwalk = Resources::Load<Texture>(L"Leftwalk", L"..\\Resources\\Knight\\Walk\\Knight_walk_Left.png");
 		std::shared_ptr<Texture> Rightwalk = Resources::Load<Texture>(L"Rightwalk", L"..\\Resources\\Knight\\Walk\\Knight_walk_Right.png");
+
+		//Fall
+		std::shared_ptr<Texture> Fall_Left = Resources::Load<Texture>(L"Fall_Left", L"..\\Resources\\Knight\\Fall\\Left\\Fall_Left.png");
+		std::shared_ptr<Texture> Fall_Right = Resources::Load<Texture>(L"Fall_Right", L"..\\Resources\\Knight\\Fall\\Right\\Fall_Right.png");
 
 		//Double Jump
 		std::shared_ptr<Texture> DoubleJump_Left = Resources::Load<Texture>(L"DoubleJumpLeft", L"..\\Resources\\Knight\\Double_Jump\\Knight_DoubleJump_Left.png");
@@ -64,43 +68,44 @@ namespace km
 		std::shared_ptr<Texture> FocusEndLeft = Resources::Load<Texture>(L"FocusEndLeft", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Left.png");
 		std::shared_ptr<Texture> FocusEndRight = Resources::Load<Texture>(L"FocusEndRight", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Right.png");
 
-		at->Create(L"Idle_Left", LeftIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
-		at->Create(L"Idle_Right", RightIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Idle_Left", LeftIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Idle_Right", RightIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
 
-		at->Create(L"walk_Left", Leftwalk, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
-		at->Create(L"walk_Right", Rightwalk, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"walk_Left", Leftwalk, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"walk_Right", Rightwalk, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
 
-		at->Create(L"DoubleJump_Left", DoubleJump_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
-		at->Create(L"DoubleJump_Right", DoubleJump_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Fall_Left", Fall_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Fall_Right", Fall_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, -0.12f));
 
-		at->Create(L"Up_Attack_Left", UP_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		at->Create(L"Up_Attack_Right", UP_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		at->Create(L"Attack_Left", LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		at->Create(L"Attack_Right", RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		at->Create(L"Down_Attack_Left", Down_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		at->Create(L"Down_Attack_Right", Down_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"DoubleJump_Left", DoubleJump_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"DoubleJump_Right", DoubleJump_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 8, Vector2(0.0f, -0.12f));
 
-		at->Create(L"Dash_Left", LeftDash, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 12, Vector2(0.0f, -0.12f));
-		at->Create(L"Dash_Right", RightDash, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 12, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Up_Attack_Left", UP_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Up_Attack_Right", UP_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Attack_Left", LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Attack_Right", RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Down_Attack_Left", Down_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Down_Attack_Right", Down_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
 
-		at->Create(L"Focus_StartLeft", FocusStartLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 7, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_StartRight", FocusStartRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 7, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_Left", FocusLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 10, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_Right", FocusRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 10, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_OnLeft", FocusOnLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 11, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_OnRight", FocusOnRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 11, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_EndLeft", FocusEndLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
-		at->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Dash_Left", LeftDash, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 12, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Dash_Right", RightDash, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 12, Vector2(0.0f, -0.12f));
+
+		mAnimation->Create(L"Focus_StartLeft", FocusStartLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 7, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_StartRight", FocusStartRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 7, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_Left", FocusLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 10, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_Right", FocusRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 10, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_OnLeft", FocusOnLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 11, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_OnRight", FocusOnRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 11, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_EndLeft", FocusEndLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
 
 
-		tr->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		tr->SetPosition (Vector3(0.0f, 0.5f, 0.0f));
-		//at->PlayAnimation(L"Idle_Right", true);
-		Direction = eDirection::Right;
+		mTransform->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		mTransform->SetPosition (Vector3(0.0f, 0.5f, 0.0f));
+		mDirection = eDirection::Right;
 
 		Collider2D* collider = AddComponent<Collider2D>();
 		collider->SetSize(Vector2(0.18f, 0.7f));
-		//collider->SetCenter(Vector2(0.007f, -0.02f));
 
 
 
@@ -111,56 +116,57 @@ namespace km
 		mRigidbody->SetVelocity(velocity);
 		mRigidbody->SetGround(false);
 
+		mAnimation->PlayAnimation(L"Idle_Right", true);
 		GameObject::Initialize();
 	}
 	void Player::Update()
 	{
-		pos = tr->GetPosition();
+		mPlayerPos = mTransform->GetPosition();
 
 		switch (mState)
 		{
-		case Player::PlayerState::Idle:
+		case Player::ePlayerState::Idle:
 			Idle();
 			break;
-		case Player::PlayerState::Move:
+		case Player::ePlayerState::Move:
 			Move();
 			break;
-		case Player::PlayerState::Jump:
+		case Player::ePlayerState::Jump:
 			Jump();
 			break;
-		case Player::PlayerState::DoubleJump:
+		case Player::ePlayerState::DoubleJump:
 			DoubleJump();
 			break;
-		case Player::PlayerState::Fall:
+		case Player::ePlayerState::Fall:
 			Fall();
 			break;
-		case Player::PlayerState::Dash:
+		case Player::ePlayerState::Dash:
 			Dash();
 			break;
-		case Player::PlayerState::UpAttack:
+		case Player::ePlayerState::UpAttack:
 			UpAttack();
 			break;
-		case Player::PlayerState::Attack:
+		case Player::ePlayerState::Attack:
 			Attack();
 			break;
-		case Player::PlayerState::DownAttack:
+		case Player::ePlayerState::DownAttack:
 			DownAttack();
 			break;
-		case Player::PlayerState::FocusStart:
-			FocusStart();
-			break;
-		case Player::PlayerState::Focus:
-			Focus();
-			break;
-		case Player::PlayerState::FocusOn:
-			FocusOn();
-			break;
-		case Player::PlayerState::FocusEnd:
-			FocusEnd();
-			break;
-		case Player::PlayerState::Death:
-			Death();
-			break;
+		//case Player::ePlayerState::FocusStart:
+		//	FocusStart();
+		//	break;
+		//case Player::ePlayerState::Focus:
+		//	Focus();
+		//	break;
+		//case Player::ePlayerState::FocusOn:
+		//	FocusOn();
+		//	break;
+		//case Player::ePlayerState::FocusEnd:
+		//	FocusEnd();
+		//	break;
+		//case Player::ePlayerState::Death:
+		//	Death();
+		//	break;
 		default:
 			break;
 		}
@@ -220,715 +226,79 @@ namespace km
 		}
 	}
 
+
 	void Player::Idle()
 	{
 		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
+			mDirection = eDirection::Left;
 		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (idle_Check == false)
-		{
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-			if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
-
-			idle_Check = true;
-			ActionInitialize();
-		}
+			mDirection = eDirection::Right;
 
 		//좌우 이동
 		if (Input::GetKey(eKeyCode::LEFT) || Input::GetKey(eKeyCode::RIGHT))
 		{
-			mState = PlayerState::Move;
+			mState = ePlayerState::Move;
 
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"walk_Left", true);
+			if (mDirection == eDirection::Left)
+				mAnimation->PlayAnimation(L"walk_Left", true);
 
-			if (Direction == eDirection::Right)
-				at->PlayAnimation(L"walk_Right", true);
-
-			idle_Check = false;
+			if (mDirection == eDirection::Right)
+				mAnimation->PlayAnimation(L"walk_Right", true);
 		}
 
-		//일반 공격
-		if (Input::GetKeyDown(eKeyCode::X))
-		{
-			mState = PlayerState::Attack;
-			idle_Check = false;
-		}
-
-		//하단 공격
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
-		{
-			mState = PlayerState::DownAttack;
-			idle_Check = false;
-		}
-
-		//상단공격
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
-		{
-			mState = PlayerState::UpAttack;
-			idle_Check = false;
-		}
-
-		// 점프
-		if (Input::GetKeyDown(eKeyCode::Z))
-		{
-			mState = PlayerState::Jump;
-			idle_Check = false;
-		}
-
-		// 대시키 입력시 dash 상태로 변경
-		if (Input::GetKeyDown(eKeyCode::LSHFIT))
-		{
-			mState = PlayerState::Dash;
-			idle_Check = false;
-			return;
-		}
-
-		//체력회복
-		if (Input::GetKey(eKeyCode::A))
-		{
-			FocusStart();
-
-			idle_Check = false;
-		}
 	}
 
 	void Player::Move()
 	{
+
 		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
+		{
+			mPlayerPos.x -= 1.0f * Time::DeltaTime();
+		}
+
 		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
+		{
+			mPlayerPos.x += 1.0f * Time::DeltaTime();
+		}
 
 		if (Input::GetKeyUp(eKeyCode::LEFT) || Input::GetKeyUp(eKeyCode::RIGHT))
 		{
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-
-			if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
+			mState = ePlayerState::Idle;
+			if (mDirection == eDirection::Left)
+				mAnimation->PlayAnimation(L"Idle_Left", true);
+			else if (mDirection == eDirection::Right)
+				mAnimation->PlayAnimation(L"Idle_Right", true);
 		}
 
-		//일반 공격
-		if (Input::GetKeyDown(eKeyCode::X))
-		{
-			mState = PlayerState::Attack;
-		}
-
-		//하단 공격
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
-		{
-			mState = PlayerState::DownAttack;
-		}
-
-		//상단공격
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
-		{
-			mState = PlayerState::UpAttack;
-		}
-
-		// 점프
-		if (Input::GetKeyDown(eKeyCode::Z))
-		{
-			mState = PlayerState::Jump;
-		}
-
-		// 대시키 입력시 dash 상태로 변경
-		if (Input::GetKeyDown(eKeyCode::LSHFIT))
-		{
-			mState = PlayerState::Dash;
-		}
-
-		//체력회복
-		if (Input::GetKey(eKeyCode::A))
-		{
-			FocusStart();
-		}
-
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			pos.x -= 1.0f * Time::DeltaTime();
-		}
-
-		if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			pos.x += 1.0f * Time::DeltaTime();
-		}
-
-		tr->SetPosition(pos);
+		mTransform->SetPosition(mPlayerPos);
 	}
 
 	void Player::Jump()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (jump_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:
-				at->PlayAnimation(L"Idle_Left", false);
-				jump_Check = true;
-				break;
-			case eDirection::Right:
-				at->PlayAnimation(L"Idle_Right", false);
-				jump_Check = true;
-				break;
-			defualt:
-				break;
-			}
-
-			VectorR velocity = mRigidbody->GetVelocity();
-			velocity.y += 5.0f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
-		}
-
-		// 더블점프
-		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
-		{
-			mState = PlayerState::DoubleJump;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Dash
-		if (Input::GetKeyDown(eKeyCode::C))
-		{
-			mState = PlayerState::Dash;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Attack
-		if (Input::GetKeyDown(eKeyCode::X))
-		{
-			mState = PlayerState::Attack;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Up Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
-		{
-			mState = PlayerState::UpAttack;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Down Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
-		{
-			mState = PlayerState::DownAttack;
-			double_jump_Check = false;
-			return;
-		}
-
-		mTime += Time::DeltaTime();
-		if (mTime >= 0.1f)
-		{
-			mTime = 0.0f;
-			Jump_End_Event();
-		}
-
-		VectorR velocity = mRigidbody->GetVelocity();
-		if (Input::GetKey(eKeyCode::LEFT))
-			velocity.x -= 0.001f;
-
-		if (Input::GetKey(eKeyCode::RIGHT))
-			velocity.x += 0.001f;
-
-		mRigidbody->SetVelocity(velocity);
 	}
 
 	void Player::DoubleJump()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (double_jump_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:	// left
-				at->PlayAnimation(L"Idle_Left", false);
-				double_jump_Check = true;
-				break;
-
-			case eDirection::Right:	// right
-				at->PlayAnimation(L"Idle_Right", false);
-				double_jump_Check = true;
-				break;
-
-			default:
-				break;
-			}
-
-			VectorR velocity = mRigidbody->GetVelocity();
-			velocity.y += 8.0f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
-		}
-
-		// 더블점프
-		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
-		{
-			mState = PlayerState::DoubleJump;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Dash
-		if (Input::GetKeyDown(eKeyCode::C))
-		{
-			mState = PlayerState::Dash;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Attack
-		if (Input::GetKeyDown(eKeyCode::X))
-		{
-			mState = PlayerState::Attack;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Up Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
-		{
-			mState = PlayerState::UpAttack;
-			double_jump_Check = false;
-			return;
-		}
-
-		// Down Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
-		{
-			mState = PlayerState::DownAttack;
-			double_jump_Check = false;
-			return;
-		}
-
-		if (Input::GetKeyDown(eKeyCode::RIGHT) || Input::GetKeyDown(eKeyCode::LEFT))
-		{
-			mState = PlayerState::Idle;
-		}
-
-		mTime += Time::DeltaTime();
-		if (mTime >= 0.2f)
-		{
-			mTime = 0.0f;
-			Double_Jump_End_Event();
-		}
 	}
 
 	void Player::Dash()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (dash_jump_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:	// left
-				at->PlayAnimation(L"Dash_Left", false);
-				dash_jump_Check = true;
-				break;
-
-			case eDirection::Right:	// right
-				at->PlayAnimation(L"Dash_Right", false);
-				dash_jump_Check = true;
-				break;
-
-			default:
-				break;
-			}
-		}
-
-		velocity = mRigidbody->GetVelocity();
-		if (Direction == eDirection::Left)
-		{
-			velocity.x -= 8.0f;
-		}
-		if (Direction == eDirection::Right)
-		{
-			velocity.x += 8.0f;
-		}
-		mRigidbody->SetVelocity(velocity);
-	}
-
-	void Player::UpAttack()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (up_attack_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:	// left
-				at->PlayAnimation(L"Up_Attack_Left", false);
-				mEffect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
-				mEffect->UP_Slash_Left();
-				up_attack_Check = true;
-				break;
-
-			case eDirection::Right:	// right
-				at->PlayAnimation(L"Up_Attack_Right", false);
-				mEffect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
-				mEffect->UP_Slash_Right();
-				up_attack_Check = true;
-				break;
-
-			default:
-				break;
-			}
-		}
-
-		mTime += Time::DeltaTime();
-		if (mTime >= 0.2f)
-		{
-			mTime = 0.0f;
-			Up_Attack_End_Evnet();
-		}
-	}
-
-	void Player::Attack()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (attack_Check == false)
-		{
-			if (Direction == eDirection::Left)
-			{
-				at->PlayAnimation(L"Attack_Left", true);
-				attack_Check = true;
-			}
-			else if (Direction == eDirection::Right)
-			{
-				//Effect = object::Instantiate<PlayerEffet>(eLayerType::Effect);
-				//Effect->Normal_Attack_Effect();
-
-				at->PlayAnimation(L"Attack_Right", true);
-				attack_Check = true;
-			}
-		}
-
-		mTime += Time::DeltaTime();
-		if (mTime >= 0.2f)
-		{
-			mTime = 0.0f;
-			Attack_End_Event();
-		}
 	}
 
 	void Player::Fall()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
+	}
 
-		if (fall_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:	// left
-				at->PlayAnimation(L"Idle_Left", false);
-				fall_Check = true;
-				break;
+	void Player::UpAttack()
+	{
+	}
 
-			case eDirection::Right:	// right
-				at->PlayAnimation(L"Idle_Right", false);
-				fall_Check = true;
-				break;
-
-			default:
-				break;
-			}
-
-			ActionInitialize();
-		}
-
-		// 더블점프
-		if (Input::GetKeyDown(eKeyCode::Z) && double_jump_Check == false)
-		{
-			mState = PlayerState::DoubleJump;
-			fall_Check = false;
-			return;
-		}
-
-		// Dash
-		if (Input::GetKeyDown(eKeyCode::C))
-		{
-			mState = PlayerState::Dash;
-			fall_Check = false;
-			return;
-		}
-
-		// Up Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
-		{
-			mState = PlayerState::UpAttack;
-			fall_Check = false;
-			return;
-		}
-
-		// Down Attack
-		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
-		{
-			mState = PlayerState::DownAttack;
-			fall_Check = false;
-			return;
-		}
-
-		// Attack
-		if (Input::GetKeyDown(eKeyCode::X))
-		{
-			mState = PlayerState::Attack;
-			fall_Check = false;
-		}
-
-		if (Input::GetKey(eKeyCode::LEFT) || Input::GetKey(eKeyCode::RIGHT))
-		{
-			mState = PlayerState::Idle;
-		}
+	void Player::Attack()
+	{
 	}
 
 	void Player::DownAttack()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (down_attack_Check == false)
-		{
-			switch (Direction)
-			{
-			case eDirection::Left:	// left
-				at->PlayAnimation(L"Down_Attack_Left", true);
-				down_attack_Check = true;
-				break;
-
-			case eDirection::Right:	// right
-				at->PlayAnimation(L"Down_Attack_Right", true);
-				down_attack_Check = true;
-				break;
-
-			default:
-				break;
-			}
-		}
-
-		mTime += Time::DeltaTime();
-		if (mTime >= 0.2f)
-		{
-			mTime = 0.0f;
-			Down_Attack_End_Event();
-		}
-	}
-	void Player::FocusStart()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		mState = PlayerState::FocusStart;
-		if (Input::GetKey(eKeyCode::A))
-		{
-			at->PlayAnimation(L"Focus_StartLeft", true);
-		}
-	}
-	void Player::Focus()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-		if (Input::GetKeyUp(eKeyCode::A))
-		{
-			int a = 0;
-		}
-
-	}
-	void Player::FocusOn()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-	}
-	void Player::FocusEnd()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-
-	}
-	void Player::Death()
-	{
-		if (Input::GetKey(eKeyCode::LEFT))
-			Direction = eDirection::Left;
-		if (Input::GetKey(eKeyCode::RIGHT))
-			Direction = eDirection::Right;
-
-	}
-	void Player::ActionInitialize()
-	{
-		idle_Check = false;
-		jump_Check = false;
-		double_jump_Check = false;
-		dash_jump_Check = false;
-		up_attack_Check = false;
-		attack_Check = false;
-		down_attack_Check = false;
 	}
 
-	void Player::Up_Attack_End_Evnet()
-	{
-		switch (mRigidbody->GetGround())
-		{
-		case true:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
-			break;
-
-		case false:
-			mState = PlayerState::Fall;
-			break;
-
-		default:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Knight_Idleleft", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Knight_Idleright", true);
-			break;
-		}
-	}
-	void Player::Attack_End_Event()
-	{
-		//switch (mRigidbody->GetGround())
-		switch (mRigidbody->GetGround())
-		{
-		case true:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
-			break;
-
-		case false:
-			mState = PlayerState::Fall;
-			break;
-
-		default:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Knight_Idleleft", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Knight_Idleright", true);
-			break;
-		}
-	}
-
-	void Player::Down_Attack_End_Event()
-	{
-		switch (mRigidbody->GetGround())
-		{
-		case true:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
-			break;
-
-		case false:
-			mState = PlayerState::Fall;
-			break;
-
-		default:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Knight_Idleleft", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Knight_Idleright", true);
-			break;
-		}
-	}
-
-	void Player::Jump_End_Event()
-	{
-		switch (mRigidbody->GetGround())
-		{
-		case true:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Idle_Left", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Idle_Right", true);
-			break;
-
-		case false:
-			mState = PlayerState::Fall;
-			break;
-
-		default:
-			mState = PlayerState::Idle;
-
-			if (Direction == eDirection::Left)
-				at->PlayAnimation(L"Knight_Idleleft", true);
-			else if (Direction == eDirection::Right)
-				at->PlayAnimation(L"Knight_Idleright", true);
-			break;
-		}
-	}
-
-	void Player::Double_Jump_End_Event()
-	{
-		mState = PlayerState::Fall;
-
-		if (Direction == eDirection::Left)
-			at->PlayAnimation(L"Idle_Left", true);
-		else if (Direction == eDirection::Right)
-			at->PlayAnimation(L"Idle_Right", true);
-	}
 }

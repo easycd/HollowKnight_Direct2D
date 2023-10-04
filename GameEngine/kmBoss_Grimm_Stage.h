@@ -24,7 +24,7 @@ namespace km
 		virtual void OnEnter () override;
 		virtual void OnExit() override;
 
-		virtual Player* GetPlayer() override { return mPlayer; };
+		virtual Player* GetPlayer() override { return mPlayer; }
 
 	private:
 		Player* mPlayer;

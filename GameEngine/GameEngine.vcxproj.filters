@@ -22,20 +22,11 @@
     <Filter Include="Contents\Scene\TitleScene">
       <UniqueIdentifier>{9d6e9113-6d08-4667-9e0a-95ba74b3d9ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\Player">
-      <UniqueIdentifier>{b759d439-57d0-4378-ab89-0d626304614f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Scene\Test">
       <UniqueIdentifier>{29c51dcb-a791-45b3-ad35-a58124322ea2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Script\Ground1">
       <UniqueIdentifier>{9d747251-c8ee-4950-b687-de149d5586e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\Player\Effect">
-      <UniqueIdentifier>{10d3d30b-c049-4b15-8d71-db2400b8d2cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\Player\PlayerScript">
-      <UniqueIdentifier>{4c0e0106-e6ab-4df1-aaba-95d2879858cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Script\Wall">
       <UniqueIdentifier>{fe21a6e3-e50f-4f1f-878a-6f807b7a0db5}</UniqueIdentifier>
@@ -121,9 +112,6 @@
     <ClInclude Include="kmGroundScript.h">
       <Filter>Contents\Script\Ground1</Filter>
     </ClInclude>
-    <ClInclude Include="kmPlayerEffet.h">
-      <Filter>Contents\Script\Player\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="kmPlayer.h">
       <Filter>Contents\GameObject\Player</Filter>
@@ -158,6 +146,9 @@
     <ClInclude Include="kmGroundDash_Effect.h">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="kmPlayerEffet.h">
+      <Filter>Contents\GameObject\Player\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -187,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="kmGroundScript.cpp">
       <Filter>Contents\Script\Ground1</Filter>
-    </ClCompile>
-    <ClCompile Include="kmPlayerEffet.cpp">
-      <Filter>Contents\Script\Player\Effect</Filter>
     </ClCompile>
     <ClCompile Include="kmPlayer.cpp">
       <Filter>Contents\GameObject\Player</Filter>
@@ -223,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="kmGroundDash_Effect.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayerEffet.cpp">
+      <Filter>Contents\GameObject\Player\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

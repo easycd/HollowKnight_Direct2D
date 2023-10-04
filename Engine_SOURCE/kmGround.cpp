@@ -125,7 +125,6 @@ namespace km
 	}
 	void Ground::OnCollisionEnter(Collider* other)
 	{
-		//PlayerScript* player = dynamic_cast<PlayerScript*>(other->GetOwner());
 	}
 	void Ground::OnCollisionStay(Collider* other)
 	{

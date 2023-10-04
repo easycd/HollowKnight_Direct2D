@@ -10,7 +10,7 @@ namespace km
 	class Player : public GameObject
 	{
 	public:
-		enum class ePlayerState
+		enum class PlayerState
 		{
 			Idle,
 			Move,
@@ -45,22 +45,24 @@ namespace km
 		virtual void Render() override;
 
 		void Complete();
-		Vector3 GetPlayerPos() { return mPlayerPos; }
+		Vector3 GetPlayerPos() { return pos; }
 
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override;
 		virtual void OnCollisionExit(Collider2D* other) override;
 
 	private:
-		ePlayerState mState;
+		PlayerState mState;
 		Rigidbody* mRigidbody;
-		Animator* mAnimation;
-		Transform* mTransform;
-		Vector3 mPlayerPos;
+		Animator* at;
+		Transform* tr;
+		Vector3 pos;
+		Vector3 Dash_Pos;
 
 		VectorR velocity;
-		eDirection mDirection; //0¿Ã∏È øﬁ¬  1¿Ã∏È ø¿∏•¬ 
+		eDirection Direction; //0Ïù¥Î©¥ ÏôºÏ™Ω 1Ïù¥Î©¥ Ïò§Î•∏Ï™Ω
 		float mTime;
+		bool Test = true;
 
 	private:
 		PlayerEffet* mSlash_Effect;
@@ -78,27 +80,30 @@ namespace km
 		void DoubleJump();
 		void Dash();
 		void Fall();
-
 		void UpAttack();
 		void Attack();
 		void DownAttack();
+		void FocusStart();
+		void Focus();
+		void FocusOn();
+		void FocusEnd();
+		void Death();
+		void ActionInitialize();
 
-		//void FocusStart();
-		//void Focus();
-		//void FocusOn();
-		//void FocusEnd();
-		//
-		//void Death();
+		void Up_Attack_End_Evnet();
+		void Attack_End_Event();
+		void Down_Attack_End_Event();
+		void Jump_End_Event();
+		void Double_Jump_End_Event();
 
 	private:
-		bool Idle_Check        = false;
-		bool Move_Check		   = false;
-		bool Jump_Check		   = false;
-		bool Double_Jump_Check = false;
-		bool Dash_Check		   = false;
-		bool Fall_Check		   = false;
-		bool UpAttack_Check	   = false;
-		bool Attack_Check	   = false;
-		bool DownAttack_Chekc  = false;
+		bool idle_Check = false;
+		bool jump_Check = false;
+		bool double_jump_Check = false;
+		bool dash_jump_Check = false;
+		bool fall_Check = false;
+		bool up_attack_Check = false;
+		bool attack_Check = false;
+		bool down_attack_Check = false;
 	};
 }

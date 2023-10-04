@@ -15,6 +15,8 @@ namespace km
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		virtual Player* GetPlayer() override { return player; }
+
 		virtual void OnEnter();
 		virtual void OnExit();
 

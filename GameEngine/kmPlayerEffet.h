@@ -4,7 +4,7 @@
 namespace km
 {
 	class Animator;
-	class PlayerScript;
+	class Player;
 
 	class PlayerEffet : public GameObject
 	{
@@ -27,11 +27,26 @@ namespace km
 		
 
 	private:
-		PlayerScript* player;
+		Player* mPlayer;
 		Animator* at;
 		Transform* mTransform;
+
 		Vector3 pos;
+		Vector3 mPlayerPos;
 		float mTime;
+
+	private:
+		bool Slash_Left_Check       = false;
+		bool Slash_Right_Check      = false;
+		bool UP_Slash_Left_Check    = false;
+		bool UP_Slash_Right_Check   = false;
+		bool Down_Slash_Left_Check  = false;
+		bool Down_Slash_Right_Check = false;
+
+
+
+
+
 
 	};
 }
