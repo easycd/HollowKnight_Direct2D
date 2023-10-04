@@ -71,6 +71,8 @@ namespace km
 		bool Dash_Left_Check = false;
 		bool Dash_Right_Check = false;
 
+		bool Ground_Check = false;
+		bool Fall_Ani_Check = true;
 	private:
 		void Idle();
 		void Move();
@@ -88,6 +90,14 @@ namespace km
 		//void FocusOn();
 		//void FocusEnd();
 		//
+		
+		void Jump_End();
+		void DoubleJump_End();
+		void Dash_End();
+		void UpAttack_End();
+		void Attack_End();
+		void DownAttack_End();
+
 		//void Death();
 
 	private:

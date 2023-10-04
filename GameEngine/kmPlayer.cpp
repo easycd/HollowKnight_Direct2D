@@ -82,8 +82,8 @@ namespace km
 
 		mAnimation->Create(L"Up_Attack_Left", UP_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
 		mAnimation->Create(L"Up_Attack_Right", UP_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		mAnimation->Create(L"Attack_Left", LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
-		mAnimation->Create(L"Attack_Right", RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
+		mAnimation->Create(L"Attack_Left", LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f), 0.02f);
+		mAnimation->Create(L"Attack_Right", RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f), 0.02f);
 		mAnimation->Create(L"Down_Attack_Left", Down_LeftAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
 		mAnimation->Create(L"Down_Attack_Right", Down_RightAttack, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 15, Vector2(0.0f, -0.12f));
 
@@ -99,7 +99,9 @@ namespace km
 		mAnimation->Create(L"Focus_EndLeft", FocusEndLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
 		mAnimation->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
 
-
+		mAnimation->CompleteEvent(L"Attack_Left") = std::bind(&Player::Attack_End, this);
+		mAnimation->CompleteEvent(L"Attack_Right") = std::bind(&Player::Attack_End, this);
+			
 		mTransform->SetScale(Vector3(0.3f, 0.2f, 0.0f));
 		mTransform->SetPosition (Vector3(0.0f, 0.5f, 0.0f));
 		mDirection = eDirection::Right;
@@ -183,6 +185,15 @@ namespace km
 		//	}
 		//}
 
+		if (Ground_Check == false)
+		{
+			mState = ePlayerState::Fall;
+		}
+
+		if (Ground_Check && Fall_Check)
+			mState = ePlayerState::Idle;
+
+
 		GameObject::Update();
 	}
 	void Player::LateUpdate()
@@ -204,8 +215,8 @@ namespace km
 		if (gd != nullptr)
 		{
 			mRigidbody->SetGround(true);
+			Ground_Check = true;
 		}
-		int a = 0;
 	}
 
 	void Player::OnCollisionStay(Collider2D* other)
@@ -213,7 +224,7 @@ namespace km
 		GroundScript* gd = dynamic_cast<GroundScript*>(other->GetOwner());
 		if (gd != nullptr)
 		{
-			int a = 0;
+			Ground_Check = true;
 		}
 	}
 
@@ -223,6 +234,7 @@ namespace km
 		if (gd != nullptr)
 		{
 			mRigidbody->SetGround(false);
+			Ground_Check = false;
 		}
 	}
 
@@ -246,20 +258,35 @@ namespace km
 				mAnimation->PlayAnimation(L"walk_Right", true);
 		}
 
+		if (Input::GetKeyDown(eKeyCode::X))
+		{
+			mState = ePlayerState::Attack;
+		}
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			mState = ePlayerState::Jump;
+		}
+
+		Fall_Check = false;
+		Fall_Ani_Check = true;
 	}
 
 	void Player::Move()
 	{
-
 		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			mPlayerPos.x -= 1.0f * Time::DeltaTime();
-		}
-
+			mDirection = eDirection::Left;
 		if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			mPlayerPos.x += 1.0f * Time::DeltaTime();
-		}
+			mDirection = eDirection::Right;
+
+		//if (Input::GetKey(eKeyCode::LEFT))
+		//{
+		//	mPlayerPos.x -= 1.0f * Time::DeltaTime();
+		//}
+		//
+		//if (Input::GetKey(eKeyCode::RIGHT))
+		//{
+		//	mPlayerPos.x += 1.0f * Time::DeltaTime();
+		//}
 
 		if (Input::GetKeyUp(eKeyCode::LEFT) || Input::GetKeyUp(eKeyCode::RIGHT))
 		{
@@ -270,11 +297,41 @@ namespace km
 				mAnimation->PlayAnimation(L"Idle_Right", true);
 		}
 
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			mState = ePlayerState::Jump;
+		}
+
 		mTransform->SetPosition(mPlayerPos);
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x = -0.8f;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x = 0.8f;
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	void Player::Jump()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		velocity.y = 5.0f;
+
+		mRigidbody->SetVelocity(velocity);
+		mRigidbody->SetGround(false);
+
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x = -0.8f;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x = 0.8f;
+
+		mRigidbody->SetVelocity(velocity);
+
 	}
 
 	void Player::DoubleJump()
@@ -287,6 +344,32 @@ namespace km
 
 	void Player::Fall()
 	{
+		if (Fall_Ani_Check)
+		{
+			if (mDirection == eDirection::Left)
+				mAnimation->PlayAnimation(L"Fall_Left", true);
+			if (mDirection == eDirection::Right)
+				mAnimation->PlayAnimation(L"Fall_Right", true);
+
+			Fall_Ani_Check = false;
+		}
+
+		if (Ground_Check)
+		{
+			if (mDirection == eDirection::Left)
+				mAnimation->PlayAnimation(L"Idle_Left", true);
+			else if (mDirection == eDirection::Right)
+				mAnimation->PlayAnimation(L"Idle_Right", true);
+		}
+
+		Fall_Check = true;
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x = -0.8f;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x = 0.8f;
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	void Player::UpAttack()
@@ -295,9 +378,83 @@ namespace km
 
 	void Player::Attack()
 	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		if (Input::GetKey(eKeyCode::X))
+		{
+			mState = ePlayerState::Attack;
+
+			if (mDirection == eDirection::Left)
+				mAnimation->PlayAnimation(L"Attack_Left", true);
+
+			if (mDirection == eDirection::Right)
+				mAnimation->PlayAnimation(L"Attack_Right", true);
+		}
+
+		//if (Input::GetKeyUp(eKeyCode::X))
+		//{
+		//	mState = ePlayerState::Idle;
+		//
+		//	if (mDirection == eDirection::Left)
+		//		mAnimation->PlayAnimation(L"Idle_Left", true);
+		//
+		//	if (mDirection == eDirection::Right)
+		//		mAnimation->PlayAnimation(L"Idle_Right", true);
+		//}
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x = -0.8f;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x = 0.8f;
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	void Player::DownAttack()
+	{
+	}
+
+	void Player::Jump_End()
+	{
+	}
+
+	void Player::DoubleJump_End()
+	{
+	}
+
+	void Player::Dash_End()
+	{
+	}
+
+	void Player::UpAttack_End()
+	{
+	}
+
+	void Player::Attack_End()
+	{
+		if (Ground_Check == false)
+		{
+			Fall();
+		}
+
+		if (mDirection == eDirection::Left)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Left", true);
+		}
+		if (mDirection == eDirection::Right)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Right", true);
+		}
+
+
+	}
+
+	void Player::DownAttack_End()
 	{
 	}
 
