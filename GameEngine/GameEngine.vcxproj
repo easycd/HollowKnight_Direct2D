@@ -165,8 +165,12 @@
     <ClInclude Include="kmGroundScript.h" />
     <ClInclude Include="kmPlayer.h" />
     <ClInclude Include="kmPlayerEffet.h" />
+    <ClInclude Include="kmPlayerHP.h" />
+    <ClInclude Include="kmPlayerHP_State.h" />
+    <ClInclude Include="kmPlayerUI.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmPureVessel.h" />
+    <ClInclude Include="kmSoulGauge.h" />
     <ClInclude Include="kmSpike_Object.h" />
     <ClInclude Include="kmTitleScene.h" />
     <ClInclude Include="kmTrumpNpc.h" />
@@ -193,8 +197,12 @@
     <ClCompile Include="kmGroundScript.cpp" />
     <ClCompile Include="kmPlayer.cpp" />
     <ClCompile Include="kmPlayerEffet.cpp" />
+    <ClCompile Include="kmPlayerHP.cpp" />
+    <ClCompile Include="kmPlayerHP_State.cpp" />
+    <ClCompile Include="kmPlayerUI.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
     <ClCompile Include="kmPureVessel.cpp" />
+    <ClCompile Include="kmSoulGauge.cpp" />
     <ClCompile Include="kmSpike_Object.cpp" />
     <ClCompile Include="kmTitleScene.cpp" />
     <ClCompile Include="kmTrumpNpc.cpp" />

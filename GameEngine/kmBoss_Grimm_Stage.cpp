@@ -283,7 +283,6 @@ namespace km
 	void Boss_Grimm_Stage::OnEnter()
 	{
 		mGrimm->Idle();
-		mNpc->Initialize();
 		mCrowd_00->Play_Right();
 		mCrowd_01->Play_Right();
 		mCrowd_02->Play_Right();

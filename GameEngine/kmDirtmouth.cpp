@@ -19,6 +19,9 @@
 #include "kmGameObject.h"
 #include "kmPlayer.h"
 
+#include "kmPlayerUI.h"
+#include "kmSoulGauge.h"
+#include "kmPlayerHP_State.h"
 
 namespace km
 {
@@ -41,24 +44,12 @@ namespace km
 			//GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(23.0f,6.2f, 0.0f));
 			GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(5.0f, 1.2f, 0.0f));
 			GrimmTownBG->SetName(L"Grimm_Town");
-
+		
 			MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmTown"));
 			//player->AddComponent<CameraScript>();
 		}
-
-		//{ //HUD
-		//	GameObject* GrimmTownBG = new GameObject();
-		//	GrimmTownBG->SetName(L"PlayerHUD");
-		//	AddGameObject(eLayerType::UI, GrimmTownBG);
-		//	MeshRenderer* mr = GrimmTownBG->AddComponent<MeshRenderer>();
-		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		//	mr->SetMaterial(Resources::Find<Material>(L"Palyer_HUD"));
-		//	GrimmTownBG->GetComponent<Transform>()->SetPosition(Vector3(-2.8f, 1.3f, 0.0f));
-		//	GrimmTownBG->GetComponent<Transform>()->SetScale(Vector3(1.0f, 0.8f, 0.0f));
-		//	//player->AddComponent<CameraScript>();
-		//}
 
 		//Ä³¸¯ÅÍ
 		{
@@ -80,14 +71,20 @@ namespace km
 		}
 
 		{
+			mPlayerUI = object::Instantiate<PlayerUI>(eLayerType::UI);
+			mSoulGauge = object::Instantiate<SoulGauge>(eLayerType::UI);
+			HP_State = object::Instantiate<PlayerHP_State>(eLayerType::UI);
+		}
+
+		{
 			GameObject* camera = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), eLayerType::Camera);
 
 			mCamera = camera->AddComponent<Camera>();
-			mCamera->TurnLayerMask(eLayerType::UI, false);
+			mCamera->TurnLayerMask(eLayerType::UI, true);
 
-			CameraScript* camerscript = camera->AddComponent<CameraScript>();
-			camerscript->SetTarget(player);
-			camerscript->SetWeight(Vector2(-1.698f, 1.68f));
+			mCamerscript = camera->AddComponent<CameraScript>();
+			mCamerscript->SetTarget(player);
+			mCamerscript->SetWeight(Vector2(-1.698f, 1.68f));
 		}
 
 		//{

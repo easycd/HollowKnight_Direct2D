@@ -49,6 +49,8 @@ namespace km
 		void Complete();
 		Vector3 GetPlayerPos() { return mPlayerPos; }
 
+		int GetPlayerHPState() { return mPlayerHP_State; }
+
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override;
 		virtual void OnCollisionExit(Collider2D* other) override;
@@ -64,6 +66,8 @@ namespace km
 		VectorR velocity;
 		eDirection mDirection; //0이면 왼쪽 1이면 오른쪽
 		float mTime;
+
+		int mPlayerHP_State;
 
 	private:
 		PlayerEffet* mSlash_Effect;

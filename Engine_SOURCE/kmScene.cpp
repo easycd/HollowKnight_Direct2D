@@ -64,6 +64,11 @@ namespace km
 		return nullptr;
 	}
 
+	CameraScript* Scene::GetCamera()
+	{
+		return nullptr;
+	}
+
 	void Scene::AddGameObject(eLayerType type, GameObject* gameObj)
 	{
 		mLayers[(int)type].AddGameObject(gameObj);

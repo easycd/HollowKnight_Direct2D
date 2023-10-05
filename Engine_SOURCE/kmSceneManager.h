@@ -4,6 +4,7 @@
 namespace km
 {
 	class Player;
+	class CameraScript;
 
 	class SceneManager
 	{
@@ -35,6 +36,7 @@ namespace km
 		static Scene* LoadScene(std::wstring name);
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Player* GetPlayer();
+		static CameraScript* GetCamera();
 
 	private:
 		static Scene* mActiveScene;

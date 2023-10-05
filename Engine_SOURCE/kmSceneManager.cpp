@@ -57,4 +57,9 @@ namespace km
 	{
 		return mActiveScene->GetPlayer();
 	}
+
+	CameraScript* SceneManager::GetCamera()
+	{
+		return mActiveScene->GetCamera();
+	}
 }

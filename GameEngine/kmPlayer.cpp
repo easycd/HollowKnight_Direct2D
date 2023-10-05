@@ -19,11 +19,13 @@
 namespace km
 {
 	Player::Player()
+		: PlayerHP_State(5)
 	{
 	}
 	Player::~Player()
 	{
 	}
+
 	void Player::Initialize()
 	{
 		mTransform = GetComponent<Transform>();

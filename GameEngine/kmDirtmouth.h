@@ -4,6 +4,10 @@
 namespace km
 {
 	class Player;
+	class PlayerUI;
+	class SoulGauge;
+	class PlayerHP_State;
+
 	class Dirtmouth : public Scene
 	{
 	public:
@@ -16,12 +20,19 @@ namespace km
 		virtual void Render() override;
 
 		virtual Player* GetPlayer() override { return player; }
+		virtual CameraScript* GetCamera(){ return mCamerscript; }
 
 		virtual void OnEnter();
 		virtual void OnExit();
 
 	private:
 		Camera* mCamera;
+		CameraScript* mCamerscript;
+
 		Player* player;
+
+		PlayerUI* mPlayerUI;
+		SoulGauge* mSoulGauge;
+		PlayerHP_State* HP_State;
 	};
 }

@@ -34,7 +34,7 @@ namespace km::enums
 		Light,
 		UI,
 		BG,
-		End = 16,
+		End,
 	};
 
 	enum class eResourceType

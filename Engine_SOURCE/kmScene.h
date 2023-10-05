@@ -20,6 +20,7 @@ namespace km
 		virtual void OnExit();
 
 		virtual class Player* GetPlayer();
+		virtual class CameraScript* GetCamera();
 
 		void AddGameObject(eLayerType type, GameObject* gameObj);
 

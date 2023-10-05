@@ -91,6 +91,21 @@
     <Filter Include="Contents\GameObject\Player\Effect\FireBall">
       <UniqueIdentifier>{0f6261c8-4f0f-46a4-8a56-e9459e03dea2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Player\PlayerUI">
+      <UniqueIdentifier>{94f0131d-431d-437d-9d36-b4bee0115875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\PlayerUI\PlayerHP_HUD">
+      <UniqueIdentifier>{4859a587-a122-4850-b9fa-949b4fb0d190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\PlayerUI\PlayerSoul_HUD">
+      <UniqueIdentifier>{4ea1df08-6a6d-4461-8990-398aba37dd1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_State">
+      <UniqueIdentifier>{bdec56dd-49be-4157-a89a-9828bc686b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_obj">
+      <UniqueIdentifier>{c19623d3-f4d7-4a39-a227-0c783eb60c2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -167,6 +182,18 @@
     <ClInclude Include="kmPlayerEffet.h">
       <Filter>Contents\GameObject\Player\Effect\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="kmPlayerUI.h">
+      <Filter>Contents\GameObject\Player\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="kmSoulGauge.h">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerSoul_HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="kmPlayerHP.h">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_obj</Filter>
+    </ClInclude>
+    <ClInclude Include="kmPlayerHP_State.h">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -238,6 +265,18 @@
     </ClCompile>
     <ClCompile Include="kmPlayerEffet.cpp">
       <Filter>Contents\GameObject\Player\Effect\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayerUI.cpp">
+      <Filter>Contents\GameObject\Player\PlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="kmSoulGauge.cpp">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerSoul_HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayerHP.cpp">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_obj</Filter>
+    </ClCompile>
+    <ClCompile Include="kmPlayerHP_State.cpp">
+      <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
