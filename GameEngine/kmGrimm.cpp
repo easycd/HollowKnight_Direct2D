@@ -184,7 +184,7 @@ namespace km
 		mAnimation->CompleteEvent(L"Tele_Out") = std::bind(&Grimm::Tele_Out_State, this);
 
 		mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
-		mTransform->SetPosition(Vector3(0.3f, -0.35f, 0.0f));
+		mTransform->SetPosition(Vector3(0.3f, -0.35f, 1.0f));
 		mCollider->SetSize(Vector2(0.7f, 1.0f));
 
 		mState = eGrimmState::Idle;

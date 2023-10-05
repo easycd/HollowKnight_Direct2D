@@ -6,6 +6,8 @@ namespace km
 	class Rigidbody;
 	class RigidbodyMath;
 	class PlayerEffet;
+	class DoubleJump_Effect;
+	class DsahEffect;
 
 	class Player : public GameObject
 	{
@@ -21,7 +23,7 @@ namespace km
 			UpAttack,
 			Attack,
 			DownAttack,
-			ShootBall,
+			Skill,
 			FocusStart,
 			Focus,
 			FocusOn,
@@ -68,6 +70,9 @@ namespace km
 		PlayerEffet* mUpSlash_Effect;
 		PlayerEffet* mDownSlash_Effect;
 
+		DoubleJump_Effect* mDoubleJump_Effect;
+		DsahEffect* mDash_Effect;
+
 	private:
 		bool Dash_Left_Check = false;
 		bool Dash_Right_Check = false;
@@ -90,6 +95,7 @@ namespace km
 		void UpAttack();
 		void Attack();
 		void DownAttack();
+		void Skill();
 
 		//void FocusStart();
 		//void Focus();
@@ -101,6 +107,7 @@ namespace km
 		void DoubleJump_End();
 		void Dash_End();
 		void Attack_End();
+		void Skill_End();
 
 		//void Death();
 
@@ -114,5 +121,6 @@ namespace km
 		bool UpAttack_Check	   = true;
 		bool Attack_Check	   = true;
 		bool DownAttack_Check  = true;
+		bool Skill_Check       = true;
 	};
 }

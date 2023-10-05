@@ -79,6 +79,18 @@
     <Filter Include="Contents\GameObject\Player\Effect">
       <UniqueIdentifier>{ee3cc869-efff-44e8-8d42-5ce5fbb0f329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect\DoubleJump">
+      <UniqueIdentifier>{533b7954-bc29-46a3-8d21-14b99a26f40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect\Dash">
+      <UniqueIdentifier>{7b0cb44e-742d-4932-bcee-22b3fbf09b76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect\Attack">
+      <UniqueIdentifier>{012eed6e-886a-4f19-b0ce-1662191c9db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect\FireBall">
+      <UniqueIdentifier>{0f6261c8-4f0f-46a4-8a56-e9459e03dea2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -146,8 +158,14 @@
     <ClInclude Include="kmGroundDash_Effect.h">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="DoubleJump_Effect.h">
+      <Filter>Contents\GameObject\Player\Effect\DoubleJump</Filter>
+    </ClInclude>
+    <ClInclude Include="kmDsahEffect.h">
+      <Filter>Contents\GameObject\Player\Effect\Dash</Filter>
+    </ClInclude>
     <ClInclude Include="kmPlayerEffet.h">
-      <Filter>Contents\GameObject\Player\Effect</Filter>
+      <Filter>Contents\GameObject\Player\Effect\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,8 +230,14 @@
     <ClCompile Include="kmGroundDash_Effect.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="DoubleJump_Effect.cpp">
+      <Filter>Contents\GameObject\Player\Effect\DoubleJump</Filter>
+    </ClCompile>
+    <ClCompile Include="kmDsahEffect.cpp">
+      <Filter>Contents\GameObject\Player\Effect\Dash</Filter>
+    </ClCompile>
     <ClCompile Include="kmPlayerEffet.cpp">
-      <Filter>Contents\GameObject\Player\Effect</Filter>
+      <Filter>Contents\GameObject\Player\Effect\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,8 +10,11 @@
 #include "kmRigidbody.h"
 #include "kmGroundScript.h"
 #include "kmObject.h"
-#include "kmPlayerEffet.h"
 #include "kmMeshRenderer.h"
+
+#include "kmPlayerEffet.h"
+#include "DoubleJump_Effect.h"
+#include "kmDsahEffect.h"
 
 namespace km
 {
@@ -72,6 +75,11 @@ namespace km
 		std::shared_ptr<Texture> FocusEndLeft = Resources::Load<Texture>(L"FocusEndLeft", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Left.png");
 		std::shared_ptr<Texture> FocusEndRight = Resources::Load<Texture>(L"FocusEndRight", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Right.png");
 
+		//Skill
+		std::shared_ptr<Texture> FireBall_Cast_Left = Resources::Load<Texture>(L"FireBall_Cast_Left", L"..\\Resources\\Knight\\FireBall_Cast\\Left\\FireBall_Cast_Left.png");
+		std::shared_ptr<Texture> FireBall_Cast_Right = Resources::Load<Texture>(L"FireBall_Cast_Right", L"..\\Resources\\Knight\\FireBall_Cast\\Right\\FireBall_Cast_Right.png");
+
+
 		mAnimation->Create(L"Idle_Left", LeftIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
 		mAnimation->Create(L"Idle_Right", RightIdle, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 9, Vector2(0.0f, -0.12f));
 
@@ -106,6 +114,9 @@ namespace km
 		mAnimation->Create(L"Focus_EndLeft", FocusEndLeft, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
 		mAnimation->Create(L"Focus_EndRight", FocusEndRight, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 3, Vector2(0.0f, -0.12f));
 
+		mAnimation->Create(L"FireBall_Cast_Left", FireBall_Cast_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, -0.12f), 0.05f);
+		mAnimation->Create(L"FireBall_Cast_Right", FireBall_Cast_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, -0.12f), 0.05f);
+
 		mAnimation->CompleteEvent(L"Jump_Left") = std::bind(&Player::Jump_End, this);
 		mAnimation->CompleteEvent(L"Jump_Right") = std::bind(&Player::Jump_End, this);
 
@@ -121,6 +132,9 @@ namespace km
 
 		mAnimation->CompleteEvent(L"Dash_Left") = std::bind(&Player::Dash_End, this);
 		mAnimation->CompleteEvent(L"Dash_Right") = std::bind(&Player::Dash_End, this);
+
+		mAnimation->CompleteEvent(L"FireBall_Cast_Left") = std::bind(&Player::Skill_End, this);
+		mAnimation->CompleteEvent(L"FireBall_Cast_Right") = std::bind(&Player::Skill_End, this);
 			
 		mTransform->SetScale(Vector3(0.3f, 0.2f, 0.0f));
 		mTransform->SetPosition (Vector3(0.0f, 0.5f, 0.0f));
@@ -173,6 +187,9 @@ namespace km
 			break;
 		case Player::ePlayerState::DownAttack:
 			DownAttack();
+			break;
+		case Player::ePlayerState::Skill:
+			Skill();
 			break;
 		//case Player::ePlayerState::FocusStart:
 		//	FocusStart();
@@ -265,6 +282,13 @@ namespace km
 				mAnimation->PlayAnimation(L"walk_Right", true);
 		}
 
+		if (Input::GetKeyDown(eKeyCode::C))
+		{
+			mState = ePlayerState::Skill;
+			Skill_Check = true;
+			return;
+		}
+
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
 		{
 			mState = ePlayerState::UpAttack;
@@ -328,6 +352,13 @@ namespace km
 				mAnimation->PlayAnimation(L"Idle_Left", true);
 			else if (mDirection == eDirection::Right)
 				mAnimation->PlayAnimation(L"Idle_Right", true);
+		}
+
+		if (Input::GetKeyDown(eKeyCode::C))
+		{
+			mState = ePlayerState::Skill;
+			Skill_Check = true;
+			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
@@ -425,11 +456,15 @@ namespace km
 		{
 			if (mDirection == eDirection::Left)
 			{
+				mDoubleJump_Effect = object::Instantiate<DoubleJump_Effect>(eLayerType::Effect);
+				mDoubleJump_Effect->DoubleJump_Left();
 				mAnimation->PlayAnimation(L"DoubleJump_Left", true);
 			}
 
 			if (mDirection == eDirection::Right)
 			{
+				mDoubleJump_Effect = object::Instantiate<DoubleJump_Effect>(eLayerType::Effect);
+				mDoubleJump_Effect->DoubleJump_Right();
 				mAnimation->PlayAnimation(L"DoubleJump_Right", true);
 			}
 			Double_Jump_Check = false;
@@ -459,6 +494,8 @@ namespace km
 			if (mDirection == eDirection::Left)
 			{
 				mSavePos = mPlayerPos;
+				mDash_Effect = object::Instantiate<DsahEffect>(eLayerType::Effect);
+				mDash_Effect->Dash_Left();
 				mAnimation->PlayAnimation(L"Dash_Left", true);
 				mRigidbody->SetGround(true);
 				
@@ -467,6 +504,8 @@ namespace km
 			if (mDirection == eDirection::Right)
 			{
 				mSavePos = mPlayerPos;
+				mDash_Effect = object::Instantiate<DsahEffect>(eLayerType::Effect);
+				mDash_Effect->Dash_Right();
 				mAnimation->PlayAnimation(L"Dash_Right", true);
 				mRigidbody->SetGround(true);
 			}
@@ -520,6 +559,7 @@ namespace km
 			Fall_Delay = true;
 			UpAttack_Check = true;
 			mState = ePlayerState::UpAttack;
+			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
@@ -527,6 +567,24 @@ namespace km
 			Fall_Delay = true;
 			DownAttack_Check = true;
 			mState = ePlayerState::DownAttack;
+			return;
+		}
+
+		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::C))
+		{
+			Fall_Delay = true;
+			Skill_Check = true;
+			mState = ePlayerState::Skill;
+			return;
+		}
+
+		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::C))
+		{
+			Fall_Delay = true;
+			Skill_Check = true;
+			mState = ePlayerState::Skill;
+			return;
+
 		}
 
 		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::X))
@@ -534,6 +592,7 @@ namespace km
 			Fall_Delay = true;
 			Attack_Check = true;
 			mState = ePlayerState::Attack;
+			return;
 		}
 
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::X))
@@ -541,6 +600,7 @@ namespace km
 			Fall_Delay = true;
 			Attack_Check = true;
 			mState = ePlayerState::Attack;
+			return;
 		}
 
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKeyDown(eKeyCode::LSHFIT))
@@ -701,6 +761,42 @@ namespace km
 		Fall_Delay = false;
 	}
 
+	void Player::Skill()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		if (Skill_Check)
+		{
+			mState = ePlayerState::Skill;
+
+			if (mDirection == eDirection::Left)
+			{
+
+				mAnimation->PlayAnimation(L"FireBall_Cast_Left", true);
+			}
+
+			if (mDirection == eDirection::Right)
+			{
+
+				mAnimation->PlayAnimation(L"FireBall_Cast_Right", true);
+			}
+
+			Skill_Check = false;
+		}
+
+		VectorR velocity = mRigidbody->GetVelocity();
+		if (Input::GetKey(eKeyCode::LEFT))
+			velocity.x = -0.8f;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			velocity.x = 0.8f;
+		mRigidbody->SetVelocity(velocity);
+
+		Fall_Delay = false;
+	}
+
 	void Player::Jump_End()
 	{
 		if (mDirection == eDirection::Left)
@@ -752,6 +848,19 @@ namespace km
 	}
 
 	void Player::Attack_End()
+	{
+		if (mDirection == eDirection::Left)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Left", true);
+		}
+		if (mDirection == eDirection::Right)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Right", true);
+		}
+	}
+	void Player::Skill_End()
 	{
 		if (mDirection == eDirection::Left)
 		{

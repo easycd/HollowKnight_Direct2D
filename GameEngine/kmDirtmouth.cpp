@@ -87,6 +87,7 @@ namespace km
 
 			CameraScript* camerscript = camera->AddComponent<CameraScript>();
 			camerscript->SetTarget(player);
+			camerscript->SetWeight(Vector2(-1.698f, 1.68f));
 		}
 
 		//{

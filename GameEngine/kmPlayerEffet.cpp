@@ -22,7 +22,8 @@ namespace km
 	void PlayerEffet::Initialize()
 	{
 		mTransform = GetComponent<Transform>();
-		at = AddComponent<Animator>();
+		mAnimation = AddComponent<Animator>();
+		mCollider = AddComponent<Collider2D>();
 
 		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -38,22 +39,24 @@ namespace km
 		std::shared_ptr<Texture> Down_Slash_Right = Resources::Load<Texture>(L"Down_Slash_Right", L"..\\Resources\\Knight\\Effect\\Down_Slash\\Right\\Down_Slash_Right.png");
 
 
-		at->Create(L"Basic_Slash_Left", Basic_Slash_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
-		at->Create(L"Basic_Slash_Right", Basic_Slash_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"Basic_Slash_Left", Basic_Slash_Left, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"Basic_Slash_Right", Basic_Slash_Right, Vector2(0.0f, 0.0f), Vector2(349.0f, 186.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
 
-		at->Create(L"UP_Slash_Left", UP_Slash_Left, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
-		at->Create(L"UP_Slash_Right", UP_Slash_Right, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"UP_Slash_Left", UP_Slash_Left, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"UP_Slash_Right", UP_Slash_Right, Vector2(0.0f, 0.0f), Vector2(169.0f, 192.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
 
-		at->Create(L"Down_Slash_Left", Down_Slash_Left, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
-		at->Create(L"Down_Slash_Right", Down_Slash_Right, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"Down_Slash_Left", Down_Slash_Left, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
+		mAnimation->Create(L"Down_Slash_Right", Down_Slash_Right, Vector2(0.0f, 0.0f), Vector2(182.0f, 209.0f), 6, Vector2(0.0f, 0.0f), 0.05f);
 
-		at->CompleteEvent(L"Basic_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
-		at->CompleteEvent(L"Basic_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
-		at->CompleteEvent(L"UP_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
-		at->CompleteEvent(L"UP_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
-		at->CompleteEvent(L"Down_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
-		at->CompleteEvent(L"Down_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"Basic_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"Basic_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"UP_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"UP_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"Down_Slash_Left") = std::bind(&PlayerEffet::Destroy, this);
+		mAnimation->CompleteEvent(L"Down_Slash_Right") = std::bind(&PlayerEffet::Destroy, this);
 
+		mCollider->SetSize(Vector2(0.4f, 0.5f));
+		mCollider->SetCenter(Vector2(-0.05f, -0.02f));
 
 		GameObject::Initialize();
 	}
@@ -66,37 +69,49 @@ namespace km
 		if (Slash_Left_Check)
 		{
 			mTransform->SetScale(Vector3(0.4f, 0.3f, 0.0f));
-			mTransform->SetPosition(Vector3(mPlayerPos.x - 0.05f, mPlayerPos.y, 0.0f));
+			mTransform->SetPosition(Vector3(mPlayerPos.x - 0.05f, mPlayerPos.y + 0.03, 0.0f));
+			mCollider->SetSize(Vector2(0.4f, 0.5f));
+			mCollider->SetCenter(Vector2(-0.05f, -0.02f));
 		}
 		
 		if (Slash_Right_Check)
 		{
 			mTransform->SetScale(Vector3(0.4f, 0.3f, 0.0f));
-			mTransform->SetPosition(Vector3(mPlayerPos.x + 0.15f, mPlayerPos.y, 0.0f));
+			mTransform->SetPosition(Vector3(mPlayerPos.x + 0.15f, mPlayerPos.y + 0.03, 0.0f));
+			mCollider->SetSize(Vector2(0.4f, 0.5f));
+			mCollider->SetCenter(Vector2(-0.05f, -0.02f));
 		}
 		
 		if (UP_Slash_Left_Check)
 		{
 			mTransform->SetScale(Vector3(0.2f, 0.3f, 0.0f));
 			mTransform->SetPosition(Vector3(mPlayerPos.x, mPlayerPos.y, 0.0f));
+			mCollider->SetSize(Vector2(1.0f, 0.5f));
+			mCollider->SetCenter(Vector2(0.0f, 0.07f));
 		}
 		
 		if (UP_Slash_Right_Check)
 		{
 			mTransform->SetScale(Vector3(0.2f, 0.3f, 0.0f));
 			mTransform->SetPosition(Vector3(mPlayerPos.x, mPlayerPos.y, 0.0f));
+			mCollider->SetSize(Vector2(1.0f, 0.5f));
+			mCollider->SetCenter(Vector2(0.0f, 0.07f));
 		}
 		
 		if (Down_Slash_Left_Check)
 		{
 			mTransform->SetScale(Vector3(0.2f, 0.3f, 0.0f));
 			mTransform->SetPosition(Vector3(mPlayerPos.x, mPlayerPos.y, 0.0f));
+			mCollider->SetSize(Vector2(1.0f, 0.5f));
+			mCollider->SetCenter(Vector2(0.0f, -0.07f));
 		}
 		
 		if (Down_Slash_Right_Check)
 		{
 			mTransform->SetScale(Vector3(0.2f, 0.3f, 0.0f));
 			mTransform->SetPosition(Vector3(mPlayerPos.x, mPlayerPos.y, 0.0f));
+			mCollider->SetSize(Vector2(1.0f, 0.5f));
+			mCollider->SetCenter(Vector2(0.0f, -0.07f));
 		}
 
 
@@ -105,37 +120,37 @@ namespace km
 
 	void PlayerEffet::Slash_Left()
 	{
-		at->PlayAnimation(L"Basic_Slash_Left", true);
+		mAnimation->PlayAnimation(L"Basic_Slash_Left", true);
 		Slash_Left_Check = true;
 	}
 
 	void PlayerEffet::Slash_Right()
 	{
-		at->PlayAnimation(L"Basic_Slash_Right", true);
+		mAnimation->PlayAnimation(L"Basic_Slash_Right", true);
 		Slash_Right_Check = true;
 	}
 
 	void PlayerEffet::UP_Slash_Left()
 	{
-		at->PlayAnimation(L"UP_Slash_Left", true);
+		mAnimation->PlayAnimation(L"UP_Slash_Left", true);
 		UP_Slash_Left_Check = true;
 	}
 
 	void PlayerEffet::UP_Slash_Right()
 	{
-		at->PlayAnimation(L"UP_Slash_Left", true);
+		mAnimation->PlayAnimation(L"UP_Slash_Left", true);
 		UP_Slash_Right_Check = true;
 	}
 
 	void PlayerEffet::Down_Slash_Left()
 	{
-		at->PlayAnimation(L"Down_Slash_Left", true);
+		mAnimation->PlayAnimation(L"Down_Slash_Left", true);
 		Down_Slash_Left_Check = true;
 	}
 
 	void PlayerEffet::Down_Slash_Right()
 	{
-		at->PlayAnimation(L"Down_Slash_Left", true);
+		mAnimation->PlayAnimation(L"Down_Slash_Left", true);
 		Down_Slash_Right_Check = true;
 	}
 

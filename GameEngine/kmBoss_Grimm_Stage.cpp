@@ -82,8 +82,8 @@ namespace km
 			mPlayer = object::Instantiate<Player>(eLayerType::Player);
 			mPlayer->SetName(L"Player");
 
-			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
-			//mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.3f, 0.1f, 0.0f));
+			mPlayer->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.1f, 0.1f));
+			//mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.9f, 0.1f, 0.0f));
 		}
 
 		//º¸½º
@@ -185,6 +185,8 @@ namespace km
 
 			CameraScript* camerscript = camera->AddComponent<CameraScript>();
 			camerscript->SetTarget(mPlayer);
+			camerscript->SetWeight(Vector2(-3.3f, 0.28f));
+			camerscript->SetHight(-0.2f);
 		}
 
 

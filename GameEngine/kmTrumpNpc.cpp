@@ -25,7 +25,7 @@ namespace km
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
-		std::shared_ptr<Texture> Idle = Resources::Load<Texture>(L"Trump_Idle", L"..\\Resources\\Boss_Grimm\\Npc\\Trump\\Trump_Npc.png");
+		std::shared_ptr<Texture> Idle = Resources::Load<Texture>(L"Trump_Idle", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\Npc\\Trump\\Trump_Npc.png");
 		mAnimation->Create(L"Trump_Idle", Idle, Vector2(0.0f, 0.0f), Vector2(329.0f, 344.0f), 11, Vector2(0.0f, 0.0f), 0.1f);
 
 		mAnimation->PlayAnimation(L"Trump_Idle", true);

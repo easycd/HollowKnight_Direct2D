@@ -28,8 +28,9 @@ namespace km
 
 	private:
 		Player* mPlayer;
-		Animator* at;
+		Animator* mAnimation;
 		Transform* mTransform;
+		Collider2D* mCollider;
 
 		Vector3 pos;
 		Vector3 mPlayerPos;
