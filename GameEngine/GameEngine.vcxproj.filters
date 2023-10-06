@@ -106,6 +106,12 @@
     <Filter Include="Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_obj">
       <UniqueIdentifier>{c19623d3-f4d7-4a39-a227-0c783eb60c2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Player\Skill">
+      <UniqueIdentifier>{7694bd44-5c1c-4a09-9b6c-f372163331d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand">
+      <UniqueIdentifier>{31fa670b-bd01-4a01-9a76-d1b1d8600abc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -194,6 +200,13 @@
     <ClInclude Include="kmPlayerHP_State.h">
       <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_State</Filter>
     </ClInclude>
+    <ClInclude Include="kmFireBallSkill.h">
+      <Filter>Contents\GameObject\Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBallSkill_Effect.h">
+      <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGirmm_Hand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -278,6 +291,13 @@
     <ClCompile Include="kmPlayerHP_State.cpp">
       <Filter>Contents\GameObject\Player\PlayerUI\PlayerHP_HUD\HP_State</Filter>
     </ClCompile>
+    <ClCompile Include="kmFireBallSkill.cpp">
+      <Filter>Contents\GameObject\Player\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBallSkill_Effect.cpp">
+      <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGirmm_Hand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

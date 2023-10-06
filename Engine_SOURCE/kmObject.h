@@ -191,6 +191,28 @@ namespace km::object
 		return gameObj;
 	}
 
+	//Skill
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate_Left(enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Left_On();
+		return gameObj;
+	}
+	template <typename T>
+	static __forceinline T* FireBall_Instantiate_Right(enums::eLayerType layer)
+	{
+		T* gameObj = new T();
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObj);
+		gameObj->Initialize();
+		gameObj->Right_On();
+		return gameObj;
+	}
+
 
 	static __forceinline void Destroy(GameObject* gameObj)
 	{

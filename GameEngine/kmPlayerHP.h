@@ -21,8 +21,6 @@ namespace km
 		void Break();
 		void Refill();
 
-		void Destroy();
-
 		void SetDistance(float distance) { mDistance = distance; }
 
 

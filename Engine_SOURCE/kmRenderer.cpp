@@ -391,6 +391,22 @@ namespace renderer
 		material->SetRenderingMode(eRenderingMode::Transparent);
 		Resources::Insert(L"GrimmStage_Ground", material);
 
+		//Boss Grimm Stage Smoke01
+		texture = Resources::Load<Texture>(L"GrimmStageSmoke01", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\GrimmStageSmoke01.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GrimmStageSmoke_01", material);
+
+		//Boss Grimm Stage Smoke02
+		texture = Resources::Load<Texture>(L"GrimmStageSmoke02", L"..\\Resources\\Boss_Grimm\\Grimm_Tent\\GrimmStageSmoke02.png");
+		material = std::make_shared<Material>();
+		material->SetShader(spriteShader);
+		material->SetTexture(texture);
+		material->SetRenderingMode(eRenderingMode::Transparent);
+		Resources::Insert(L"GrimmStageSmoke_02", material);
+
 		//GodHome
 		texture = Resources::Load<Texture>(L"GodHomeBG", L"..\\Resources\\Boss_PureVessel\\GodHome\\GodHomeBG.png");
 		material = std::make_shared<Material>();

@@ -29,16 +29,16 @@ namespace km
 		mr->SetMaterial(Resources::Find<Material>(L"SpriteAnimaionMaterial"));
 
 		std::shared_ptr<Texture> Empty_State = Resources::Load<Texture>(L"Empty_State", L"..\\Resources\\UI\\HP\\Empty\\Empty.png");
-		std::shared_ptr<Texture> Idle_State = Resources::Load<Texture>(L"Idle_State", L"..\\Resources\\UI\\HP\\Idle\\");
-		std::shared_ptr<Texture> Break_State = Resources::Load<Texture>(L"Break_State", L"..\\Resources\\UI\\HP\\Break\\");
-		std::shared_ptr<Texture> Refill_State = Resources::Load<Texture>(L"Refill_State", L"..\\Resources\\UI\\HP\\Refill\\");
+		std::shared_ptr<Texture> Idle_State = Resources::Load<Texture>(L"Idle_State", L"..\\Resources\\UI\\HP\\Idle\\Health_Idle.png");
+		std::shared_ptr<Texture> Break_State = Resources::Load<Texture>(L"Break_State", L"..\\Resources\\UI\\HP\\Break\\Health_Break.png");
+		std::shared_ptr<Texture> Refill_State = Resources::Load<Texture>(L"Refill_State", L"..\\Resources\\UI\\HP\\Refill\\Health_Refill.png");
 
-		mAnimation->Create(L"Empty_State", Empty_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 1, Vector2(0.0f, 0.0f), 1.0f);
-		mAnimation->Create(L"Idle_State", Idle_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 45, Vector2(0.0f, 0.0f), 1.0f);
-		mAnimation->Create(L"Break_State", Break_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 6, Vector2(0.0f, 0.0f), 1.0f);
-		mAnimation->Create(L"Refill_State", Refill_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 6, Vector2(0.0f, 0.0f), 1.0f);
+		mAnimation->Create(L"Empty_State", Empty_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Idle_State", Idle_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 45, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Break_State", Break_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Refill_State", Refill_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
 
-		mAnimation->CompleteEvent(L"Break_State") = std::bind(&PlayerHP::Destroy, this);
+		mAnimation->CompleteEvent(L"Break_State") = std::bind(&PlayerHP::Empty, this);
 
 		mTransform->SetScale(Vector3(0.07f, 0.1f, 0.0f));
 		GameObject::Initialize();
@@ -73,10 +73,5 @@ namespace km
 	void PlayerHP::Refill()
 	{
 		mAnimation->PlayAnimation(L"Refill_State", true);
-	}
-	
-	void PlayerHP::Destroy()
-	{
-		object::Destroy(this);
 	}
 }

@@ -28,8 +28,8 @@ namespace km
 		std::shared_ptr<Texture> Crowd_Left = Resources::Load<Texture>(L"Crowd_Left", L"..\\\Resources\\Boss_Grimm\\Grimm_Tent\\Npc\\Crowd\\Left\\Crowd_Left.png");
 		std::shared_ptr<Texture> Crowd_Right = Resources::Load<Texture>(L"Crowd_Right", L"..\\\Resources\\Boss_Grimm\\Grimm_Tent\\Npc\\Crowd\\Right\\Crowd_Right.png");
 
-		mAnimation->Create(L"Crowd_Left", Crowd_Left, Vector2(0.0f, 0.0f), Vector2(389.0f, 248.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimation->Create(L"Crowd_Right", Crowd_Right, Vector2(0.0f, 0.0f), Vector2(389.0f, 248.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Crowd_Left", Crowd_Left, Vector2(0.0f, 0.0f), Vector2(389.0f, 248.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimation->Create(L"Crowd_Right", Crowd_Right, Vector2(0.0f, 0.0f), Vector2(389.0f, 248.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
 
 		GameObject::Initialize();
 	}

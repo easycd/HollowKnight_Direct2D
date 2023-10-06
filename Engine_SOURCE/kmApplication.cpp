@@ -4,6 +4,7 @@
 #include "kmRenderer.h"
 #include "kmSceneManager.h"
 #include "kmCollisionManager.h"
+#include "kmFmod.h"
 
 namespace km
 {
@@ -32,7 +33,7 @@ namespace km
 	{
 		Time::Initiailize();
 		Input::Initialize();
-
+		Fmod::Initialize();
 		renderer::Initialize();
 
 		SceneManager::Initialize();

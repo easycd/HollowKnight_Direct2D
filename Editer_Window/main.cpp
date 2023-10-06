@@ -7,6 +7,7 @@
 #include "..\Engine_SOURCE\kmApplication.h"
 #include "..\Engine_SOURCE\kmRenderer.h"
 #include "..\Engine_SOURCE\kmResources.h"
+#include "..\Engine_SOURCE\kmFmod.h"
 #include "LoadScene.h"
 #include "guiEditor.h"
 
@@ -79,6 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     renderer::Release();
     km::SceneManager::Release();
+    km::Fmod::Release();
     gui::Editor::Release();
 
     return (int)msg.wParam;

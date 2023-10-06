@@ -112,6 +112,9 @@
     <Filter Include="Resource\Shader\CS">
       <UniqueIdentifier>{bc54299e-053c-4fe3-bc1c-bc7859d8ee02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Component\Sound">
+      <UniqueIdentifier>{98fe634a-f1cd-41cd-835a-a4d6cbe599b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp">
@@ -215,6 +218,18 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)kmComputeShader.cpp">
       <Filter>Resource\Shader\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmFmod.cpp">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioListener.cpp">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioClip.cpp">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioSource.cpp">
+      <Filter>GameObject\Component\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +349,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)kmComputeShader.h">
       <Filter>Resource\Shader\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmFmod.h">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioListener.h">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioClip.h">
+      <Filter>GameObject\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioSource.h">
+      <Filter>GameObject\Component\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

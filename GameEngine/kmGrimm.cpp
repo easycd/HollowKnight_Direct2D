@@ -394,7 +394,7 @@ namespace km
 			mDirection = eDirection::Left;
 		}
 
-		////패턴 시작
+		//패턴 시작
 		//if (mPlayerPos.x > -1.26f && Pattern_Start == false)
 		//{
 		//	mTime += Time::DeltaTime();

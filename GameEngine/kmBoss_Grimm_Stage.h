@@ -9,6 +9,7 @@ namespace km
 	class FlameBat;
 	class TrumpNpc;
 	class Crowd;
+	class Girmm_Hand;
 
 	class Boss_Grimm_Stage : public Scene
 	{
@@ -48,6 +49,10 @@ namespace km
 		Crowd* mCrowd_09;
 		Crowd* mCrowd_10;
 
+		Girmm_Hand* mGrimm_Hand;
 
+		float mTime;
+		bool mHand_Check = true;
+		bool mRecall_Check = true;
 	};
 }

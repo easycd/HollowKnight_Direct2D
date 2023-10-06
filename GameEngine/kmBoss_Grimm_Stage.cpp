@@ -8,6 +8,7 @@
 #include "kmSceneManager.h"
 #include "kmInput.h"
 #include "kmObject.h"
+#include "kmTime.h"
 #include "kmRenderer.h"
 #include "kmCollider2D.h"
 #include "kmCollisionManager.h"
@@ -22,15 +23,22 @@
 #include "kmGrimm.h"
 #include "kmGrimmScript.h"
 
+#include "kmGirmm_Hand.h"
+
 #include "kmSpike_Object.h"
 #include "kmFlameBat.h"
 
 #include "kmTrumpNpc.h"
 #include "kmCrowd.h"
 
+#include "kmAudioListener.h"
+#include "kmAudioClip.h"
+#include "kmAudioSource.h"
+
 namespace km
 {
 	Boss_Grimm_Stage::Boss_Grimm_Stage()
+		:mTime(0.0f)
 	{
 	}
 	Boss_Grimm_Stage::~Boss_Grimm_Stage()
@@ -77,6 +85,28 @@ namespace km
 			mr->SetMaterial(Resources::Find<Material>(L"GrimmStage_Ground"));
 		}
 
+		////복도 안개
+		//{
+		//	GameObject* GrimmStageSmoke01 = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 10.0f), eLayerType::BG);
+		//	GrimmStageSmoke01->GetComponent<Transform>()->SetScale(Vector3(8.3f, 1.5f, 0.0f));
+		//	GrimmStageSmoke01->SetName(L"GrimmStageSmoke01");
+		//
+		//	MeshRenderer* mr = GrimmStageSmoke01->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"GrimmStageSmoke_01"));
+		//}
+		//
+		////무대 안개
+		//{
+		//	GameObject* GrimmStageSmoke02 = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 10.0f), eLayerType::BG);
+		//	GrimmStageSmoke02->GetComponent<Transform>()->SetScale(Vector3(8.3f, 1.5f, 0.0f));
+		//	GrimmStageSmoke02->SetName(L"GrimmStageSmoke02");
+		//
+		//	MeshRenderer* mr = GrimmStageSmoke02->AddComponent<MeshRenderer>();
+		//	mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//	mr->SetMaterial(Resources::Find<Material>(L"GrimmStageSmoke_02"));
+		//}
+
 		//캐릭터
 		{
 			mPlayer = object::Instantiate<Player>(eLayerType::Player);
@@ -99,83 +129,83 @@ namespace km
 			mNpc->GetComponent<Transform>()->SetPosition(Vector3(-2.05f, -0.43f, 0.5f));
 			mNpc->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.3f, 0.0f));
 		}
-		//Crowd NPC
-		{
-			mCrowd_00 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_00->SetName(L"Crowd00");
-			mCrowd_00->GetComponent<Transform>()->SetPosition(Vector3(-1.0f, -0.13f, 11.0f));
-			mCrowd_00->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_01 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_01->SetName(L"Crowd01");
-			mCrowd_01->GetComponent<Transform>()->SetPosition(Vector3(-0.85f, 0.05f, 11.0f));
-			mCrowd_01->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_02 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_02->SetName(L"Crowd02");
-			mCrowd_02->GetComponent<Transform>()->SetPosition(Vector3(-0.7f, -0.15f, 11.0f));
-			mCrowd_02->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_03 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_03->SetName(L"Crowd03");
-			mCrowd_03->GetComponent<Transform>()->SetPosition(Vector3(-0.4f, -0.16f, 11.0f));
-			mCrowd_03->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_04 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_04->SetName(L"Crowd04");
-			mCrowd_04->GetComponent<Transform>()->SetPosition(Vector3(-0.5f, 0.0f, 11.1f));
-			mCrowd_04->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_05 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_05->SetName(L"Crowd05");
-			mCrowd_05->GetComponent<Transform>()->SetPosition(Vector3(-0.2f, 0.0f, 11.2f));
-			mCrowd_05->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_06 = object::Instantiate<Crowd>(eLayerType::Npc); 
-			mCrowd_06->SetName(L"Crowd06");
-			mCrowd_06->GetComponent<Transform>()->SetPosition(Vector3(-0.05f, -0.19f, 11.0f));
-			mCrowd_06->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_07 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_07->SetName(L"Crowd07");
-			mCrowd_07->GetComponent<Transform>()->SetPosition(Vector3(0.22f, -0.19f, 11.0f));
-			mCrowd_07->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_08 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_08->SetName(L"Crowd08");
-			mCrowd_08->GetComponent<Transform>()->SetPosition(Vector3(0.5f, -0.15f, 11.0f));
-			mCrowd_08->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_09 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_09->SetName(L"Crowd09");
-			mCrowd_09->GetComponent<Transform>()->SetPosition(Vector3(0.12f, 0.0f, 11.0f));
-			mCrowd_09->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
-		//Crowd NPC
-		{
-			mCrowd_10 = object::Instantiate<Crowd>(eLayerType::Npc);
-			mCrowd_10->SetName(L"Crowd10");
-			mCrowd_10->GetComponent<Transform>()->SetPosition(Vector3(0.45f, 0.0f, 11.1f));
-			mCrowd_10->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
-		}
+		////Crowd NPC
+		//{
+		//	mCrowd_00 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_00->SetName(L"Crowd00");
+		//	mCrowd_00->GetComponent<Transform>()->SetPosition(Vector3(-1.0f, -0.13f, 11.0f));
+		//	mCrowd_00->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_01 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_01->SetName(L"Crowd01");
+		//	mCrowd_01->GetComponent<Transform>()->SetPosition(Vector3(-0.85f, 0.05f, 11.0f));
+		//	mCrowd_01->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_02 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_02->SetName(L"Crowd02");
+		//	mCrowd_02->GetComponent<Transform>()->SetPosition(Vector3(-0.7f, -0.15f, 11.0f));
+		//	mCrowd_02->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_03 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_03->SetName(L"Crowd03");
+		//	mCrowd_03->GetComponent<Transform>()->SetPosition(Vector3(-0.4f, -0.16f, 11.0f));
+		//	mCrowd_03->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_04 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_04->SetName(L"Crowd04");
+		//	mCrowd_04->GetComponent<Transform>()->SetPosition(Vector3(-0.5f, 0.0f, 11.1f));
+		//	mCrowd_04->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_05 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_05->SetName(L"Crowd05");
+		//	mCrowd_05->GetComponent<Transform>()->SetPosition(Vector3(-0.2f, 0.0f, 11.2f));
+		//	mCrowd_05->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_06 = object::Instantiate<Crowd>(eLayerType::Npc); 
+		//	mCrowd_06->SetName(L"Crowd06");
+		//	mCrowd_06->GetComponent<Transform>()->SetPosition(Vector3(-0.05f, -0.19f, 11.0f));
+		//	mCrowd_06->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_07 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_07->SetName(L"Crowd07");
+		//	mCrowd_07->GetComponent<Transform>()->SetPosition(Vector3(0.22f, -0.19f, 11.0f));
+		//	mCrowd_07->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_08 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_08->SetName(L"Crowd08");
+		//	mCrowd_08->GetComponent<Transform>()->SetPosition(Vector3(0.5f, -0.15f, 11.0f));
+		//	mCrowd_08->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_09 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_09->SetName(L"Crowd09");
+		//	mCrowd_09->GetComponent<Transform>()->SetPosition(Vector3(0.12f, 0.0f, 11.0f));
+		//	mCrowd_09->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
+		////Crowd NPC
+		//{
+		//	mCrowd_10 = object::Instantiate<Crowd>(eLayerType::Npc);
+		//	mCrowd_10->SetName(L"Crowd10");
+		//	mCrowd_10->GetComponent<Transform>()->SetPosition(Vector3(0.45f, 0.0f, 11.1f));
+		//	mCrowd_10->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+		//}
 
 		{
 			GameObject* camera = object::Instantiate<GameObject>(Vector3(1.0f, 0.0f, 0.0f), eLayerType::Camera);
@@ -187,6 +217,7 @@ namespace km
 			camerscript->SetTarget(mPlayer);
 			camerscript->SetWeight(Vector2(-3.3f, 0.28f));
 			camerscript->SetHight(-0.2f);
+			camera->AddComponent<AudioListener>();
 		}
 
 
@@ -259,6 +290,109 @@ namespace km
 		{
 			SceneManager::LoadScene(L"Godhome");
 		}
+
+		mTime += Time::DeltaTime();
+
+		if (mTime > 3.0f && mHand_Check)
+		{
+			mHand_Check = false;
+			mGrimm_Hand = object::Instantiate<Girmm_Hand>(eLayerType::BossObj);
+			mGrimm_Hand->Hand_Out();
+		}
+
+		if (mTime > 100.0f && mRecall_Check)
+		{
+			mRecall_Check = false;
+			//Crowd NPC
+			{
+				mCrowd_00 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_00->SetName(L"Crowd00");
+				mCrowd_00->GetComponent<Transform>()->SetPosition(Vector3(-1.0f, -0.13f, 11.0f));
+				mCrowd_00->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_01 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_01->SetName(L"Crowd01");
+				mCrowd_01->GetComponent<Transform>()->SetPosition(Vector3(-0.85f, 0.05f, 11.0f));
+				mCrowd_01->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_02 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_02->SetName(L"Crowd02");
+				mCrowd_02->GetComponent<Transform>()->SetPosition(Vector3(-0.7f, -0.15f, 11.0f));
+				mCrowd_02->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_03 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_03->SetName(L"Crowd03");
+				mCrowd_03->GetComponent<Transform>()->SetPosition(Vector3(-0.4f, -0.16f, 11.0f));
+				mCrowd_03->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_04 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_04->SetName(L"Crowd04");
+				mCrowd_04->GetComponent<Transform>()->SetPosition(Vector3(-0.5f, 0.0f, 11.1f));
+				mCrowd_04->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_05 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_05->SetName(L"Crowd05");
+				mCrowd_05->GetComponent<Transform>()->SetPosition(Vector3(-0.2f, 0.0f, 11.2f));
+				mCrowd_05->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_06 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_06->SetName(L"Crowd06");
+				mCrowd_06->GetComponent<Transform>()->SetPosition(Vector3(-0.05f, -0.19f, 11.0f));
+				mCrowd_06->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_07 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_07->SetName(L"Crowd07");
+				mCrowd_07->GetComponent<Transform>()->SetPosition(Vector3(0.22f, -0.19f, 11.0f));
+				mCrowd_07->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_08 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_08->SetName(L"Crowd08");
+				mCrowd_08->GetComponent<Transform>()->SetPosition(Vector3(0.5f, -0.15f, 11.0f));
+				mCrowd_08->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_09 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_09->SetName(L"Crowd09");
+				mCrowd_09->GetComponent<Transform>()->SetPosition(Vector3(0.12f, 0.0f, 11.0f));
+				mCrowd_09->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			//Crowd NPC
+			{
+				mCrowd_10 = object::Instantiate<Crowd>(eLayerType::Npc);
+				mCrowd_10->SetName(L"Crowd10");
+				mCrowd_10->GetComponent<Transform>()->SetPosition(Vector3(0.45f, 0.0f, 11.1f));
+				mCrowd_10->GetComponent<Transform>()->SetScale(Vector3(0.3f, 0.2f, 0.0f));
+			}
+			mCrowd_00->Play_Right();
+			mCrowd_01->Play_Right();
+			mCrowd_02->Play_Right();
+			mCrowd_03->Play_Right();
+			mCrowd_04->Play_Right();
+			mCrowd_05->Play_Right();
+			mCrowd_06->Play_Left();
+			mCrowd_07->Play_Left();
+			mCrowd_08->Play_Left();
+			mCrowd_09->Play_Left();
+			mCrowd_10->Play_Left();
+		}
+
 	}
 	void Boss_Grimm_Stage::LateUpdate()
 	{
@@ -283,7 +417,7 @@ namespace km
 	void Boss_Grimm_Stage::OnEnter()
 	{
 		mGrimm->Idle();
-		mCrowd_00->Play_Right();
+		/*mCrowd_00->Play_Right();
 		mCrowd_01->Play_Right();
 		mCrowd_02->Play_Right();
 		mCrowd_03->Play_Right();
@@ -293,7 +427,7 @@ namespace km
 		mCrowd_07->Play_Left();
 		mCrowd_08->Play_Left();
 		mCrowd_09->Play_Left();
-		mCrowd_10->Play_Left();
+		mCrowd_10->Play_Left();*/
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()

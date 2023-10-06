@@ -23,6 +23,10 @@
 #include "kmSoulGauge.h"
 #include "kmPlayerHP_State.h"
 
+#include "kmAudioListener.h"
+#include "kmAudioClip.h"
+#include "kmAudioSource.h"
+
 namespace km
 {
 	Dirtmouth::Dirtmouth()
@@ -85,6 +89,8 @@ namespace km
 			mCamerscript = camera->AddComponent<CameraScript>();
 			mCamerscript->SetTarget(player);
 			mCamerscript->SetWeight(Vector2(-1.698f, 1.68f));
+
+			camera->AddComponent<AudioListener>();
 		}
 
 		//{

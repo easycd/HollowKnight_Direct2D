@@ -19,6 +19,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmCollisionManager.h" />
@@ -27,6 +30,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)kmConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)kmFmod.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)kmGraphics.h" />
@@ -58,6 +62,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmAnimator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioListener.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmCollisionManager.cpp" />
@@ -65,6 +72,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)kmComputeShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)kmFmod.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)kmGround.cpp" />

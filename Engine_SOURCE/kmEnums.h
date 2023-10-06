@@ -16,6 +16,8 @@ namespace km::enums
 		Light,
 		Camera,
 		Rigidbody,
+		AudioListener,
+		AudioSource,
 		End,
 	};
 
@@ -25,6 +27,7 @@ namespace km::enums
 		Ground,
 		Wall,
 		Player,
+		Skill,
 		Effect,
 		Monster,
 		Boss,
@@ -45,6 +48,7 @@ namespace km::enums
 		Mesh,
 		Animation,
 		ComputeShader,
+		AudioClip,
 		End,
 	};
 

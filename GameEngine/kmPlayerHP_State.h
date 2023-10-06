@@ -33,6 +33,13 @@ namespace km
 		PlayerHP* HP_02;
 		PlayerHP* HP_03;
 		PlayerHP* HP_04;
+
+	private:
+		bool Check_00 = true;
+		bool Check_01 = true;
+		bool Check_02 = true;
+		bool Check_03 = true;
+		bool Check_04 = true;
 	};
 }
 

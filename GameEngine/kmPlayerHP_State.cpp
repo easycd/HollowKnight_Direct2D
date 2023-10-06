@@ -26,14 +26,14 @@ namespace km
 		HP_03 = object::Instantiate<PlayerHP>(eLayerType::UI);
 		HP_04 = object::Instantiate<PlayerHP>(eLayerType::UI);
 
-		HP_00->Empty();
-		HP_01->Empty();
+		HP_00->Idle();
+		HP_01->Idle();
 		HP_01->SetDistance(0.06f);
-		HP_02->Empty();
+		HP_02->Idle();
 		HP_02->SetDistance(0.12f);
-		HP_03->Empty();
+		HP_03->Idle();
 		HP_03->SetDistance(0.18f);
-		HP_04->Empty();
+		HP_04->Idle();
 		HP_04->SetDistance(0.24f);
 
 		GameObject::Initialize();
@@ -44,24 +44,29 @@ namespace km
 		mPlayer = SceneManager::GetPlayer();
 		mPlayer_HP = mPlayer->GetPlayerHPState();
 
-		if (mPlayer_HP == 4)
+		if (mPlayer_HP == 4 && Check_04)
 		{
+			Check_04 = false;
 			HP_04->Break();
 		}
-		if (mPlayer_HP == 3)
+		if (mPlayer_HP == 3 && Check_03)
 		{
+			Check_03 = false;
 			HP_03->Break();
 		}
-		if (mPlayer_HP == 2)
+		if (mPlayer_HP == 2 && Check_02)
 		{
+			Check_02 = false;
 			HP_02->Break();
 		}
-		if (mPlayer_HP == 1)
+		if (mPlayer_HP == 1 && Check_01)
 		{
+			Check_01 = false;
 			HP_01->Break();
 		}
-		if (mPlayer_HP == 0)
+		if (mPlayer_HP == 0 && Check_00)
 		{
+			Check_00 = false;
 			HP_00->Break();
 
 		}

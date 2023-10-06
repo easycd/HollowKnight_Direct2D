@@ -5,9 +5,13 @@ namespace km
 {
 	class Rigidbody;
 	class RigidbodyMath;
+	
 	class PlayerEffet;
 	class DoubleJump_Effect;
 	class DsahEffect;
+	class FireBallSkill_Effect;
+
+	class AudioSource;
 
 	class Player : public GameObject
 	{
@@ -60,11 +64,12 @@ namespace km
 		Rigidbody* mRigidbody;
 		Animator* mAnimation;
 		Transform* mTransform;
+		Collider2D* mCollider;
 		Vector3 mPlayerPos;
 		Vector3 mSavePos;
 
 		VectorR velocity;
-		eDirection mDirection; //0이면 왼쪽 1이면 오른쪽
+		eDirection mDirection;
 		float mTime;
 
 		int mPlayerHP_State;
@@ -73,9 +78,9 @@ namespace km
 		PlayerEffet* mSlash_Effect;
 		PlayerEffet* mUpSlash_Effect;
 		PlayerEffet* mDownSlash_Effect;
-
 		DoubleJump_Effect* mDoubleJump_Effect;
 		DsahEffect* mDash_Effect;
+		FireBallSkill_Effect* Skill_Effect;
 
 	private:
 		bool Dash_Left_Check = false;
@@ -87,6 +92,9 @@ namespace km
 		bool Ground_Check = false;
 		bool Fall_Delay = false;
 		bool Fall_Ani_Check = true;
+
+		bool Walk_Sound_Loop = false;
+		bool Walk_Check = false;
 
 	private:
 		void Idle();
@@ -126,5 +134,17 @@ namespace km
 		bool Attack_Check	   = true;
 		bool DownAttack_Check  = true;
 		bool Skill_Check       = true;
+
+	private:
+		AudioSource* mWalkSound;
+		AudioSource* mJumpSound;
+		AudioSource* mDoubleJump;
+		AudioSource* mLandSound;
+		AudioSource* mDash;
+		AudioSource* mSlash;
+		AudioSource* mDownSlash;
+		AudioSource* mUpSlash;
+		AudioSource* mFireBall;
+
 	};
 }

@@ -15,11 +15,17 @@
 #include "kmPlayerEffet.h"
 #include "DoubleJump_Effect.h"
 #include "kmDsahEffect.h"
+#include "FireBallSkill_Effect.h"
+
+#include "kmFireBallSkill.h"
+
+#include "kmAudioClip.h"
+#include "kmAudioSource.h"
 
 namespace km
 {
 	Player::Player()
-		: PlayerHP_State(5)
+		: mPlayerHP_State(5)
 	{
 	}
 	Player::~Player()
@@ -30,6 +36,17 @@ namespace km
 	{
 		mTransform = GetComponent<Transform>();
 		mAnimation = AddComponent<Animator>();
+		mCollider = AddComponent<Collider2D>();
+
+		mWalkSound  = AddComponent<AudioSource>();
+		mJumpSound	= AddComponent<AudioSource>();
+		mDoubleJump	= AddComponent<AudioSource>();
+		mLandSound	= AddComponent<AudioSource>();
+		mDash		= AddComponent<AudioSource>();
+		mSlash		= AddComponent<AudioSource>();
+		mDownSlash	= AddComponent<AudioSource>();
+		mUpSlash	= AddComponent<AudioSource>();
+		mFireBall	= AddComponent<AudioSource>();
 
 		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -137,15 +154,25 @@ namespace km
 
 		mAnimation->CompleteEvent(L"FireBall_Cast_Left") = std::bind(&Player::Skill_End, this);
 		mAnimation->CompleteEvent(L"FireBall_Cast_Right") = std::bind(&Player::Skill_End, this);
-			
+
+
+		mWalkSound->SetClip(Resources::Load<AudioClip>(L"WalkSound", L"..\\Resources\\Sound\\Knight\\Walk.wav"));
+		mJumpSound->SetClip(Resources::Load<AudioClip>(L"JumpSound", L"..\\Resources\\Sound\\Knight\\Jump.wav"));
+		mDoubleJump->SetClip(Resources::Load<AudioClip>(L"mDoubleJump", L"..\\Resources\\Sound\\Knight\\DoubleJump.wav"));
+		mLandSound->SetClip(Resources::Load<AudioClip>(L"LandSound", L"..\\Resources\\Sound\\Knight\\Land.wav"));
+		mDash->SetClip(Resources::Load<AudioClip>(L"mDash", L"..\\Resources\\Sound\\Knight\\Dash.wav"));
+		mSlash->SetClip(Resources::Load<AudioClip>(L"mSlash", L"..\\Resources\\Sound\\Knight\\Slash.wav"));
+		mDownSlash->SetClip(Resources::Load<AudioClip>(L"mDownSlash", L"..\\Resources\\Sound\\Knight\\DownSlash.wav"));
+		mUpSlash->SetClip(Resources::Load<AudioClip>(L"mUpSlash", L"..\\Resources\\Sound\\Knight\\UpSlash.wav"));
+		mFireBall->SetClip(Resources::Load<AudioClip>(L"mFireBall", L"..\\Resources\\Sound\\Knight\\FireBall.wav"));
+
+		mWalkSound->SetLoop(true);
+
 		mTransform->SetScale(Vector3(0.3f, 0.2f, 0.0f));
 		mTransform->SetPosition (Vector3(0.0f, 0.5f, 0.0f));
 		mDirection = eDirection::Right;
 
-		Collider2D* collider = AddComponent<Collider2D>();
-		collider->SetSize(Vector2(0.18f, 0.7f));
-
-
+		mCollider->SetSize(Vector2(0.18f, 0.7f));
 
 		mRigidbody = AddComponent<Rigidbody>();
 		mRigidbody->SetMass(0.1f);
@@ -160,7 +187,7 @@ namespace km
 	void Player::Update()
 	{
 		mPlayerPos = mTransform->GetPosition();
-
+		mPlayerHP_State;
 		switch (mState)
 		{
 		case Player::ePlayerState::Idle:
@@ -218,6 +245,17 @@ namespace km
 		if (Ground_Check && Fall_Check)
 			mState = ePlayerState::Idle;
 
+		if (Walk_Check && Walk_Sound_Loop == false)
+		{
+			mWalkSound->Play();
+			Walk_Sound_Loop = true;
+		}
+		else if(Walk_Check == false && Walk_Sound_Loop)
+		{
+			mWalkSound->Stop();
+			Walk_Sound_Loop = false;
+		}
+
 
 		GameObject::Update();
 	}
@@ -272,10 +310,16 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirection = eDirection::Right;
 
+		if (Input::GetKeyDown(eKeyCode::A))
+		{
+			mPlayerHP_State = mPlayerHP_State - 1;
+		}
+
 		//좌우 이동
 		if (Input::GetKey(eKeyCode::LEFT) || Input::GetKey(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Move;
+			Walk_Check = true;
 
 			if (mDirection == eDirection::Left)
 				mAnimation->PlayAnimation(L"walk_Left", true);
@@ -308,7 +352,6 @@ namespace km
 		if (Input::GetKeyDown(eKeyCode::X))
 		{
 			mState = ePlayerState::Attack;
-			Attack_Check = true;
 			return;
 		}
 
@@ -337,18 +380,9 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirection = eDirection::Right;
 
-		//if (Input::GetKey(eKeyCode::LEFT))
-		//{
-		//	mPlayerPos.x -= 1.0f * Time::DeltaTime();
-		//}
-		//
-		//if (Input::GetKey(eKeyCode::RIGHT))
-		//{
-		//	mPlayerPos.x += 1.0f * Time::DeltaTime();
-		//}
-
 		if (Input::GetKeyUp(eKeyCode::LEFT) || Input::GetKeyUp(eKeyCode::RIGHT))
 		{
+			Walk_Check = false;
 			mState = ePlayerState::Idle;
 			if (mDirection == eDirection::Left)
 				mAnimation->PlayAnimation(L"Idle_Left", true);
@@ -358,6 +392,7 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::C))
 		{
+
 			mState = ePlayerState::Skill;
 			Skill_Check = true;
 			return;
@@ -365,6 +400,7 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
 		{
+
 			mState = ePlayerState::UpAttack;
 			UpAttack_Check = true;
 			return;
@@ -372,6 +408,7 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::DOWN))
 		{
+
 			mState = ePlayerState::DownAttack;
 			DownAttack_Check = true;
 			return;
@@ -379,8 +416,8 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::X))
 		{
-			mState = ePlayerState::Attack;
 			Attack_Check = true;
+			mState = ePlayerState::Attack;
 			return;
 		}
 
@@ -405,6 +442,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			velocity.x = 0.8f;
 		mRigidbody->SetVelocity(velocity);
+
 	}
 
 	void Player::Jump()
@@ -418,6 +456,7 @@ namespace km
 
 		if (Jump_Check)
 		{
+			mJumpSound->Play();
 			if (mDirection == eDirection::Left)
 			{
 				mAnimation->PlayAnimation(L"Jump_Left", true);
@@ -456,6 +495,7 @@ namespace km
 
 		if (Double_Jump_Check)
 		{
+			mDoubleJump->Play();
 			if (mDirection == eDirection::Left)
 			{
 				mDoubleJump_Effect = object::Instantiate<DoubleJump_Effect>(eLayerType::Effect);
@@ -491,6 +531,7 @@ namespace km
 	{
 		if(Dash_Check)
 		{
+			mDash->Play();
 			mState = ePlayerState::Dash;
 
 			if (mDirection == eDirection::Left)
@@ -537,6 +578,7 @@ namespace km
 
 	void Player::Fall()
 	{
+		Walk_Check = false;
 		if (Fall_Ani_Check)
 		{
 			if (mDirection == eDirection::Left)
@@ -550,10 +592,17 @@ namespace km
 		//Ground 충돌 시 Idle
 		if (Ground_Check)
 		{
+			mLandSound->Play();
 			if (mDirection == eDirection::Left)
+			{
+				mState = ePlayerState::Idle;
 				mAnimation->PlayAnimation(L"Idle_Left", true);
+			}
 			else if (mDirection == eDirection::Right)
+			{
+				mState = ePlayerState::Idle;
 				mAnimation->PlayAnimation(L"Idle_Right", true);
+			}
 		}
 
 		if (Input::GetKeyDown(eKeyCode::X) && Input::GetKey(eKeyCode::UP))
@@ -575,7 +624,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::C))
 		{
 			Fall_Delay = true;
-			Skill_Check = true;
+			//Skill_Check = true;
 			mState = ePlayerState::Skill;
 			return;
 		}
@@ -583,7 +632,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::C))
 		{
 			Fall_Delay = true;
-			Skill_Check = true;
+			//Skill_Check = true;
 			mState = ePlayerState::Skill;
 			return;
 
@@ -592,7 +641,6 @@ namespace km
 		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::X))
 		{
 			Fall_Delay = true;
-			Attack_Check = true;
 			mState = ePlayerState::Attack;
 			return;
 		}
@@ -600,7 +648,6 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::X))
 		{
 			Fall_Delay = true;
-			Attack_Check = true;
 			mState = ePlayerState::Attack;
 			return;
 		}
@@ -658,6 +705,7 @@ namespace km
 
 		if (UpAttack_Check)
 		{
+			mUpSlash->Play();
 			mState = ePlayerState::UpAttack;
 
 			if (mDirection == eDirection::Left)
@@ -696,6 +744,7 @@ namespace km
 
 		if (Attack_Check)
 		{
+			mSlash->Play();
 			mState = ePlayerState::Attack;
 
 			if (mDirection == eDirection::Left)
@@ -734,6 +783,7 @@ namespace km
 
 		if (DownAttack_Check)
 		{
+			mDownSlash->Play();
 			mState = ePlayerState::UpAttack;
 
 			if (mDirection == eDirection::Left)
@@ -770,20 +820,29 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirection = eDirection::Right;
 
+		
 		if (Skill_Check)
 		{
 			mState = ePlayerState::Skill;
 
 			if (mDirection == eDirection::Left)
 			{
-
+				mFireBall->Play();
+				object::FireBall_Instantiate_Left<FireBallSkill>(eLayerType::Skill);
+				Skill_Effect = object::Instantiate<FireBallSkill_Effect>(eLayerType::Effect);
+				Skill_Effect->FireBallSkill_Left();
 				mAnimation->PlayAnimation(L"FireBall_Cast_Left", true);
+				mRigidbody->SetGround(true);
 			}
 
 			if (mDirection == eDirection::Right)
 			{
-
+				mFireBall->Play();
+				object::FireBall_Instantiate_Right<FireBallSkill>(eLayerType::Skill);
+				Skill_Effect = object::Instantiate<FireBallSkill_Effect>(eLayerType::Effect);
+				Skill_Effect->FireBallSkill_Right();
 				mAnimation->PlayAnimation(L"FireBall_Cast_Right", true);
+				mRigidbody->SetGround(true);
 			}
 
 			Skill_Check = false;
@@ -803,14 +862,14 @@ namespace km
 	{
 		if (mDirection == eDirection::Left)
 		{
-			mState = ePlayerState::Idle;
-			mAnimation->PlayAnimation(L"Idle_Left", true);
+			mState = ePlayerState::Fall;
+			mAnimation->PlayAnimation(L"Fall_Left", true);
 		}
 
 		if (mDirection == eDirection::Right)
 		{
-			mState = ePlayerState::Idle;
-			mAnimation->PlayAnimation(L"Idle_Right", true);
+			mState = ePlayerState::Fall;
+			mAnimation->PlayAnimation(L"Fall_Right", true);
 		}
 		Jump_Check = true;
 		Jump_Delay = false;
@@ -820,14 +879,14 @@ namespace km
 	{
 		if (mDirection == eDirection::Left)
 		{
-			mState = ePlayerState::Idle;
-			mAnimation->PlayAnimation(L"Idle_Left", true);
+			mState = ePlayerState::Fall;
+			mAnimation->PlayAnimation(L"Fall_Left", true);
 		}
 
 		if (mDirection == eDirection::Right)
 		{
-			mState = ePlayerState::Idle;
-			mAnimation->PlayAnimation(L"Idle_Right", true);
+			mState = ePlayerState::Fall;
+			mAnimation->PlayAnimation(L"Fall_Right", true);
 		}
 		Double_Jump_Check = true;
 		DoubleJump_Delay = false;
@@ -851,6 +910,7 @@ namespace km
 
 	void Player::Attack_End()
 	{
+		Attack_Check = true;
 		if (mDirection == eDirection::Left)
 		{
 			mState = ePlayerState::Idle;
@@ -864,6 +924,8 @@ namespace km
 	}
 	void Player::Skill_End()
 	{
+		mRigidbody->SetGround(false);
+		Skill_Check = true;
 		if (mDirection == eDirection::Left)
 		{
 			mState = ePlayerState::Idle;

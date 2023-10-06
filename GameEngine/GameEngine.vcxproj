@@ -150,6 +150,7 @@
     <ClInclude Include="..\Engine_SOURCE\kmCameraScript.h" />
     <ClInclude Include="Boss_PureVessel_Stage.h" />
     <ClInclude Include="DoubleJump_Effect.h" />
+    <ClInclude Include="FireBallSkill_Effect.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="kmAirDash_Effect.h" />
     <ClInclude Include="kmBoss_Grimm_Stage.h" />
@@ -157,7 +158,9 @@
     <ClInclude Include="kmDirtmouth.h" />
     <ClInclude Include="kmDsahEffect.h" />
     <ClInclude Include="kmFIreBall.h" />
+    <ClInclude Include="kmFireBallSkill.h" />
     <ClInclude Include="kmFlameBat.h" />
+    <ClInclude Include="kmGirmm_Hand.h" />
     <ClInclude Include="kmGodhome.h" />
     <ClInclude Include="kmGridScript.h" />
     <ClInclude Include="kmGrimm.h" />
@@ -182,6 +185,7 @@
     <ClCompile Include="..\Engine_SOURCE\kmCameraScript.cpp" />
     <ClCompile Include="Boss_PureVessel_Stage.cpp" />
     <ClCompile Include="DoubleJump_Effect.cpp" />
+    <ClCompile Include="FireBallSkill_Effect.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="kmAirDash_Effect.cpp" />
     <ClCompile Include="kmBoss_Grimm_Stage.cpp" />
@@ -189,7 +193,9 @@
     <ClCompile Include="kmDirtmouth.cpp" />
     <ClCompile Include="kmDsahEffect.cpp" />
     <ClCompile Include="kmFIreBall.cpp" />
+    <ClCompile Include="kmFireBallSkill.cpp" />
     <ClCompile Include="kmFlameBat.cpp" />
+    <ClCompile Include="kmGirmm_Hand.cpp" />
     <ClCompile Include="kmGodhome.cpp" />
     <ClCompile Include="kmGridScript.cpp" />
     <ClCompile Include="kmGrimm.cpp" />
