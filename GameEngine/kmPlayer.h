@@ -109,19 +109,20 @@ namespace km
 		void DownAttack();
 		void Skill();
 
-		//void FocusStart();
-		//void Focus();
-		//void FocusOn();
-		//void FocusEnd();
-		//
+		void FocusStart();
+		void Focus();
+		void FocusOn();
+		void FocusEnd();
+		
 		
 		void Jump_End();
 		void DoubleJump_End();
 		void Dash_End();
 		void Attack_End();
 		void Skill_End();
+		void FocusEnd_End();
 
-		//void Death();
+		void Death();
 
 	private:
 		bool Idle_Check        = false;
@@ -134,6 +135,14 @@ namespace km
 		bool Attack_Check	   = true;
 		bool DownAttack_Check  = true;
 		bool Skill_Check       = true;
+		bool Focus_Start_Check = true;
+		bool Focus_Check       = true;
+		bool Focus_On_Check    = true;
+		bool Focus_End_Check   = true;
+
+	private:
+		float Focus_mTime;
+		
 
 	private:
 		AudioSource* mWalkSound;

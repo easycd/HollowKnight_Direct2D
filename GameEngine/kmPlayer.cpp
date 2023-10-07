@@ -26,6 +26,7 @@ namespace km
 {
 	Player::Player()
 		: mPlayerHP_State(5)
+		, Focus_mTime(0.0f)
 	{
 	}
 	Player::~Player()
@@ -85,14 +86,14 @@ namespace km
 		std::shared_ptr<Texture> RightDash = Resources::Load<Texture>(L"RightDash", L"..\\Resources\\Knight\\Dash\\Knight_Dash_Right.png");
 
 		//Focus
-		std::shared_ptr<Texture> FocusStartLeft = Resources::Load<Texture>(L"FocusStartLeft", L"..\\Resources\\Knight\\Start\\Knight_FocusStart_Left.png");
-		std::shared_ptr<Texture> FocusStartRight = Resources::Load<Texture>(L"FocusStartRight", L"..\\Resources\\Knight\\Start\\Knight_FocusStart_Right.png");
-		std::shared_ptr<Texture> FocusLeft = Resources::Load<Texture>(L"FocusLeft", L"..\\Resources\\Knight\\Loop\\Knight_Focus_Left.png");
-		std::shared_ptr<Texture> FocusRight = Resources::Load<Texture>(L"FocusRight", L"..\\Resources\\Knight\\Loop\\Knight_Focus_Right.png");
-		std::shared_ptr<Texture> FocusOnLeft = Resources::Load<Texture>(L"FocusOnLeft", L"..\\Resources\\Knight\\On\\Knight_FocusOn_Left.png");
-		std::shared_ptr<Texture> FocusOnRight = Resources::Load<Texture>(L"FocusOnRight", L"..\\Resources\\Knight\\On\\Knight_FocusOn_Right.png");
-		std::shared_ptr<Texture> FocusEndLeft = Resources::Load<Texture>(L"FocusEndLeft", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Left.png");
-		std::shared_ptr<Texture> FocusEndRight = Resources::Load<Texture>(L"FocusEndRight", L"..\\Resources\\Knight\\End\\Knight_FocusEnd_Right.png");
+		std::shared_ptr<Texture> FocusStartLeft = Resources::Load<Texture>(L"FocusStartLeft", L"..\\Resources\\Knight\\Focus\\Start\\Knight_FocusStart_Left.png");
+		std::shared_ptr<Texture> FocusStartRight = Resources::Load<Texture>(L"FocusStartRight", L"..\\Resources\\Knight\\Focus\\Start\\Knight_FocusStart_Right.png");
+		std::shared_ptr<Texture> FocusLeft = Resources::Load<Texture>(L"FocusLeft", L"..\\Resources\\Knight\\Focus\\Loop\\Knight_Focus_Left.png");
+		std::shared_ptr<Texture> FocusRight = Resources::Load<Texture>(L"FocusRight", L"..\\Resources\\Knight\\Focus\\Loop\\Knight_Focus_Right.png");
+		std::shared_ptr<Texture> FocusOnLeft = Resources::Load<Texture>(L"FocusOnLeft", L"..\\Resources\\Knight\\Focus\\On\\Knight_FocusOn_Left.png");
+		std::shared_ptr<Texture> FocusOnRight = Resources::Load<Texture>(L"FocusOnRight", L"..\\Resources\\Knight\\Focus\\On\\Knight_FocusOn_Right.png");
+		std::shared_ptr<Texture> FocusEndLeft = Resources::Load<Texture>(L"FocusEndLeft", L"..\\Resources\\Knight\\Focus\\End\\Knight_FocusEnd_Left.png");
+		std::shared_ptr<Texture> FocusEndRight = Resources::Load<Texture>(L"FocusEndRight", L"..\\Resources\\Knight\\Focus\\End\\Knight_FocusEnd_Right.png");
 
 		//Skill
 		std::shared_ptr<Texture> FireBall_Cast_Left = Resources::Load<Texture>(L"FireBall_Cast_Left", L"..\\Resources\\Knight\\FireBall_Cast\\Left\\FireBall_Cast_Left.png");
@@ -154,6 +155,15 @@ namespace km
 
 		mAnimation->CompleteEvent(L"FireBall_Cast_Left") = std::bind(&Player::Skill_End, this);
 		mAnimation->CompleteEvent(L"FireBall_Cast_Right") = std::bind(&Player::Skill_End, this);
+
+		mAnimation->CompleteEvent(L"Focus_StartLeft") = std::bind(&Player::Focus, this);
+		mAnimation->CompleteEvent(L"Focus_StartRight") = std::bind(&Player::Focus, this);
+		mAnimation->CompleteEvent(L"Focus_Left") = std::bind(&Player::FocusOn, this);
+		mAnimation->CompleteEvent(L"Focus_Right") = std::bind(&Player::FocusOn, this);
+		mAnimation->CompleteEvent(L"Focus_OnLeft") = std::bind(&Player::Focus, this);
+		mAnimation->CompleteEvent(L"Focus_OnRight") = std::bind(&Player::Focus, this);
+		mAnimation->CompleteEvent(L"Focus_EndLeft") = std::bind(&Player::FocusEnd_End, this);
+		mAnimation->CompleteEvent(L"Focus_EndRight") = std::bind(&Player::FocusEnd_End, this);
 
 
 		mWalkSound->SetClip(Resources::Load<AudioClip>(L"WalkSound", L"..\\Resources\\Sound\\Knight\\Walk.wav"));
@@ -220,21 +230,21 @@ namespace km
 		case Player::ePlayerState::Skill:
 			Skill();
 			break;
-		//case Player::ePlayerState::FocusStart:
-		//	FocusStart();
-		//	break;
-		//case Player::ePlayerState::Focus:
-		//	Focus();
-		//	break;
-		//case Player::ePlayerState::FocusOn:
-		//	FocusOn();
-		//	break;
-		//case Player::ePlayerState::FocusEnd:
-		//	FocusEnd();
-		//	break;
-		//case Player::ePlayerState::Death:
-		//	Death();
-		//	break;
+		case Player::ePlayerState::FocusStart:
+			FocusStart();
+			break;
+		case Player::ePlayerState::Focus:
+			Focus();
+			break;
+		case Player::ePlayerState::FocusOn:
+			FocusOn();
+			break;
+		case Player::ePlayerState::FocusEnd:
+			FocusEnd();
+			break;
+		case Player::ePlayerState::Death:
+			Death();
+			break;
 		default:
 			break;
 		}
@@ -310,7 +320,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirection = eDirection::Right;
 
-		if (Input::GetKeyDown(eKeyCode::A))
+		if (Input::GetKeyDown(eKeyCode::Q))
 		{
 			mPlayerHP_State = mPlayerHP_State - 1;
 		}
@@ -365,6 +375,13 @@ namespace km
 		{
 			mState = ePlayerState::Dash;
 			Dash_Check = true;
+			return;
+		}
+
+		if (Input::GetKeyDown(eKeyCode::A))
+		{
+			Focus_End_Check = true;
+			mState = ePlayerState::FocusStart;
 			return;
 		}
 
@@ -624,7 +641,6 @@ namespace km
 		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::C))
 		{
 			Fall_Delay = true;
-			//Skill_Check = true;
 			mState = ePlayerState::Skill;
 			return;
 		}
@@ -632,7 +648,14 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::C))
 		{
 			Fall_Delay = true;
-			//Skill_Check = true;
+			mState = ePlayerState::Skill;
+			return;
+
+		}
+
+		if (Input::GetKey(eKeyCode::C))
+		{
+			Fall_Delay = true;
 			mState = ePlayerState::Skill;
 			return;
 
@@ -858,6 +881,129 @@ namespace km
 		Fall_Delay = false;
 	}
 
+	void Player::FocusStart()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		if (Focus_Start_Check)
+		{
+			mState = ePlayerState::FocusStart;
+
+			if (mDirection == eDirection::Left)
+			{
+				mAnimation->PlayAnimation(L"Focus_StartLeft", true);
+			}
+
+			if (mDirection == eDirection::Right)
+			{
+				mAnimation->PlayAnimation(L"Focus_StartRight", true);
+			}
+
+			Focus_Start_Check = false;
+		}
+	}
+
+	void Player::Focus()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		if (Focus_Check)
+		{
+			mState = ePlayerState::FocusStart;
+
+			if (mDirection == eDirection::Left)
+			{
+				mAnimation->PlayAnimation(L"Focus_Left", true);
+			}
+
+			if (mDirection == eDirection::Right)
+			{
+				mAnimation->PlayAnimation(L"Focus_Right", true);
+			}
+
+			Focus_Check = false;
+		}
+
+		if (Input::GetKeyUp(eKeyCode::A))
+		{
+			FocusEnd();
+		}
+
+		Focus_On_Check = true;
+	}
+
+	void Player::FocusOn()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+
+		Focus_mTime += Time::DeltaTime();
+
+		if (Input::GetKey(eKeyCode::A))
+		{
+			mState = ePlayerState::FocusOn;
+
+			if (Focus_mTime > 1.0f && Focus_On_Check)
+			{
+				if (mDirection == eDirection::Left)
+				{
+					mAnimation->PlayAnimation(L"Focus_OnLeft", true);
+				}
+
+				if (mDirection == eDirection::Right)
+				{
+					mAnimation->PlayAnimation(L"Focus_OnRight", true);
+				}
+				Focus_mTime = 0.0f;
+				Focus_On_Check = false;
+			}
+		}
+
+		if (Input::GetKeyUp(eKeyCode::A))
+		{
+			FocusEnd();
+		}
+
+		Focus_Check = true;
+	}
+
+	void Player::FocusEnd()
+	{
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirection = eDirection::Left;
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirection = eDirection::Right;
+		
+		if (Focus_End_Check)
+		{
+			mState = ePlayerState::FocusEnd;
+
+			if (mDirection == eDirection::Left)
+			{
+				mAnimation->PlayAnimation(L"Focus_EndLeft", true);
+			}
+
+			if (mDirection == eDirection::Right)
+			{
+				mAnimation->PlayAnimation(L"Focus_EndRight", true);
+			}
+			Focus_End_Check = false;
+		}
+
+		Focus_mTime = 0.0f;
+		Focus_Start_Check = true;
+		Focus_On_Check = true;
+		Focus_Check = true;
+	}
+
 	void Player::Jump_End()
 	{
 		if (mDirection == eDirection::Left)
@@ -936,5 +1082,21 @@ namespace km
 			mState = ePlayerState::Idle;
 			mAnimation->PlayAnimation(L"Idle_Right", true);
 		}
+	}
+	void Player::FocusEnd_End()
+	{
+		if (mDirection == eDirection::Left)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Left", true);
+		}
+		if (mDirection == eDirection::Right)
+		{
+			mState = ePlayerState::Idle;
+			mAnimation->PlayAnimation(L"Idle_Right", true);
+		}
+	}
+	void Player::Death()
+	{
 	}
 }
