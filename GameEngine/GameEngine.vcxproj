@@ -151,6 +151,8 @@
     <ClInclude Include="Boss_PureVessel_Stage.h" />
     <ClInclude Include="DoubleJump_Effect.h" />
     <ClInclude Include="FireBallSkill_Effect.h" />
+    <ClInclude Include="Focus_Effect.h" />
+    <ClInclude Include="Focus_On_Effect.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="kmAirDash_Effect.h" />
     <ClInclude Include="kmBoss_Grimm_Stage.h" />
@@ -186,6 +188,8 @@
     <ClCompile Include="Boss_PureVessel_Stage.cpp" />
     <ClCompile Include="DoubleJump_Effect.cpp" />
     <ClCompile Include="FireBallSkill_Effect.cpp" />
+    <ClCompile Include="Focus_Effect.cpp" />
+    <ClCompile Include="Focus_On_Effect.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="kmAirDash_Effect.cpp" />
     <ClCompile Include="kmBoss_Grimm_Stage.cpp" />

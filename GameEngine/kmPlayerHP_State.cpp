@@ -42,33 +42,57 @@ namespace km
 	void PlayerHP_State::Update()
 	{
 		mPlayer = SceneManager::GetPlayer();
-		mPlayer_HP = mPlayer->GetPlayerHPState();
+		mPlayer_HP = mPlayer->GetPlayerHP();
 
-		if (mPlayer_HP == 4 && Check_04)
+		HPState = mPlayer->GetPlayerHPState();
+
+		//HP 회복
+		if (mPlayer_HP == 4 && Check_Break_04 == false && HPState)
 		{
-			Check_04 = false;
+			Check_Break_04 = true;
+			HP_04->Refill();
+		}
+		if (mPlayer_HP == 3 && Check_Break_03 == false && HPState)
+		{
+			Check_Break_03 = true;
+			HP_03->Refill();
+		}
+		if (mPlayer_HP == 2 && Check_Break_02 == false && HPState)
+		{
+			Check_Break_02 = true;
+			HP_02->Refill();
+		}
+		if (mPlayer_HP == 1 && Check_Break_01 == false && HPState)
+		{
+			Check_Break_01 = true;
+			HP_01->Refill();
+		}
+
+		//HP 차감
+		if (mPlayer_HP == 4 && Check_Break_04 && HPState == false)
+		{
+			Check_Break_04 = false;
 			HP_04->Break();
 		}
-		if (mPlayer_HP == 3 && Check_03)
+		if (mPlayer_HP == 3 && Check_Break_03 && HPState == false)
 		{
-			Check_03 = false;
+			Check_Break_03 = false;
 			HP_03->Break();
 		}
-		if (mPlayer_HP == 2 && Check_02)
+		if (mPlayer_HP == 2 && Check_Break_02 && HPState == false)
 		{
-			Check_02 = false;
+			Check_Break_02 = false;
 			HP_02->Break();
 		}
-		if (mPlayer_HP == 1 && Check_01)
+		if (mPlayer_HP == 1 && Check_Break_01 && HPState == false)
 		{
-			Check_01 = false;
+			Check_Break_01 = false;
 			HP_01->Break();
 		}
-		if (mPlayer_HP == 0 && Check_00)
+		if (mPlayer_HP == 0 && Check_Break_00 && HPState == false)
 		{
-			Check_00 = false;
+			Check_Break_00 = false;
 			HP_00->Break();
-
 		}
 
 		GameObject::Update();

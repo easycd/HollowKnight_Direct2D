@@ -26,6 +26,7 @@ namespace km
 
 	private:
 		int mPlayer_HP;
+		bool HPState = true; //true면 회복 false면 HP 차감
 
 	private:
 		PlayerHP* HP_00;
@@ -35,11 +36,18 @@ namespace km
 		PlayerHP* HP_04;
 
 	private:
-		bool Check_00 = true;
-		bool Check_01 = true;
-		bool Check_02 = true;
-		bool Check_03 = true;
-		bool Check_04 = true;
+		bool Check_Recover_00 = true;
+		bool Check_Recover_01 = true;
+		bool Check_Recover_02 = true;
+		bool Check_Recover_03 = true;
+		bool Check_Recover_04 = true;
+
+
+		bool Check_Break_00 = true;
+		bool Check_Break_01 = true;
+		bool Check_Break_02 = true;
+		bool Check_Break_03 = true;
+		bool Check_Break_04 = true;
 	};
 }
 

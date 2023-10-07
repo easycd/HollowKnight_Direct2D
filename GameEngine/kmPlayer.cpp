@@ -14,6 +14,8 @@
 
 #include "kmPlayerEffet.h"
 #include "DoubleJump_Effect.h"
+#include "Focus_Effect.h"
+#include "Focus_On_Effect.h"
 #include "kmDsahEffect.h"
 #include "FireBallSkill_Effect.h"
 
@@ -26,7 +28,6 @@ namespace km
 {
 	Player::Player()
 		: mPlayerHP_State(5)
-		, Focus_mTime(0.0f)
 	{
 	}
 	Player::~Player()
@@ -322,6 +323,7 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::Q))
 		{
+			HPState = false;
 			mPlayerHP_State = mPlayerHP_State - 1;
 		}
 
@@ -894,12 +896,20 @@ namespace km
 
 			if (mDirection == eDirection::Left)
 			{
+				mFocus_Effect = object::Instantiate<Focus_Effect>(eLayerType::Effect);
+				mFocus_Effect->Focus_Start();
 				mAnimation->PlayAnimation(L"Focus_StartLeft", true);
 			}
 
 			if (mDirection == eDirection::Right)
-			{
+			{	mFocus_Effect = object::Instantiate<Focus_Effect>(eLayerType::Effect);
+				mFocus_Effect->Focus_Start();
 				mAnimation->PlayAnimation(L"Focus_StartRight", true);
+			}
+
+			if (Input::GetKeyUp(eKeyCode::A))
+			{
+				FocusEnd();
 			}
 
 			Focus_Start_Check = false;
@@ -919,11 +929,13 @@ namespace km
 
 			if (mDirection == eDirection::Left)
 			{
+				mFocus_Effect->Focus_Loop();
 				mAnimation->PlayAnimation(L"Focus_Left", true);
 			}
 
 			if (mDirection == eDirection::Right)
 			{
+				mFocus_Effect->Focus_Loop();
 				mAnimation->PlayAnimation(L"Focus_Right", true);
 			}
 
@@ -945,24 +957,30 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirection = eDirection::Right;
 
-		Focus_mTime += Time::DeltaTime();
 
 		if (Input::GetKey(eKeyCode::A))
 		{
 			mState = ePlayerState::FocusOn;
 
-			if (Focus_mTime > 1.0f && Focus_On_Check)
+			if (Focus_On_Check)
 			{
+				mPlayerHP_State = mPlayerHP_State + 1;
+				HPState = true;
 				if (mDirection == eDirection::Left)
 				{
+					mFocus_On_Effect = object::Instantiate<Focus_On_Effect>(eLayerType::Effect);
+					mFocus_On_Effect->Start();
+					mFocus_Effect->Focus_Loop();
 					mAnimation->PlayAnimation(L"Focus_OnLeft", true);
 				}
 
 				if (mDirection == eDirection::Right)
 				{
+					mFocus_On_Effect = object::Instantiate<Focus_On_Effect>(eLayerType::Effect);
+					mFocus_On_Effect->Start();
+					mFocus_Effect->Focus_Loop();
 					mAnimation->PlayAnimation(L"Focus_OnRight", true);
 				}
-				Focus_mTime = 0.0f;
 				Focus_On_Check = false;
 			}
 		}
@@ -988,17 +1006,18 @@ namespace km
 
 			if (mDirection == eDirection::Left)
 			{
+				mFocus_Effect->Focus_End();
 				mAnimation->PlayAnimation(L"Focus_EndLeft", true);
 			}
 
 			if (mDirection == eDirection::Right)
 			{
+				mFocus_Effect->Focus_End();
 				mAnimation->PlayAnimation(L"Focus_EndRight", true);
 			}
 			Focus_End_Check = false;
 		}
 
-		Focus_mTime = 0.0f;
 		Focus_Start_Check = true;
 		Focus_On_Check = true;
 		Focus_Check = true;

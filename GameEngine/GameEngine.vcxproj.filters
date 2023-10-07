@@ -112,6 +112,9 @@
     <Filter Include="Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand">
       <UniqueIdentifier>{31fa670b-bd01-4a01-9a76-d1b1d8600abc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Player\Effect\Focus">
+      <UniqueIdentifier>{0726f5b9-7c56-4bd0-be08-9186f80ae5a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -207,6 +210,12 @@
       <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
     </ClInclude>
     <ClInclude Include="kmGirmm_Hand.h" />
+    <ClInclude Include="Focus_Effect.h">
+      <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClInclude>
+    <ClInclude Include="Focus_On_Effect.h">
+      <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -298,6 +307,12 @@
       <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
     </ClCompile>
     <ClCompile Include="kmGirmm_Hand.cpp" />
+    <ClCompile Include="Focus_Effect.cpp">
+      <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClCompile>
+    <ClCompile Include="Focus_On_Effect.cpp">
+      <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc" />

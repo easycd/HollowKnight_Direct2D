@@ -10,6 +10,8 @@ namespace km
 	class DoubleJump_Effect;
 	class DsahEffect;
 	class FireBallSkill_Effect;
+	class Focus_Effect;
+	class Focus_On_Effect;
 
 	class AudioSource;
 
@@ -53,7 +55,8 @@ namespace km
 		void Complete();
 		Vector3 GetPlayerPos() { return mPlayerPos; }
 
-		int GetPlayerHPState() { return mPlayerHP_State; }
+		int GetPlayerHP() { return mPlayerHP_State; }
+		bool GetPlayerHPState() { return HPState; }
 
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override;
@@ -73,6 +76,7 @@ namespace km
 		float mTime;
 
 		int mPlayerHP_State;
+		bool HPState = true;
 
 	private:
 		PlayerEffet* mSlash_Effect;
@@ -81,6 +85,8 @@ namespace km
 		DoubleJump_Effect* mDoubleJump_Effect;
 		DsahEffect* mDash_Effect;
 		FireBallSkill_Effect* Skill_Effect;
+		Focus_Effect* mFocus_Effect;
+		Focus_On_Effect* mFocus_On_Effect;
 
 	private:
 		bool Dash_Left_Check = false;
@@ -141,7 +147,7 @@ namespace km
 		bool Focus_End_Check   = true;
 
 	private:
-		float Focus_mTime;
+
 		
 
 	private:
