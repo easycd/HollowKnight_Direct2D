@@ -39,6 +39,7 @@ namespace km
 		mAnimation->Create(L"Refill_State", Refill_State, Vector2(0.0f, 0.0f), Vector2(126.0f, 167.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
 
 		mAnimation->CompleteEvent(L"Break_State") = std::bind(&PlayerHP::Empty, this);
+		mAnimation->CompleteEvent(L"Refill_State") = std::bind(&PlayerHP::Idle, this);
 
 		mTransform->SetScale(Vector3(0.07f, 0.1f, 0.0f));
 		GameObject::Initialize();

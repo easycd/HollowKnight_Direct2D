@@ -47,22 +47,22 @@ namespace km
 		HPState = mPlayer->GetPlayerHPState();
 
 		//HP È¸º¹
-		if (mPlayer_HP == 4 && Check_Break_04 == false && HPState)
+		if (mPlayer_HP == 5 && Check_Break_04 == false && HPState)
 		{
 			Check_Break_04 = true;
 			HP_04->Refill();
 		}
-		if (mPlayer_HP == 3 && Check_Break_03 == false && HPState)
+		if (mPlayer_HP == 4 && Check_Break_03 == false && HPState)
 		{
 			Check_Break_03 = true;
 			HP_03->Refill();
 		}
-		if (mPlayer_HP == 2 && Check_Break_02 == false && HPState)
+		if (mPlayer_HP == 3 && Check_Break_02 == false && HPState)
 		{
 			Check_Break_02 = true;
 			HP_02->Refill();
 		}
-		if (mPlayer_HP == 1 && Check_Break_01 == false && HPState)
+		if (mPlayer_HP == 2 && Check_Break_01 == false && HPState)
 		{
 			Check_Break_01 = true;
 			HP_01->Refill();
