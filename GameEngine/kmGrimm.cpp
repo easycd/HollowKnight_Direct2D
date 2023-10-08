@@ -39,7 +39,7 @@ namespace km
 
 
 
-		, attack_pattern(1)
+		, attack_pattern(0)
 
 		, Test(true)
 	{
@@ -254,12 +254,13 @@ namespace km
 
 			if (FireBall_Delay_time > 0.5f)
 			{
-				FireBall_Obj();
 				FireBall_Delay_time = 0.0f;
+				FireBall_Obj();
 			}
 
 			if (Balloon_Loop_Delay > 5.0f)
 			{
+				Balloon_Loop_Delay_Check = false;
 				Balloon_Loop_Delay = 0.0f;
 				Tele_Out();
 			}
@@ -359,7 +360,6 @@ namespace km
 
 			if (Slash_On_Delay > 1.0f)
 			{
-				Slash_On_Delay = 0.0f;
 				Slash();
 			}
 		}
@@ -368,14 +368,24 @@ namespace km
 		if (Slash_Move_Check && mGetDirection == eDirection::Left)
 		{
 			if (Wall_Check == false)
+			{
 				mGrimm_Live_Pos.x -= 2.0f * Time::DeltaTime();
-			//	mTransform->SetPosition(mGetGimmPos);
+			}
+			else
+			{
+				Slash_Move_Check = false;
+			}
 		}
 		else if (Slash_Move_Check && mGetDirection == eDirection::Right)
 		{
 			if (Wall_Check == false)
+			{
 				mGrimm_Live_Pos.x += 2.0f * Time::DeltaTime();
-			//	mTransform->SetPosition(mGetGimmPos);
+			}
+			else
+			{
+				Slash_Move_Check = false;
+			}
 		}
 
 		//캐릭터 위치 받아오는 함수
@@ -395,15 +405,15 @@ namespace km
 		}
 
 		//패턴 시작
-		//if (mPlayerPos.x > -1.26f && Pattern_Start == false)
-		//{
-		//	mTime += Time::DeltaTime();
-		//	if (mTime > 3.0f)
-		//	{
-		//		Pattern_Start = true;
-		//		Tele_Out();
-		//	}
-		//}
+		if (mPlayerPos.x > -1.26f && Pattern_Start == false)
+		{
+			mTime += Time::DeltaTime();
+			if (mTime > 3.0f)
+			{
+				Pattern_Start = true;
+				Tele_Out();
+			}
+		}
 
 		mTransform->SetPosition(mGrimm_Live_Pos);
 		GameObject::Update();
@@ -455,8 +465,8 @@ namespace km
 
 	void Grimm::Pattern()
 	{
-		//srand(time(NULL));
-		//attack_pattern = rand() % 5 + 1;
+		srand(time(NULL));
+		attack_pattern = rand() % 5;
 
 			switch (attack_pattern)
 			{
@@ -773,7 +783,6 @@ namespace km
 
 		if (Slash_Tele_In_Check)
 		{
-			mPattern_State = ePatternState::Pattern;
 			mAnimation->PlayAnimation(L"Slash_Tele_In", true);
 			mTransform->SetScale(Vector3(0.25f, 0.4f, 0.0f));
 			Slash_Tele_In_Check = false;
@@ -808,7 +817,6 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && Slash_On_Check)
 		{
-			mGetPlayerPos = mPlayerPos;
 			mAnimation->PlayAnimation(L"Slash_On_Left", false);
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
@@ -817,7 +825,6 @@ namespace km
 
 		if (mGetDirection == eDirection::Right && Slash_On_Check)
 		{
-			mGetPlayerPos = mPlayerPos;
 			mAnimation->PlayAnimation(L"Slash_On_Right", false);
 			mTransform->SetScale(Vector3(0.3f, 0.4f, 0.0f));
 			Slash_On_Delay_Check = true;
@@ -907,7 +914,14 @@ namespace km
 
 	void Grimm::Tele_Out()
 	{
-		Balloon_Loop_Delay_Check = false;
+		Balloon_Loop_Delay_Check = false; //Balloon 패턴 반복 해제
+		FireBall_Delay_time = 0.0f;
+		Balloon_Loop_Delay = 0.0f;
+
+		AirDash_Attack_Delay = 0.0f; //AirDash 패턴 해제
+
+		Slash_On_Delay = 0.0f; // Slash 패턴 해제
+
 		if (Tele_Out_Check)
 		{
 			mAnimation->PlayAnimation(L"Tele_Out", true);
@@ -959,6 +973,7 @@ namespace km
 		AirDash_Stop_Check = true;
 		Balloon_Start_Check = true;
 		Balloon_Loop_Check = true;
+		Balloon_Tele_In_Check = true;
 		Capspike_On_Check = true;
 		Capspike_Loop_Check = true;
 		Capspike_End_Check = true;
@@ -970,7 +985,6 @@ namespace km
 		Tele_Out_Check = true;
 		Death_Check = true;
 		AirDash_Tele_In_Check = true;
-		Balloon_Tele_In_Check = true;
 		Capspike_Tele_In_Check = true;
 		Cast_Tele_In_Check = true;
 		Slash_Tele_In_Check = true;

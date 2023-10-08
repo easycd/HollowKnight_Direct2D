@@ -18,7 +18,7 @@ namespace km
 		virtual void OnCollisionStay(Collider2D* other) override;
 		virtual void OnCollisionExit(Collider2D* other) override;
 
-		enum class ePatternType
+		enum class eVesselState
 		{
 			Counter,
 			Dash,
@@ -59,13 +59,22 @@ namespace km
 		void Dash_Shoot();
 		void Dash_End();
 		 
+		void Knife_Spike_Tele_In();
 		void Knife_Spike();
+
+		void Slash_Tele_In();
 		void Slash();
+
+		void Knife_Spread_Tele_In();
 		void Knife_Spread();
 
 		//2 Pase
 		void Groggy();
+
+		void Circle_Attack_Tele_In();
 		void Circle_Attack();
+
+		void Dark_Tentacle_Tele_In();
 		void Dark_Tentacle();
 
 		void Tele_Out();
@@ -79,8 +88,11 @@ namespace km
 		Collider2D* mCollider;
 		Rigidbody* mRigidbody;
 		Player* mPlayer;
+
+		eVesselState mState;
 		eDirection Live_Direction;
 		eDirection mDirection;
+
 		Vector3 mPlayerPos;
 		Vector3 mVesselPos;
 		VectorR mPlayer_Direction;

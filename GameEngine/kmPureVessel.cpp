@@ -274,6 +274,32 @@ namespace km
 		//	Intro_00();
 		//}
 
+		switch (mState)
+		{
+		case PureVessel::eVesselState::Counter:
+			Counter_Cast();
+			break;
+		case PureVessel::eVesselState::Dash:
+			Dash_Tele_In();
+			break;
+		case PureVessel::eVesselState::Knife_Spike:
+			Knife_Spike_Tele_In();
+			break;
+		case PureVessel::eVesselState::Slash:
+			Slash_Tele_In();
+			break;
+		case PureVessel::eVesselState::Knife_Spread:
+			Knife_Spread_Tele_In();
+			break;
+		case PureVessel::eVesselState::Circle_Attack:
+			Circle_Attack_Tele_In();
+			break;
+		case PureVessel::eVesselState::Dark_Teneacle:
+			Dark_Tentacle_Tele_In();
+			break;
+
+		}
+
 		if (Intro_02_Start_Check)
 		{		
 			Intro02_Start += Time::DeltaTime();
@@ -315,10 +341,6 @@ namespace km
 				mVesselPos.x += 3.0f * Time::DeltaTime();
 			}
 		}
-
-
-
-
 
 		mPlayer = SceneManager::GetPlayer();
 		mPlayerPos = mPlayer->GetComponent<Transform>()->GetPosition();
@@ -409,20 +431,37 @@ namespace km
 		case 0:
 			Counter_Cast();
 		case 1:
-			Dash_On();
+			Dash_Tele_In();
 		case 2:
-			Knife_Spike();
+			Knife_Spike_Tele_In();
 		case 3:
 			Slash();
 		case 4:
-			Knife_Spread();
-		case 5:
-			Circle_Attack();
-		case 6:
-			Dark_Tentacle();
+			Slash_Tele_In();
 		default:
 			break;
 		}
+
+		//Pase 2
+		//switch (mPattern)
+		//{
+		//case 0:
+		//	Counter_Cast();
+		//case 1:
+		//	Dash_Tele_In();
+		//case 2:
+		//	Knife_Spike_Tele_In();
+		//case 3:
+		//	Slash();
+		//case 4:
+		//	Slash_Tele_In();
+		//case 5:
+		//	Circle_Attack();
+		//case 6:
+		//	Dark_Tentacle();
+		//default:
+		//	break;
+		//}
 	}
 
 	void PureVessel::Idle()
@@ -492,6 +531,10 @@ namespace km
 
 
 
+	void PureVessel::Dash_Tele_In()
+	{
+	}
+
 	void PureVessel::Dash_On()
 	{
 		if (mPlayerPos.x > 0.0f && Dash_On_Check)
@@ -546,11 +589,23 @@ namespace km
 		}
 	}
 
+	void PureVessel::Knife_Spike_Tele_In()
+	{
+	}
+
 	void PureVessel::Knife_Spike()
 	{
 	}
 
+	void PureVessel::Slash_Tele_In()
+	{
+	}
+
 	void PureVessel::Slash()
+	{
+	}
+
+	void PureVessel::Knife_Spread_Tele_In()
 	{
 	}
 
@@ -562,7 +617,15 @@ namespace km
 	{
 	}
 
+	void PureVessel::Circle_Attack_Tele_In()
+	{
+	}
+
 	void PureVessel::Circle_Attack()
+	{
+	}
+
+	void PureVessel::Dark_Tentacle_Tele_In()
 	{
 	}
 
