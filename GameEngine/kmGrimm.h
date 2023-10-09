@@ -191,11 +191,11 @@ namespace km
         bool Tele_In_Check             = true;
         bool Tele_Out_Check            = true;
         bool Death_Check               = true;
-		bool AirDash_Tele_In_Check = true;
-		bool Balloon_Tele_In_Check = true;
-		bool Capspike_Tele_In_Check = true;
-		bool Cast_Tele_In_Check = true;
-		bool Slash_Tele_In_Check = true;
+		bool AirDash_Tele_In_Check     = true;
+		bool Balloon_Tele_In_Check     = true;
+		bool Capspike_Tele_In_Check    = true;
+		bool Cast_Tele_In_Check        = true;
+		bool Slash_Tele_In_Check       = true;
 
 		//SpikeObj
 	private:

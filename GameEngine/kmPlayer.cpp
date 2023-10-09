@@ -363,6 +363,7 @@ namespace km
 
 		if (Input::GetKeyDown(eKeyCode::X))
 		{
+			Attack_Check = true;
 			mState = ePlayerState::Attack;
 			return;
 		}
@@ -651,7 +652,7 @@ namespace km
 		{
 			Fall_Delay = true;
 			mState = ePlayerState::Skill;
-			return;
+			return; 
 
 		}
 
@@ -666,6 +667,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::LEFT) && Input::GetKey(eKeyCode::X))
 		{
 			Fall_Delay = true;
+			//Attack_Check = true;
 			mState = ePlayerState::Attack;
 			return;
 		}
@@ -673,6 +675,7 @@ namespace km
 		if (Input::GetKey(eKeyCode::RIGHT) && Input::GetKey(eKeyCode::X))
 		{
 			Fall_Delay = true;
+			///Attack_Check = true;
 			mState = ePlayerState::Attack;
 			return;
 		}

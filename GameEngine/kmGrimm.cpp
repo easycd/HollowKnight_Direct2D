@@ -360,6 +360,8 @@ namespace km
 
 			if (Slash_On_Delay > 1.0f)
 			{
+				Slash_On_Delay_Check = false;
+				Slash_On_Delay = 0.0f;
 				Slash();
 			}
 		}
@@ -836,7 +838,6 @@ namespace km
 	{
 		if (mGetDirection == eDirection::Left && Slash_Check)
 		{
-			Slash_On_Delay_Check = false;
 			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Slash_Left", true);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
@@ -846,7 +847,6 @@ namespace km
 
 		if (mGetDirection == eDirection::Right && Slash_Check)
 		{
-			Slash_On_Delay_Check = false;
 			mPattern_State = ePatternState::DisPattern;
 			mAnimation->PlayAnimation(L"Slash_Right", true);
 			mTransform->SetScale(Vector3(0.5f, 0.4f, 0.0f));
@@ -908,12 +908,12 @@ namespace km
 
 	void Grimm::Tele_In_State()
 	{
-		Check();
 		Pattern();
 	}
 
 	void Grimm::Tele_Out()
 	{
+		Check();
 		Balloon_Loop_Delay_Check = false; //Balloon 패턴 반복 해제
 		FireBall_Delay_time = 0.0f;
 		Balloon_Loop_Delay = 0.0f;
