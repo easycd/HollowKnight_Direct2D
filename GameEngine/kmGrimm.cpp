@@ -26,7 +26,7 @@ namespace km
 {
 	Grimm::Grimm()
 		: mPattern_Timing(0.0f)
-		, PatternState(0)
+		, PatternState(4)
 		, AirDash_On_Location(0)
 		, Balloon_Loop_Delay(0.0f)
 		, FireBall_Delay_time(0.0f)
@@ -326,8 +326,8 @@ namespace km
 	{
 		mState = eGrimmState::Pattern;
 
-		srand(time(NULL));
-		PatternState = rand() % 9;
+		//srand(time(NULL));
+		//PatternState = rand() % 9;
 
 		switch (PatternState)
 		{
@@ -994,6 +994,36 @@ namespace km
 			mTransform->SetScale(Vector3(0.5f, 0.6f, 0.0f));
 			Up_Slash_Check = false;
 		}
+
+		if (mGrimmPos.y < 0.1f)
+		{
+			if (mDirection == eDirection::Left)
+			{
+				if (Wall_Check == false)
+				{
+					mGrimmPos.x -= 1.5f * Time::DeltaTime();
+					mGrimmPos.y += 1.5f * Time::DeltaTime();
+				}
+				else if (Wall_Check)
+				{
+					mGrimmPos.y += 1.5f * Time::DeltaTime();
+				}
+			}
+			else if (mDirection == eDirection::Right)
+			{
+				if (Wall_Check == false)
+				{
+					mGrimmPos.x += 1.5f * Time::DeltaTime();
+					mGrimmPos.y += 1.5f * Time::DeltaTime();
+				}
+				else if (Wall_Check)
+				{
+					mGrimmPos.y += 1.5f * Time::DeltaTime();
+				}
+			}
+		}
+
+		mTransform->SetPosition(mGrimmPos);
 	}
 	void Grimm::Death()
 	{
