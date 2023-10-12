@@ -20,13 +20,38 @@ namespace km
 
 		enum class eVesselState
 		{
-			Counter,
-			Dash,
-			Knife_Spike,
+			IntroIdle,
+			Intro00,
+			Intro01,
+			Intro02,
+			Intro03,
+			Intro04,
+			Intro05,
+			Intro06,
+			IntroEnd,
+			Pattern,
+			Idle,
+			CounterCast,
+			CounterLoop,
+			CounterEnd,
+			DashTeleIn,
+			DashOn,
+			DashShoot,
+			DashEnd,
+			KnifeSpikeTeleIn,
+			KnifeSpike,
+			SlashTeleIn,
 			Slash,
-			Knife_Spread,
-			Circle_Attack,
-			Dark_Teneacle,
+			KnifeSpreadTeleIn,
+			KnifeSpread,
+			Groggy,
+			CircleAttackTeleIn,
+			CircleAttack,
+			DarkTentacleTeleIn,
+			DarkTentacle,
+			TeleOut,
+			TeleOutState,
+			Death,
 		};
 
 		enum class eDirection
@@ -79,7 +104,7 @@ namespace km
 
 		void Tele_Out();
 		void Tele_Out_State();
-		void Tele_In();
+		void Death();
 
 
 	private:
@@ -101,34 +126,34 @@ namespace km
 		int mPattern;
 
 	private:
-		float IntroStart;
-		float Intro02_Start;
-		float Intro03_Start;
-		float Intro_End_Start;
+		float Intro_Idle_Timing;
+		float Intro01_Timing;
+		float Intro02_Timing;
+		float Intro06_Timing;
 
 	private:
-		float Counter_Loop_Delay;
-		bool Dash_Move_Check = false;
-
-	private:
-		bool IntroStart_Check = true;
-		bool Intro_02_Start_Check = false;
-		bool Intro_03_Start_Check = false;
-		bool Intro_End_Check = false;
 		bool Intro_Idle_Check = true;
+		bool Intro_00_Check = true;
+		bool Intro_01_Check = true;
+		bool Intro_02_Check = true;
+		bool Intro_03_Check = true;
+		bool Intro_04_Check = true;
+		bool Intro_05_Check = true;
+		bool Intro_06_Check = true;
+		bool Intro_End_Check = true;
 
 	private:
 		bool Idle_Check = true;
+		bool Tele_Out_Check = true;
+
 		bool Counter_Cast_Check = true;
 		bool Counter_Loop_Check = true;
 		bool Counter_End_Check = true;
+
 		bool Dash_On_Check = true;
 		bool Dash_Shoot_Check = true;
 		bool Dash_End_Check = true;
 
-
-		bool Tele_In_Check = true;
-		bool Tele_Out_Check = true;
 
 	};
 }

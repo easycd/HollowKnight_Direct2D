@@ -15,6 +15,6 @@ namespace km
 		virtual void Render() override;
 
 	private:
-
+		
 	};
 }

@@ -209,12 +209,14 @@
     <ClInclude Include="FireBallSkill_Effect.h">
       <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
     </ClInclude>
-    <ClInclude Include="kmGirmm_Hand.h" />
     <ClInclude Include="Focus_Effect.h">
       <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
     </ClInclude>
     <ClInclude Include="Focus_On_Effect.h">
       <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGirmm_Hand.h">
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -306,12 +308,14 @@
     <ClCompile Include="FireBallSkill_Effect.cpp">
       <Filter>Contents\GameObject\Player\Effect\FireBall</Filter>
     </ClCompile>
-    <ClCompile Include="kmGirmm_Hand.cpp" />
     <ClCompile Include="Focus_Effect.cpp">
       <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
     </ClCompile>
     <ClCompile Include="Focus_On_Effect.cpp">
       <Filter>Contents\GameObject\Player\Effect\Focus</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGirmm_Hand.cpp">
+      <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

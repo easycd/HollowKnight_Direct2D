@@ -8,7 +8,7 @@
 #include "kmSceneManager.h"
 #include "kmInput.h"
 #include "kmLight.h"
-
+#include "kmObject.h"
 
 namespace km
 {
