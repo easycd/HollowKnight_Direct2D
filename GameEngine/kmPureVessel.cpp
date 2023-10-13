@@ -357,20 +357,56 @@ namespace km
 		case km::PureVessel::eVesselState::KnifeSpikeTeleIn:
 			Knife_Spike_Tele_In();
 			break;
-		case km::PureVessel::eVesselState::KnifeSpike:
-			Knife_Spike();
+		case km::PureVessel::eVesselState::KnifeSpikeOn:
+			Knife_Spike_On();
+			break;
+		case km::PureVessel::eVesselState::KnifeSpikeLoop:
+			Knife_Spike_Loop();
+			break;
+		case km::PureVessel::eVesselState::KnifeSpikeEnd:
+			Knife_Spike_End();
 			break;
 		case km::PureVessel::eVesselState::SlashTeleIn:
 			Slash_Tele_In();
 			break;
-		case km::PureVessel::eVesselState::Slash:
-			Slash();
+		case km::PureVessel::eVesselState::SlashOn:
+			Slash_On();
+			break;
+		case km::PureVessel::eVesselState::Slash00:
+			Slash_00();
+			break;
+		case km::PureVessel::eVesselState::Slash01:
+			Slash_01();
+			break;
+		case km::PureVessel::eVesselState::Slash02:
+			Slash_02();
+			break;
+		case km::PureVessel::eVesselState::Slash03:
+			Slash_03();
+			break;
+		case km::PureVessel::eVesselState::Slash04:
+			Slash_04();
+			break;
+		case km::PureVessel::eVesselState::Slash05:
+			Slash_05();
+			break;
+		case km::PureVessel::eVesselState::SlashEnd:
+			Slash_End();
 			break;
 		case km::PureVessel::eVesselState::KnifeSpreadTeleIn:
 			Knife_Spread_Tele_In();
 			break;
-		case km::PureVessel::eVesselState::KnifeSpread:
-			Knife_Spread();
+		case km::PureVessel::eVesselState::KnifeSpreadOn:
+			Knife_Spread_On();
+			break;
+		case km::PureVessel::eVesselState::KnifeSpreadStart:
+			Knife_Spread_Start();
+			break;
+		case km::PureVessel::eVesselState::KnifeSpreadLoop:
+			Knife_Spread_Loop();
+			break;
+		case km::PureVessel::eVesselState::KnifeSpreadEnd:
+			Knife_Spread_End();
 			break;
 		case km::PureVessel::eVesselState::Groggy:
 			Groggy();
@@ -384,8 +420,17 @@ namespace km
 		case km::PureVessel::eVesselState::DarkTentacleTeleIn:
 			Dark_Tentacle_Tele_In();
 			break;
-		case km::PureVessel::eVesselState::DarkTentacle:
-			Dark_Tentacle();
+		case km::PureVessel::eVesselState::DarkTentacleOn:
+			Dark_Tentacle_On();
+			break;
+		case km::PureVessel::eVesselState::DarkTentacleStart:
+			Dark_Tentacle_Start();
+			break;
+		case km::PureVessel::eVesselState::DarkTentacleLoop:
+			Dark_Tentacle_Loop();
+			break;
+		case km::PureVessel::eVesselState::DarkTentacleEnd:
+			Dark_Tentacle_End();
 			break;
 		case km::PureVessel::eVesselState::TeleOut:
 			Tele_Out();
@@ -649,14 +694,22 @@ namespace km
 		{
 			mAnimation->PlayAnimation(L"Dash_Tele_On_Left", true);
 			Dash_Tele_In_Check = false;
-			mTransform->SetPosition(Vector3(0.5f, 0.0f, 0.0f));
+
+			if (mPlayerPos.x < 0.241f)
+			{
+				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.7f, -0.1f, 0.0f));
+			}
 		}
 
 		if (Dash_Tele_In_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Dash_Tele_On_Right", true);
 			Dash_Tele_In_Check = false;
-			mTransform->SetPosition(Vector3(0.5f, 0.0f, 0.0f));
+
+			if (mPlayerPos.x > -0.493f)
+			{
+				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.7f, -0.1f, 0.0f));
+			}
 		}
 	}
 
@@ -677,7 +730,7 @@ namespace km
 			Dash_On_Check = false;
 		}
 
-		if (Dash_On_Timing > 1.0f)
+		if (Dash_On_Timing > 0.7f)
 			mState = eVesselState::DashShoot;
 	}
 
@@ -700,7 +753,7 @@ namespace km
 		{
 			if (Wall_Check == false)
 			{
-				mVesselPos.x -= 2.5f * Time::DeltaTime();
+				mVesselPos.x -= 3.5f * Time::DeltaTime();
 				mTransform->SetPosition(mVesselPos);
 			}
 		}
@@ -708,7 +761,7 @@ namespace km
 		{
 			if (Wall_Check == false)
 			{
-				mVesselPos.x += 2.5f * Time::DeltaTime();
+				mVesselPos.x += 3.5f * Time::DeltaTime();
 				mTransform->SetPosition(mVesselPos);
 			}
 		}
@@ -732,46 +785,158 @@ namespace km
 
 	void PureVessel::Knife_Spike_Tele_In()
 	{
+		mState = eVesselState::KnifeSpikeTeleIn;
+
 	}
 
-	void PureVessel::Knife_Spike()
+	void PureVessel::Knife_Spike_On()
 	{
+		mState = eVesselState::KnifeSpikeOn;
+
+	}
+
+	void PureVessel::Knife_Spike_Loop()
+	{
+		mState = eVesselState::KnifeSpikeLoop;
+
+	}
+
+	void PureVessel::Knife_Spike_End()
+	{
+		mState = eVesselState::KnifeSpikeEnd;
+
 	}
 
 	void PureVessel::Slash_Tele_In()
 	{
+		mState = eVesselState::SlashTeleIn;
+
 	}
 
-	void PureVessel::Slash()
+	void PureVessel::Slash_On()
 	{
+		mState = eVesselState::SlashOn;
+
+	}
+
+	void PureVessel::Slash_00()
+	{
+		mState = eVesselState::Slash00;
+
+	}
+
+	void PureVessel::Slash_01()
+	{
+		mState = eVesselState::Slash01;
+
+	}
+
+	void PureVessel::Slash_02()
+	{
+		mState = eVesselState::Slash02;
+
+	}
+
+	void PureVessel::Slash_03()
+	{
+		mState = eVesselState::Slash03;
+
+	}
+
+	void PureVessel::Slash_04()
+	{
+		mState = eVesselState::Slash04;
+
+	}
+
+	void PureVessel::Slash_05()
+	{
+		mState = eVesselState::Slash05;
+
+	}
+
+	void PureVessel::Slash_End()
+	{
+		mState = eVesselState::SlashEnd;
+
 	}
 
 	void PureVessel::Knife_Spread_Tele_In()
 	{
+		mState = eVesselState::KnifeSpreadTeleIn;
+
 	}
 
-	void PureVessel::Knife_Spread()
+	void PureVessel::Knife_Spread_On()
 	{
+		mState = eVesselState::KnifeSpreadOn;
+
+	}
+
+	void PureVessel::Knife_Spread_Start()
+	{
+		mState = eVesselState::KnifeSpreadStart;
+
+	}
+
+	void PureVessel::Knife_Spread_Loop()
+	{
+		mState = eVesselState::KnifeSpreadLoop;
+
+	}
+
+	void PureVessel::Knife_Spread_End()
+	{
+		mState = eVesselState::KnifeSpreadEnd;
+
 	}
 
 	void PureVessel::Groggy()
 	{
+		mState = eVesselState::Groggy;
+
 	}
 
 	void PureVessel::Circle_Attack_Tele_In()
 	{
+		mState = eVesselState::CircleAttackTeleIn;
+
 	}
 
 	void PureVessel::Circle_Attack()
 	{
+		mState = eVesselState::CircleAttack;
+
 	}
 
 	void PureVessel::Dark_Tentacle_Tele_In()
 	{
+		mState = eVesselState::DarkTentacleTeleIn;
+
 	}
 
-	void PureVessel::Dark_Tentacle()
+	void PureVessel::Dark_Tentacle_On()
 	{
+		mState = eVesselState::DarkTentacleOn;
+
+	}
+
+	void PureVessel::Dark_Tentacle_Start()
+	{
+		mState = eVesselState::DarkTentacleStart;
+
+	}
+
+	void PureVessel::Dark_Tentacle_Loop()
+	{
+		mState = eVesselState::DarkTentacleLoop;
+
+	}
+
+	void PureVessel::Dark_Tentacle_End()
+	{
+		mState = eVesselState::DarkTentacleEnd;
+
 	}
 
 	void PureVessel::Tele_Out()

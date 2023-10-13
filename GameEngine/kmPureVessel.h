@@ -39,16 +39,31 @@ namespace km
 			DashShoot,
 			DashEnd,
 			KnifeSpikeTeleIn,
-			KnifeSpike,
+			KnifeSpikeOn,
+			KnifeSpikeLoop,
+			KnifeSpikeEnd,
 			SlashTeleIn,
-			Slash,
+			SlashOn,
+			Slash00,
+			Slash01,
+			Slash02,
+			Slash03,
+			Slash04,
+			Slash05,
+			SlashEnd,
 			KnifeSpreadTeleIn,
-			KnifeSpread,
+			KnifeSpreadOn,
+			KnifeSpreadStart,
+			KnifeSpreadLoop,
+			KnifeSpreadEnd,
 			Groggy,
 			CircleAttackTeleIn,
 			CircleAttack,
 			DarkTentacleTeleIn,
-			DarkTentacle,
+			DarkTentacleOn,
+			DarkTentacleStart,
+			DarkTentacleLoop,
+			DarkTentacleEnd,
 			TeleOut,
 			TeleOutState,
 			Death,
@@ -85,13 +100,25 @@ namespace km
 		void Dash_End();
 		 
 		void Knife_Spike_Tele_In();
-		void Knife_Spike();
+		void Knife_Spike_On();
+		void Knife_Spike_Loop();
+		void Knife_Spike_End();
 
 		void Slash_Tele_In();
-		void Slash();
+		void Slash_On();
+		void Slash_00();
+		void Slash_01();
+		void Slash_02();
+		void Slash_03();
+		void Slash_04();
+		void Slash_05();
+		void Slash_End();
 
 		void Knife_Spread_Tele_In();
-		void Knife_Spread();
+		void Knife_Spread_On();
+		void Knife_Spread_Start();
+		void Knife_Spread_Loop();
+		void Knife_Spread_End();
 
 		//2 Pase
 		void Groggy();
@@ -100,7 +127,10 @@ namespace km
 		void Circle_Attack();
 
 		void Dark_Tentacle_Tele_In();
-		void Dark_Tentacle();
+		void Dark_Tentacle_On();
+		void Dark_Tentacle_Start();
+		void Dark_Tentacle_Loop();
+		void Dark_Tentacle_End();
 
 		void Tele_Out();
 		void Tele_Out_State();
