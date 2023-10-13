@@ -124,12 +124,17 @@ namespace km
 		VectorR mGrimm_Direction;
 		VectorR dr;
 		int mPattern;
+		bool Wall_Check = false;
 
 	private:
+		float Pattern_Timing;
+
 		float Intro_Idle_Timing;
 		float Intro01_Timing;
 		float Intro02_Timing;
 		float Intro06_Timing;
+
+		float Dash_On_Timing;
 
 	private:
 		bool Intro_Idle_Check = true;
@@ -150,6 +155,7 @@ namespace km
 		bool Counter_Loop_Check = true;
 		bool Counter_End_Check = true;
 
+		bool Dash_Tele_In_Check = true;
 		bool Dash_On_Check = true;
 		bool Dash_Shoot_Check = true;
 		bool Dash_End_Check = true;

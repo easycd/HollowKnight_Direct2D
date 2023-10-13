@@ -13,10 +13,12 @@
 namespace km
 {
 	PureVessel::PureVessel()
-		: Intro_Idle_Timing(0.0f)
+		: Pattern_Timing(0.0f)
+		, Intro_Idle_Timing(0.0f)
 		, Intro01_Timing(0.0f)
 		, Intro02_Timing(0.0f)
 		, Intro06_Timing(0.0f)
+		, Dash_On_Timing(0.0f)
 		, mPattern(1)
 
 	{
@@ -77,6 +79,8 @@ namespace km
 		std::shared_ptr<Texture> Counter_End_Right = Resources::Load<Texture>(L"Counter_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Counter\\Counter_End\\Right\\Counter_End_Right.png");
 
 		//Dark_Tentacle Image
+		std::shared_ptr<Texture> Tentacle_Tele_On_Left = Resources::Load<Texture>(L"Tentacle_Tele_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Left\\Tele_On_Left.png");
+		std::shared_ptr<Texture> Tentacle_Tele_On_Right = Resources::Load<Texture>(L"Tentacle_Tele_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Right\\Tele_On_Right.png");
 		std::shared_ptr<Texture> Tentacle_On_Left = Resources::Load<Texture>(L"Tentacle_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dark_Tentacle\\On\\Left\\Dark_Teneacle_On_Left.png");
 		std::shared_ptr<Texture> Tentacle_On_Right = Resources::Load<Texture>(L"Tentacle_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dark_Tentacle\\On\\Right\\Dark_Teneacle_On_Right.png");
 		std::shared_ptr<Texture> Tentacle_Start_Left = Resources::Load<Texture>(L"Tentacle_Start_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dark_Tentacle\\Start\\Left\\Tentacle_Start_Left.png");
@@ -87,6 +91,8 @@ namespace km
 		std::shared_ptr<Texture> Tentacle_End_Right = Resources::Load<Texture>(L"Tentacle_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dark_Tentacle\\End\\Right\\Dark_Teneacle_End_Right.png");
 
 		//DartShoot Image
+		std::shared_ptr<Texture> DartShoot_Tele_On_Left = Resources::Load<Texture>(L"DartShoot_Tele_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Left\\Tele_On_Left.png");
+		std::shared_ptr<Texture> DartShoot_Tele_On_Right = Resources::Load<Texture>(L"DartShoot_Tele_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Right\\Tele_On_Right.png");
 		std::shared_ptr<Texture> DartShoot_On_Left = Resources::Load<Texture>(L"DartShoot_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\DartShoot\\On\\Left\\"); //아직 이미지 없음
 		std::shared_ptr<Texture> DartShoot_On_Right = Resources::Load<Texture>(L"DartShoot_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\DartShoot\\On\\Right\\"); //아직 이미지 없음
 		std::shared_ptr<Texture> DartShoot_Start_Left = Resources::Load<Texture>(L"DartShoot_Start_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\DartShoot\\Start\\Left\\Start_Left.png");
@@ -97,6 +103,8 @@ namespace km
 		std::shared_ptr<Texture> DartShoot_End_Right = Resources::Load<Texture>(L"DartShoot_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\DartShoot\\End\\Right\\DarkShoot_End_Right.png");
 
 		//Dash Image
+		std::shared_ptr<Texture> Dash_Tele_On_Left = Resources::Load<Texture>(L"Dash_Tele_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Left\\Tele_On_Left.png");
+		std::shared_ptr<Texture> Dash_Tele_On_Right = Resources::Load<Texture>(L"Dash_Tele_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Right\\Tele_On_Right.png");
 		std::shared_ptr<Texture> Dash_On_Left = Resources::Load<Texture>(L"Dash_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dash\\On\\Left\\Dash_On_Left.png");
 		std::shared_ptr<Texture> Dash_On_Right = Resources::Load<Texture>(L"Dash_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dash\\On\\Right\\Dash_On_Right.png");
 		std::shared_ptr<Texture> Dash_Shoot_Left = Resources::Load<Texture>(L"Dash_Shoot_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dash\\Shoot\\Left\\Dash_Shoot_Left.png");
@@ -105,6 +113,8 @@ namespace km
 		std::shared_ptr<Texture> Dash_End_Right = Resources::Load<Texture>(L"Dash_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Dash\\End\\Right\\Dash_End_Right.png");
 
 		//Slash Image
+		std::shared_ptr<Texture> Slash_Tele_On_Left = Resources::Load<Texture>(L"Slash_Tele_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Left\\Tele_On_Left.png");
+		std::shared_ptr<Texture> Slash_Tele_On_Right = Resources::Load<Texture>(L"Slash_Tele_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Right\\Tele_On_Right.png");
 		std::shared_ptr<Texture> Slash_On_Left = Resources::Load<Texture>(L"Slash_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Slash\\On\\Left\\Slash_On_Left.png");
 		std::shared_ptr<Texture> Slash_On_Right = Resources::Load<Texture>(L"Slash_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Slash\\On\\Right\\Slash_On_Right.png");
 		std::shared_ptr<Texture> Slash_00_Left = Resources::Load<Texture>(L"Slash_00_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Slash\\Slash_00\\Left\\Slash_Slash00_Left.png");
@@ -123,6 +133,8 @@ namespace km
 		std::shared_ptr<Texture> Slash_End_Right = Resources::Load<Texture>(L"Slash_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Slash\\End\\Right\\Slash_End_Right.png");
 
 		//SpikeAttack Image
+		std::shared_ptr<Texture> Spike_Tele_On_Left = Resources::Load<Texture>(L"Spike_Tele_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Left\\Tele_On_Left.png");
+		std::shared_ptr<Texture> Spike_Tele_On_Right = Resources::Load<Texture>(L"Spike_Tele_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Tele_On\\Right\\Tele_On_Right.png");
 		std::shared_ptr<Texture> Spike_On_Left = Resources::Load<Texture>(L"Spike_On_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\SpikeAttack\\On\\Left\\SpikeAttack_On_Left.png");
 		std::shared_ptr<Texture> Spike_On_Right = Resources::Load<Texture>(L"Spike_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\SpikeAttack\\On\\Right\\SpikeAttack_On_Right.png");
 		std::shared_ptr<Texture> Spike_Loop_Left = Resources::Load<Texture>(L"Spike_Loop_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\SpikeAttack\\Loop\\Left\\SpikeAttack_Loop_Left.png");
@@ -173,6 +185,8 @@ namespace km
 		mAnimation->Create(L"Counter_End_Right", Counter_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 
 		//Dark_Tentacle Animation
+		mAnimation->Create(L"Tentacle_Tele_On_Left", Tentacle_Tele_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Tentacle_Tele_On_Right", Tentacle_Tele_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Tentacle_On_Left", Tentacle_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Tentacle_On_Right", Tentacle_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Tentacle_Start_Left", Tentacle_Start_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
@@ -182,6 +196,8 @@ namespace km
 		mAnimation->Create(L"Tentacle_End_Left", Tentacle_End_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 		//DartShoot Animation
+		mAnimation->Create(L"DartShoot_Tele_On_Left", DartShoot_Tele_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"DartShoot_Tele_On_Right", DartShoot_Tele_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"DartShoot_On_Left", DartShoot_On_Left, Vector2(0.0f, 0.0f), Vector2(939.0f, 698.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"DartShoot_On_Right", DartShoot_On_Right, Vector2(0.0f, 0.0f), Vector2(939.0f, 698.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"DartShoot_Start_Left", DartShoot_Start_Left, Vector2(0.0f, 0.0f), Vector2(939.0f, 698.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
@@ -192,6 +208,8 @@ namespace km
 		mAnimation->Create(L"DartShoot_End_Right", DartShoot_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 
 		//Dash Animation
+		mAnimation->Create(L"Dash_Tele_On_Left", Dash_Tele_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Dash_Tele_On_Right", Dash_Tele_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Dash_On_Left", Dash_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Dash_On_Right", Dash_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 6, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Dash_Shoot_Left", Dash_Shoot_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
@@ -200,6 +218,8 @@ namespace km
 		mAnimation->Create(L"Dash_End_Right", Dash_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 		//Slash Animation
+		mAnimation->Create(L"Slash_Tele_On_Left", Slash_Tele_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Slash_Tele_On_Right", Slash_Tele_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Slash_On_Left", Slash_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 8, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Slash_On_Right", Slash_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 8, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Slash_00_Left", Slash_00_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 2, Vector2(0.0f, 0.02f), 0.1f);
@@ -218,6 +238,8 @@ namespace km
 		mAnimation->Create(L"Slash_End_Right", Slash_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 		//SpikeAttack Animation
+		mAnimation->Create(L"Spike_Tele_On_Left", Spike_Tele_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Spike_Tele_On_Right", Spike_Tele_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Spike_On_Left", Spike_On_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Spike_On_Right", Spike_On_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Spike_Loop_Left", Spike_Loop_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
@@ -226,11 +248,24 @@ namespace km
 		mAnimation->Create(L"Spike_End_Right", Spike_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 
 
+		mAnimation->CompleteEvent(L"Tele_Out_Left") = std::bind(&PureVessel::Tele_Out_State, this);
+		mAnimation->CompleteEvent(L"Tele_Out_Right") = std::bind(&PureVessel::Tele_Out_State, this);
+
 		mAnimation->CompleteEvent(L"Intro00") = std::bind(&PureVessel::Intro_01, this);
 		mAnimation->CompleteEvent(L"Intro03") = std::bind(&PureVessel::Intro_04, this);
 		mAnimation->CompleteEvent(L"Intro04") = std::bind(&PureVessel::Intro_05, this);
 		mAnimation->CompleteEvent(L"Intro05") = std::bind(&PureVessel::Intro_06, this);
 		mAnimation->CompleteEvent(L"Intro_End") = std::bind(&PureVessel::Idle, this);
+		mAnimation->CompleteEvent(L"Idle_Left") = std::bind(&PureVessel::Pattern, this);
+		mAnimation->CompleteEvent(L"Idle_Right") = std::bind(&PureVessel::Pattern, this);
+
+		mAnimation->CompleteEvent(L"Dash_Tele_On_Left") = std::bind(&PureVessel::Dash_On, this);
+		mAnimation->CompleteEvent(L"Dash_Tele_On_Right") = std::bind(&PureVessel::Dash_On, this);
+		mAnimation->CompleteEvent(L"Dash_Shoot_Left") = std::bind(&PureVessel::Dash_End, this);
+		mAnimation->CompleteEvent(L"Dash_Shoot_Right") = std::bind(&PureVessel::Dash_End, this);
+		mAnimation->CompleteEvent(L"Dash_End_Left") = std::bind(&PureVessel::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Dash_End_Right") = std::bind(&PureVessel::Tele_Out, this);
+
 
 
 		//Intro Scale//mTransform->SetScale(Vector3(0.55f, 0.62f, 0.0f));
@@ -364,8 +399,6 @@ namespace km
 		default:
 			break;
 		}
-
-		mTransform->SetPosition(mVesselPos);
 
 		GameObject::Update();
 	}
@@ -538,6 +571,8 @@ namespace km
 
 	void PureVessel::Idle()
 	{
+		mState = eVesselState::Idle;
+
 		if (Idle_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Idle_Left", true);
@@ -553,6 +588,7 @@ namespace km
 
 	void PureVessel::Counter_Cast()
 	{
+		mState = eVesselState::CounterCast;
 		mDirection = Live_Direction;
 
 
@@ -570,6 +606,8 @@ namespace km
 
 	void PureVessel::Counter_Loop()
 	{
+		mState = eVesselState::CounterLoop;
+
 		if (Counter_Loop_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Counter_Loop_Left", true);
@@ -584,6 +622,8 @@ namespace km
 
 	void PureVessel::Counter_End()
 	{
+		mState = eVesselState::CounterEnd;
+
 		if (Counter_End_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Counter_End_Left", true);
@@ -600,32 +640,51 @@ namespace km
 
 	void PureVessel::Dash_Tele_In()
 	{
+		mState = eVesselState::DashTeleIn;
+
+		if(Dash_Tele_In_Check)
+			mDirection = Live_Direction;
+
+		if (Dash_Tele_In_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Dash_Tele_On_Left", true);
+			Dash_Tele_In_Check = false;
+			mTransform->SetPosition(Vector3(0.5f, 0.0f, 0.0f));
+		}
+
+		if (Dash_Tele_In_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Dash_Tele_On_Right", true);
+			Dash_Tele_In_Check = false;
+			mTransform->SetPosition(Vector3(0.5f, 0.0f, 0.0f));
+		}
 	}
 
 	void PureVessel::Dash_On()
 	{
-		if (mPlayerPos.x > 0.0f && Dash_On_Check)
-			mDirection = eDirection::Left;
+		mState = eVesselState::DashOn;
 
-		if (mPlayerPos.x <= 0.0f && Dash_On_Check)
-			mDirection = eDirection::Right;
+		Dash_On_Timing += Time::DeltaTime();
 
 		if (Dash_On_Check && mDirection == eDirection::Left)
 		{
-			mAnimation->PlayAnimation(L"Dash_On_Left", true);
-			//mTransform->SetPosition(Vector3(0.4f, -0.13f, 0.0f));
+			mAnimation->PlayAnimation(L"Dash_On_Left", false);
 			Dash_On_Check = false;
 		}
 		if (Dash_On_Check && mDirection == eDirection::Right)
 		{
-			mAnimation->PlayAnimation(L"Dash_On_Right", true);
-			//mTransform->SetPosition(Vector3(0.4f, -0.13f, 0.0f));
+			mAnimation->PlayAnimation(L"Dash_On_Right", false);
 			Dash_On_Check = false;
 		}
+
+		if (Dash_On_Timing > 1.0f)
+			mState = eVesselState::DashShoot;
 	}
 
 	void PureVessel::Dash_Shoot()
 	{
+		mState = eVesselState::DashShoot;
+
 		if (Dash_Shoot_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Dash_Shoot_Left", true);
@@ -636,18 +695,37 @@ namespace km
 			mAnimation->PlayAnimation(L"Dash_Shoot_Right", true);
 			Dash_Shoot_Check = false;
 		}
+
+		if (mDirection == eDirection::Left)
+		{
+			if (Wall_Check == false)
+			{
+				mVesselPos.x -= 2.5f * Time::DeltaTime();
+				mTransform->SetPosition(mVesselPos);
+			}
+		}
+		else if (mDirection == eDirection::Right)
+		{
+			if (Wall_Check == false)
+			{
+				mVesselPos.x += 2.5f * Time::DeltaTime();
+				mTransform->SetPosition(mVesselPos);
+			}
+		}
 	}
 
 	void PureVessel::Dash_End()
 	{
+		mState = eVesselState::DashEnd;
+
 		if (Dash_End_Check && mDirection == eDirection::Left)
 		{
-			mAnimation->PlayAnimation(L"Dash_End_Left", false);
+			mAnimation->PlayAnimation(L"Dash_End_Left", true);
 			Dash_End_Check = false;
 		}
 		if (Dash_End_Check && mDirection == eDirection::Right)
 		{
-			mAnimation->PlayAnimation(L"Dash_End_Right", false);
+			mAnimation->PlayAnimation(L"Dash_End_Right", true);
 			Dash_End_Check = false;
 		}
 	}
@@ -698,20 +776,61 @@ namespace km
 
 	void PureVessel::Tele_Out()
 	{
+		mState = eVesselState::TeleOut;
+
 		if (Tele_Out_Check && mDirection == eDirection::Left)
 		{
-			mAnimation->PlayAnimation(L"Tele_Out_Left", false);
+			mAnimation->PlayAnimation(L"Tele_Out_Left", true);
 			Tele_Out_Check = false;
 		}
-		if (Dash_End_Check && mDirection == eDirection::Right)
+		if (Tele_Out_Check && mDirection == eDirection::Right)
 		{
-			mAnimation->PlayAnimation(L"Tele_Out_Right", false);
+			mAnimation->PlayAnimation(L"Tele_Out_Right", true);
 			Tele_Out_Check = false;
 		}
 	}
 
 	void PureVessel::Tele_Out_State()
 	{
+		mState = eVesselState::TeleOutState;
+		Pattern_Timing += Time::DeltaTime();
+
+		mTransform->SetPosition(Vector3(0.0f, 100.0f, 0.0f));
+
+		if (Pattern_Timing > 0.5f)
+		{
+			mState = eVesselState::Pattern;
+			Pattern_Timing = 0.0f;
+		}
+
+		Dash_On_Timing = 0.0f;
+		Intro_Idle_Timing = 0.0f;
+		Intro01_Timing = 0.0f;
+		Intro02_Timing = 0.0f;
+		Intro06_Timing = 0.0f;
+
+		Intro_Idle_Check = true;
+		Intro_00_Check = true;
+		Intro_01_Check = true;
+		Intro_02_Check = true;
+		Intro_03_Check = true;
+		Intro_04_Check = true;
+		Intro_05_Check = true;
+		Intro_06_Check = true;
+		Intro_End_Check = true;
+
+		Idle_Check = true;
+		Tele_Out_Check = true;
+
+		Counter_Cast_Check = true;
+		Counter_Loop_Check = true;
+		Counter_End_Check = true;
+
+		Dash_Tele_In_Check = true;
+		Dash_On_Check = true;
+		Dash_Shoot_Check = true;
+		Dash_End_Check = true;
+
 	}
 
 	void PureVessel::Death()

@@ -70,6 +70,8 @@ namespace km
 		
 			CameraScript* camerscript = camera->AddComponent<CameraScript>();
 			camerscript->SetTarget(mPlayer);
+			camerscript->SetWeight(Vector2(-0.39f, 0.4f));
+			camerscript->SetHight(0.0f);
 		}
 
 		//Ground
