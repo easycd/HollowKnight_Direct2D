@@ -19,7 +19,8 @@ namespace km
 		, Intro02_Timing(0.0f)
 		, Intro06_Timing(0.0f)
 		, Dash_On_Timing(0.0f)
-		, mPattern(1)
+		, Knife_Spike_Loop_Timing(0.0f)
+		, mPattern(2)
 
 	{
 	}
@@ -49,8 +50,8 @@ namespace km
 		std::shared_ptr<Texture> Intro_End = Resources::Load<Texture>(L"Intro_End", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Intro\\Intro_End\\Intro_End.png");
 
 		//Idle Image
-		std::shared_ptr<Texture> Idle_Left = Resources::Load<Texture>(L"Idle_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Left\\Idle_Left.png");
-		std::shared_ptr<Texture> Idle_Right = Resources::Load<Texture>(L"Idle_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Right\\Idle_Right.png");
+		std::shared_ptr<Texture> Vessel_Idle_Left = Resources::Load<Texture>(L"Vessel_Idle_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Left\\Idle_Left.png");
+		std::shared_ptr<Texture> Vessel_Idle_Right = Resources::Load<Texture>(L"Vessel_Idle_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Right\\Idle_Right.png");
 
 		//Stun Image
 		std::shared_ptr<Texture> Stun_00_Left = Resources::Load<Texture>(L"Stun_00_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Stun\\Stun_00\\Left\\Stun_00_Left.png");
@@ -154,8 +155,8 @@ namespace km
 		mAnimation->Create(L"Intro_End", Intro_End, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.06f, 0.02f), 0.1f);
 
 		//Idle Animation
-		mAnimation->Create(L"Idle_Left", Idle_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
-		mAnimation->Create(L"Idle_Right", Idle_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Vessel_Idle_Left", Vessel_Idle_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Vessel_Idle_Right", Vessel_Idle_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
 
 
 		//Stun Animation
@@ -256,8 +257,9 @@ namespace km
 		mAnimation->CompleteEvent(L"Intro04") = std::bind(&PureVessel::Intro_05, this);
 		mAnimation->CompleteEvent(L"Intro05") = std::bind(&PureVessel::Intro_06, this);
 		mAnimation->CompleteEvent(L"Intro_End") = std::bind(&PureVessel::Idle, this);
-		mAnimation->CompleteEvent(L"Idle_Left") = std::bind(&PureVessel::Pattern, this);
-		mAnimation->CompleteEvent(L"Idle_Right") = std::bind(&PureVessel::Pattern, this);
+
+		mAnimation->CompleteEvent(L"Vessel_Idle_Left") = std::bind(&PureVessel::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Vessel_Idle_Right") = std::bind(&PureVessel::Tele_Out, this);
 
 		mAnimation->CompleteEvent(L"Dash_Tele_On_Left") = std::bind(&PureVessel::Dash_On, this);
 		mAnimation->CompleteEvent(L"Dash_Tele_On_Right") = std::bind(&PureVessel::Dash_On, this);
@@ -266,6 +268,38 @@ namespace km
 		mAnimation->CompleteEvent(L"Dash_End_Left") = std::bind(&PureVessel::Tele_Out, this);
 		mAnimation->CompleteEvent(L"Dash_End_Right") = std::bind(&PureVessel::Tele_Out, this);
 
+		mAnimation->CompleteEvent(L"Spike_Tele_On_Left") = std::bind(&PureVessel::Knife_Spike_On, this);
+		mAnimation->CompleteEvent(L"Spike_Tele_On_Right") = std::bind(&PureVessel::Knife_Spike_On, this);
+		mAnimation->CompleteEvent(L"Spike_On_Left") = std::bind(&PureVessel::Knife_Spike_Loop, this);
+		mAnimation->CompleteEvent(L"Spike_On_Right") = std::bind(&PureVessel::Knife_Spike_Loop, this);
+		mAnimation->CompleteEvent(L"Spike_End_Left") = std::bind(&PureVessel::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Spike_End_Right") = std::bind(&PureVessel::Tele_Out, this);
+
+		mAnimation->CompleteEvent(L"Slash_Tele_On_Left") = std::bind(&PureVessel::Slash_On, this);
+		mAnimation->CompleteEvent(L"Slash_Tele_On_Right") = std::bind(&PureVessel::Slash_On, this);
+		mAnimation->CompleteEvent(L"Slash_On_Left") = std::bind(&PureVessel::Slash_00, this);
+		mAnimation->CompleteEvent(L"Slash_On_Right") = std::bind(&PureVessel::Slash_00, this);
+
+		mAnimation->CompleteEvent(L"Slash_00_Left") = std::bind(&PureVessel::Slash_01, this);
+		mAnimation->CompleteEvent(L"Slash_00_Right") = std::bind(&PureVessel::Slash_01, this);
+
+		mAnimation->CompleteEvent(L"Slash_01_Left") = std::bind(&PureVessel::Slash_02, this);
+		mAnimation->CompleteEvent(L"Slash_01_Right") = std::bind(&PureVessel::Slash_02, this);
+
+		mAnimation->CompleteEvent(L"Slash_02_Left") = std::bind(&PureVessel::Slash_03, this);
+		mAnimation->CompleteEvent(L"Slash_02_Right") = std::bind(&PureVessel::Slash_03, this);
+
+		mAnimation->CompleteEvent(L"Slash_03_Left") = std::bind(&PureVessel::Slash_04, this);
+		mAnimation->CompleteEvent(L"Slash_03_Right") = std::bind(&PureVessel::Slash_04, this);
+
+		mAnimation->CompleteEvent(L"Slash_04_Left") = std::bind(&PureVessel::Slash_05, this);
+		mAnimation->CompleteEvent(L"Slash_04_Right") = std::bind(&PureVessel::Slash_05, this);
+
+		mAnimation->CompleteEvent(L"Slash_05_Left") = std::bind(&PureVessel::Slash_End, this);
+		mAnimation->CompleteEvent(L"Slash_05_Right") = std::bind(&PureVessel::Slash_End, this);
+
+		mAnimation->CompleteEvent(L"Slash_End_Left") = std::bind(&PureVessel::Tele_Out, this);
+		mAnimation->CompleteEvent(L"Slash_End_Right") = std::bind(&PureVessel::Tele_Out, this);
 
 
 		//Intro Scale//mTransform->SetScale(Vector3(0.55f, 0.62f, 0.0f));
@@ -585,9 +619,9 @@ namespace km
 		case 2:
 			Knife_Spike_Tele_In();
 		case 3:
-			Slash();
-		case 4:
 			Slash_Tele_In();
+		case 4:
+			Knife_Spread_Tele_In();
 		default:
 			break;
 		}
@@ -620,13 +654,13 @@ namespace km
 
 		if (Idle_Check && mDirection == eDirection::Left)
 		{
-			mAnimation->PlayAnimation(L"Idle_Left", true);
+			mAnimation->PlayAnimation(L"Vessel_Idle_Left", true);
 			Idle_Check = false;
 		}
 
 		if (Idle_Check && mDirection == eDirection::Right)
 		{
-			mAnimation->PlayAnimation(L"Idle_Right", true);
+			mAnimation->PlayAnimation(L"Vessel_Idle_Right", true);
 			Idle_Check = false;
 		}
 	}
@@ -787,35 +821,133 @@ namespace km
 	{
 		mState = eVesselState::KnifeSpikeTeleIn;
 
+		if(Knife_Spike_Tele_In_Check)
+			mDirection = Live_Direction;
+
+		if (Knife_Spike_Tele_In_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Spike_Tele_On_Left", true);
+			Knife_Spike_Tele_In_Check = false;
+		}
+		if (Knife_Spike_Tele_In_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Spike_Tele_On_Right", true);
+			Knife_Spike_Tele_In_Check = false;
+		}
+
+		mTransform->SetPosition(mPlayerPos.x, 0.35f, 0.0f);
 	}
 
 	void PureVessel::Knife_Spike_On()
 	{
 		mState = eVesselState::KnifeSpikeOn;
 
+
+		if (Spike_On_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Spike_On_Left", true);
+			Spike_On_Check = false;
+		}
+		if (Spike_On_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Spike_On_Right", true);
+			Spike_On_Check = false;
+		}
 	}
 
 	void PureVessel::Knife_Spike_Loop()
 	{
 		mState = eVesselState::KnifeSpikeLoop;
+		Knife_Spike_Loop_Timing += Time::DeltaTime();
 
+		if (Spike_Loop_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Spike_Loop_Left", true);
+			Spike_Loop_Check = false;
+		}
+		if (Spike_Loop_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Spike_Loop_Right", true);
+			Spike_Loop_Check = false;
+		}
+
+		if (mVesselPos.y > -0.1f && mDirection == eDirection::Left)
+		{
+			mVesselPos.x -= 0.5f * Time::DeltaTime();
+			mVesselPos.y -= 2.5f * Time::DeltaTime();
+		}
+		if (mVesselPos.y > -0.1f && mDirection == eDirection::Right)
+		{
+			mVesselPos.x += 0.5f * Time::DeltaTime();
+			mVesselPos.y -= 2.5f * Time::DeltaTime();
+		}
+
+		if(Knife_Spike_Loop_Timing > 2.0f)
+			mState = eVesselState::KnifeSpikeEnd;
+
+		mTransform->SetPosition(mVesselPos);
 	}
 
 	void PureVessel::Knife_Spike_End()
 	{
 		mState = eVesselState::KnifeSpikeEnd;
 
+		if (Spike_End_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Spike_End_Left", true);
+			Spike_End_Check = false;
+		}
+		if (Spike_End_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Spike_End_Right", true);
+			Spike_End_Check = false;
+		}
 	}
 
 	void PureVessel::Slash_Tele_In()
 	{
 		mState = eVesselState::SlashTeleIn;
 
+		if(Slash_Tele_In_Check)
+			mDirection = Live_Direction;
+
+		if (Slash_Tele_In_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_Tele_On_Left", true);
+			Slash_Tele_In_Check = false;
+
+			if (mPlayerPos.x < 0.241f)
+			{
+				mTransform->SetPosition(Vector3(mPlayerPos.x + 0.7f, -0.1f, 0.0f));
+			}
+		}
+
+		if (Slash_Tele_In_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_Tele_On_Right", true);
+			Slash_Tele_In_Check = false;
+
+			if (mPlayerPos.x > -0.493f)
+			{
+				mTransform->SetPosition(Vector3(mPlayerPos.x - 0.7f, -0.1f, 0.0f));
+			}
+		}
 	}
 
 	void PureVessel::Slash_On()
 	{
 		mState = eVesselState::SlashOn;
+
+		if (Slash_On_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_On_Left", true);
+			Slash_On_Check = false;
+		}
+		if (Slash_On_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_On_Right", true);
+			Slash_On_Check = false;
+		}
 
 	}
 
@@ -823,42 +955,136 @@ namespace km
 	{
 		mState = eVesselState::Slash00;
 
+		if (Slash_00_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_00_Left", true);
+			Slash_00_Check = false;
+		}
+		if (Slash_00_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_00_Right", true);
+			Slash_00_Check = false;
+		}
+
+		if(mDirection == eDirection::Left)
+			mVesselPos.x -= 2.0f * Time::DeltaTime();
+
+		if (mDirection == eDirection::Right)
+			mVesselPos.x += 2.0f * Time::DeltaTime();
+
+		mTransform->SetPosition(mVesselPos);
 	}
 
 	void PureVessel::Slash_01()
 	{
 		mState = eVesselState::Slash01;
 
+		if (Slash_01_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_01_Left", true);
+			Slash_01_Check = false;
+		}
+		if (Slash_01_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_01_Right", true);
+			Slash_01_Check = false;
+		}
 	}
 
 	void PureVessel::Slash_02()
 	{
 		mState = eVesselState::Slash02;
 
+		if (Slash_02_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_02_Left", true);
+			Slash_02_Check = false;
+		}
+		if (Slash_02_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_02_Right", true);
+			Slash_02_Check = false;
+		}
+
+		if (mDirection == eDirection::Left)
+			mVesselPos.x -= 2.0f * Time::DeltaTime();
+
+		if (mDirection == eDirection::Right)
+			mVesselPos.x += 2.0f * Time::DeltaTime();
+
+		mTransform->SetPosition(mVesselPos);
 	}
 
 	void PureVessel::Slash_03()
 	{
 		mState = eVesselState::Slash03;
 
+		if (Slash_03_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_03_Left", true);
+			Slash_03_Check = false;
+		}
+		if (Slash_03_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_03_Right", true);
+			Slash_03_Check = false;
+		}
 	}
 
 	void PureVessel::Slash_04()
 	{
 		mState = eVesselState::Slash04;
 
+		if (Slash_04_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_04_Left", true);
+			Slash_04_Check = false;
+		}
+		if (Slash_04_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_04_Right", true);
+			Slash_04_Check = false;
+		}
+
+		if (mDirection == eDirection::Left)
+			mVesselPos.x -= 2.0f * Time::DeltaTime();
+
+		if (mDirection == eDirection::Right)
+			mVesselPos.x += 2.0f * Time::DeltaTime();
+
+		mTransform->SetPosition(mVesselPos);
 	}
 
 	void PureVessel::Slash_05()
 	{
 		mState = eVesselState::Slash05;
 
+		if (Slash_05_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_05_Left", true);
+			Slash_05_Check = false;
+		}
+		if (Slash_05_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_05_Right", true);
+			Slash_05_Check = false;
+		}
 	}
 
 	void PureVessel::Slash_End()
 	{
 		mState = eVesselState::SlashEnd;
 
+		if (Slash_End_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Slash_End_Left", true);
+			Slash_End_Check = false;
+		}
+		if (Slash_End_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Slash_End_Right", true);
+			Slash_End_Check = false;
+		}
 	}
 
 	void PureVessel::Knife_Spread_Tele_In()
@@ -968,11 +1194,12 @@ namespace km
 			Pattern_Timing = 0.0f;
 		}
 
-		Dash_On_Timing = 0.0f;
 		Intro_Idle_Timing = 0.0f;
 		Intro01_Timing = 0.0f;
 		Intro02_Timing = 0.0f;
 		Intro06_Timing = 0.0f;
+		Dash_On_Timing = 0.0f;
+		Knife_Spike_Loop_Timing = 0.0f;
 
 		Intro_Idle_Check = true;
 		Intro_00_Check = true;
@@ -996,6 +1223,20 @@ namespace km
 		Dash_Shoot_Check = true;
 		Dash_End_Check = true;
 
+		Knife_Spike_Tele_In_Check = true;
+		Spike_On_Check = true;
+		Spike_Loop_Check = true;
+		Spike_End_Check = true;
+
+		Slash_Tele_In_Check = true;
+		Slash_On_Check = true;
+		Slash_00_Check = true;
+		Slash_01_Check = true;
+		Slash_02_Check = true;
+		Slash_03_Check = true;
+		Slash_04_Check = true;
+		Slash_05_Check = true;
+		Slash_End_Check = true;
 	}
 
 	void PureVessel::Death()

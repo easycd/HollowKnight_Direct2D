@@ -166,6 +166,9 @@ namespace km
 
 		float Dash_On_Timing;
 
+		float Knife_Spike_Loop_Timing;
+
+
 	private:
 		bool Intro_Idle_Check = true;
 		bool Intro_00_Check = true;
@@ -190,7 +193,20 @@ namespace km
 		bool Dash_Shoot_Check = true;
 		bool Dash_End_Check = true;
 
+		bool Knife_Spike_Tele_In_Check = true;
+		bool Spike_On_Check = true;
+		bool Spike_Loop_Check = true;
+		bool Spike_End_Check = true;
 
+		bool Slash_Tele_In_Check = true;
+		bool Slash_On_Check = true;
+		bool Slash_00_Check = true;
+		bool Slash_01_Check = true;
+		bool Slash_02_Check = true;
+		bool Slash_03_Check = true;
+		bool Slash_04_Check = true;
+		bool Slash_05_Check = true;
+		bool Slash_End_Check = true;
 	};
 }
 
