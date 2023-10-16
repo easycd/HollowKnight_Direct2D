@@ -116,11 +116,11 @@ namespace km
 			//mPlayer->GetComponent<Transform>()->SetPosition(Vector3(-3.9f, 0.1f, 0.0f));
 		}
 
-		////보스
-		//{
-		//	mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
-		//	mGrimm->SetName(L"Grimm");
-		//}
+		//보스
+		{
+			mGrimm = object::Instantiate<Grimm>(eLayerType::Boss);
+			mGrimm->SetName(L"Grimm");
+		}
 
 		//Trump NPC
 		{
@@ -339,18 +339,7 @@ namespace km
 	}
 	void Boss_Grimm_Stage::OnEnter()
 	{
-		//mGrimm->Idle();
-		/*mCrowd_00->Play_Right();
-		mCrowd_01->Play_Right();
-		mCrowd_02->Play_Right();
-		mCrowd_03->Play_Right();
-		mCrowd_04->Play_Right();
-		mCrowd_05->Play_Right();
-		mCrowd_06->Play_Left();
-		mCrowd_07->Play_Left();
-		mCrowd_08->Play_Left();
-		mCrowd_09->Play_Left();
-		mCrowd_10->Play_Left();*/
+		mGrimm->Idle();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_Grimm_Stage::OnExit()

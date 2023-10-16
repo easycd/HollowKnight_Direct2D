@@ -40,6 +40,7 @@ namespace km
 			DashEnd,
 			KnifeSpikeTeleIn,
 			KnifeSpikeOn,
+			KnifeSpikeStart,
 			KnifeSpikeLoop,
 			KnifeSpikeEnd,
 			SlashTeleIn,
@@ -56,9 +57,15 @@ namespace km
 			KnifeSpreadStart,
 			KnifeSpreadLoop,
 			KnifeSpreadEnd,
-			Groggy,
-			CircleAttackTeleIn,
-			CircleAttack,
+			GroggyStart,
+			GroggyLoop,
+			GroggyEnd,
+			RoarTeleIn,
+			RoarOn,
+			RoarOnLoop,
+			RoarStart,
+			RoarLoop,
+			RoarEnd,
 			DarkTentacleTeleIn,
 			DarkTentacleOn,
 			DarkTentacleStart,
@@ -101,6 +108,7 @@ namespace km
 		 
 		void Knife_Spike_Tele_In();
 		void Knife_Spike_On();
+		void Knife_Spike_Start();
 		void Knife_Spike_Loop();
 		void Knife_Spike_End();
 
@@ -121,10 +129,16 @@ namespace km
 		void Knife_Spread_End();
 
 		//2 Pase
-		void Groggy();
+		void Groggy_Start();
+		void Groggy_Loop();
+		void Groggy_End();
 
-		void Circle_Attack_Tele_In();
-		void Circle_Attack();
+		void Roar_Tele_In();
+		void Roar_On();
+		void Roar_On_Loop();
+		void Roar_Start();
+		void Roar_Loop();
+		void Roar_End();
 
 		void Dark_Tentacle_Tele_In();
 		void Dark_Tentacle_On();
@@ -157,56 +171,85 @@ namespace km
 		bool Wall_Check = false;
 
 	private:
+		Vector3 Temp_Pos;
+		int RoarLocationCounter;
+
+	private:
 		float Pattern_Timing;
 
 		float Intro_Idle_Timing;
 		float Intro01_Timing;
 		float Intro02_Timing;
 		float Intro06_Timing;
-
 		float Dash_On_Timing;
-
 		float Knife_Spike_Loop_Timing;
-
+		float Knife_Spread_Loop_Timing;
+		float Groggy_Loop_Timing;
+		float DarkTentacle_Loop_Timing;
+		float Roar_On_Loop_Timing;
+		float Roar_Loop_Timing;
 
 	private:
 		bool Intro_Idle_Check = true;
-		bool Intro_00_Check = true;
-		bool Intro_01_Check = true;
-		bool Intro_02_Check = true;
-		bool Intro_03_Check = true;
-		bool Intro_04_Check = true;
-		bool Intro_05_Check = true;
-		bool Intro_06_Check = true;
-		bool Intro_End_Check = true;
+		bool Intro_00_Check   = true;
+		bool Intro_01_Check   = true;
+		bool Intro_02_Check   = true;
+		bool Intro_03_Check   = true;
+		bool Intro_04_Check   = true;
+		bool Intro_05_Check   = true;
+		bool Intro_06_Check   = true;
+		bool Intro_End_Check  = true;
 
 	private:
-		bool Idle_Check = true;
-		bool Tele_Out_Check = true;
+		bool Idle_Check         = true;
+		bool Tele_Out_Check     = true;
+		bool Groggy_Start_Check = true;
+		bool Groggy_Loop_Check  = true;
+		bool Groggy_End_Check   = true;
 
 		bool Counter_Cast_Check = true;
 		bool Counter_Loop_Check = true;
-		bool Counter_End_Check = true;
+		bool Counter_End_Check  = true;
 
 		bool Dash_Tele_In_Check = true;
-		bool Dash_On_Check = true;
-		bool Dash_Shoot_Check = true;
-		bool Dash_End_Check = true;
+		bool Dash_On_Check      = true;
+		bool Dash_Shoot_Check   = true;
+		bool Dash_End_Check     = true;
 
 		bool Knife_Spike_Tele_In_Check = true;
-		bool Spike_On_Check = true;
-		bool Spike_Loop_Check = true;
-		bool Spike_End_Check = true;
+		bool Spike_On_Check            = true;
+		bool Spike_Start_Check         = true;
+		bool Spike_Loop_Check          = true;
+		bool Spike_End_Check           = true;
 
 		bool Slash_Tele_In_Check = true;
-		bool Slash_On_Check = true;
-		bool Slash_00_Check = true;
-		bool Slash_01_Check = true;
-		bool Slash_02_Check = true;
-		bool Slash_03_Check = true;
-		bool Slash_04_Check = true;
-		bool Slash_05_Check = true;
-		bool Slash_End_Check = true;
+		bool Slash_On_Check      = true;
+		bool Slash_00_Check      = true;
+		bool Slash_01_Check      = true;
+		bool Slash_02_Check      = true;
+		bool Slash_03_Check      = true;
+		bool Slash_04_Check      = true;
+		bool Slash_05_Check      = true;
+		bool Slash_End_Check     = true;
+
+		bool DartShoot_Tele_In_Check = true;
+		bool Spread_On_Check         = true;
+		bool Spread_Start_Check      = true;
+		bool Spread_Loop_Check       = true;
+		bool Spread_End_Check        = true;
+
+		bool DarkTentacle_Tele_In_Check = true;
+		bool DarkTentacle_On_Check      = true;
+		bool DarkTentacle_Start_Check   = true;
+		bool DarkTentacle_Loop_Check    = true;
+		bool DarkTentacle_End_Check     = true;
+
+		bool Roar_Tele_In_Check = true;
+		bool Roar_On_Check      = true;
+		bool Roar_On_Loop_Check = true;
+		bool Roar_Start_Check   = true;
+		bool Roar_Loop_Check    = true;
+		bool Roar_End_Check     = true;
 	};
 }
 
