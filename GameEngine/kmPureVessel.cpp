@@ -8,7 +8,14 @@
 #include "kmCollisionManager.h"
 #include "kmTime.h"
 #include "kmSceneManager.h"
+#include "kmObject.h"
 #include "kmPlayer.h"
+
+#include "kmSpike.h"
+#include "kmDarkWhip.h"
+#include "kmLightCircleobj_Guid.h"
+
+#include "kmDark_Tentacle_Effect.h"
 
 namespace km
 {
@@ -26,7 +33,8 @@ namespace km
 		, RoarLocationCounter(0)
 		, Roar_On_Loop_Timing(0.0f)
 		, Roar_Loop_Timing(0.0f)
-		, mPattern(2)
+		, Roar_Idle_Timing(0.0f)
+		, mPattern(5)
 
 	{
 	}
@@ -160,14 +168,14 @@ namespace km
 		std::shared_ptr<Texture> Vessel_Roar_On_Right = Resources::Load<Texture>(L"Vessel_Roar_On_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\On\\Right\\Roar_On_Right.png");
 		std::shared_ptr<Texture> Vessel_Roar_On_Loop_Left = Resources::Load<Texture>(L"Vessel_Roar_On_Loop_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\On_Loop\\Left\\Roar_On_Loop_Left.png");
 		std::shared_ptr<Texture> Vessel_Roar_On_Loop_Right = Resources::Load<Texture>(L"Vessel_Roar_On_Loop_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\On_Loop\\Right\\Roar_On_Loop_Right.png");
-
 		std::shared_ptr<Texture> Vessel_Roar_Start_Left = Resources::Load<Texture>(L"Vessel_Roar_Start_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\Start\\Left\\Roar_Start_Left.png");
 		std::shared_ptr<Texture> Vessel_Roar_Start_Right = Resources::Load<Texture>(L"Vessel_Roar_Start_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\Start\\Right\\Roar_Start_Right.png");
 		std::shared_ptr<Texture> Vessel_Roar_Loop_Left = Resources::Load<Texture>(L"Vessel_Roar_Loop_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\Loop\\Left\\Roar_Loop_Left.png");
 		std::shared_ptr<Texture> Vessel_Roar_Loop_Right = Resources::Load<Texture>(L"Vessel_Roar_Loop_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\Loop\\Right\\Roar_Loop_Right.png");
 		std::shared_ptr<Texture> Vessel_Roar_End_Left = Resources::Load<Texture>(L"Vessel_Roar_End_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\End\\Left\\Roar_End_Left.png");
 		std::shared_ptr<Texture> Vessel_Roar_End_Right = Resources::Load<Texture>(L"Vessel_Roar_End_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Pattern\\Roar\\End\\Right\\Roar_End_Right.png");
-
+		std::shared_ptr<Texture> Vessel_Roar_Idle_Left = Resources::Load<Texture>(L"Vessel_Roar_Idle_Left", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Left\\Idle_Left.png");
+		std::shared_ptr<Texture> Vessel_Roar_Idle_Right = Resources::Load<Texture>(L"Vessel_Roar_Idle_Right", L"..\\Resources\\Boss_PureVessel\\PureVessel\\Idle\\Right\\Idle_Right.png");
 
 		//Intro Animation
 		mAnimation->Create(L"Intro_Idle", Veesel_Intro_Idle, Vector2(0.0f, 0.0f), Vector2(648.0f, 692.0f), 1, Vector2(0.0f, 0.02f), 0.1f);
@@ -293,6 +301,9 @@ namespace km
 		mAnimation->Create(L"Roar_Loop_Right", Vessel_Roar_Loop_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 3, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Roar_End_Left", Vessel_Roar_End_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
 		mAnimation->Create(L"Roar_End_Right", Vessel_Roar_End_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 4, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Roar_Idle_Left", Vessel_Roar_Idle_Left, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+		mAnimation->Create(L"Roar_Idle_Right", Vessel_Roar_Idle_Right, Vector2(0.0f, 0.0f), Vector2(1296.0f, 908.0f), 5, Vector2(0.0f, 0.02f), 0.1f);
+
 
 		mAnimation->CompleteEvent(L"Stun_00_Left") = std::bind(&PureVessel::Groggy_Loop, this);
 		mAnimation->CompleteEvent(L"Stun_00_Right") = std::bind(&PureVessel::Groggy_Loop, this);
@@ -368,9 +379,8 @@ namespace km
 		mAnimation->CompleteEvent(L"Roar_On_Right") = std::bind(&PureVessel::Roar_On_Loop, this);
 		mAnimation->CompleteEvent(L"Roar_Start_Left") = std::bind(&PureVessel::Roar_Loop, this);
 		mAnimation->CompleteEvent(L"Roar_Start_Right") = std::bind(&PureVessel::Roar_Loop, this);
-		mAnimation->CompleteEvent(L"Roar_End_Left") = std::bind(&PureVessel::Tele_Out, this);
-		mAnimation->CompleteEvent(L"Roar_End_Right") = std::bind(&PureVessel::Tele_Out, this);
-
+		mAnimation->CompleteEvent(L"Roar_End_Left") = std::bind(&PureVessel::Roar_Idle, this);
+		mAnimation->CompleteEvent(L"Roar_End_Right") = std::bind(&PureVessel::Roar_Idle, this);
 
 		//Intro Scale//mTransform->SetScale(Vector3(0.55f, 0.62f, 0.0f));
 		//mTransform->SetPosition(Vector3(0.4f, -0.15f, 0.0f));
@@ -541,6 +551,9 @@ namespace km
 			break;
 		case km::PureVessel::eVesselState::RoarEnd:
 			Roar_End();
+			break;
+		case km::PureVessel::eVesselState::RoarIdle:
+			Roar_Idle();
 			break;
 		case km::PureVessel::eVesselState::DarkTentacleTeleIn:
 			Dark_Tentacle_Tele_In();
@@ -1034,14 +1047,16 @@ namespace km
 		{
 			mAnimation->PlayAnimation(L"Spike_Loop_Left", true);
 			Spike_Loop_Check = false;
+			SpikeObj();
 		}
 		if (Spike_Loop_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Spike_Loop_Right", true);
 			Spike_Loop_Check = false;
+			SpikeObj();
 		}
 
-		if(Knife_Spike_Loop_Timing > 2.0f)
+		if(Knife_Spike_Loop_Timing > 2.5f)
 			mState = eVesselState::KnifeSpikeEnd;
 	}
 
@@ -1551,13 +1566,35 @@ namespace km
 		if (Roar_End_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Roar_End_Left", true);
+			CircleObj();
 			Roar_End_Check = false;
 		}
 		if (Roar_End_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Roar_End_Right", true);
+			CircleObj();
 			Roar_End_Check = false;
 		}
+	}
+
+	void PureVessel::Roar_Idle()
+	{
+		mState = eVesselState::RoarIdle;
+		Roar_Idle_Timing += Time::DeltaTime();
+
+		if (Roar_Idle_Check && mDirection == eDirection::Left)
+		{
+			mAnimation->PlayAnimation(L"Roar_Idle_Left", true);
+			Roar_Idle_Check = false;
+		}
+		if (Roar_Idle_Check && mDirection == eDirection::Right)
+		{
+			mAnimation->PlayAnimation(L"Roar_Idle_Right", true);
+			Roar_Idle_Check = false;
+		}
+
+		if(Roar_Idle_Timing > 2.0f)
+			mState = eVesselState::TeleOut;
 	}
 
 
@@ -1614,11 +1651,39 @@ namespace km
 		if (DarkTentacle_Start_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Tentacle_Start_Left", true);
+
+			//Effect
+			mDark_Tentacle_Effect = object::Instantiate<Dark_Tentacle_Effect>(eLayerType::Effect);
+			mDark_Tentacle_Effect->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x - 0.09f, mVesselPos.y - 0.03f, 0.0f));
+			mDark_Tentacle_Effect->On_Left();
+
+			//Object
+			mDarkWhip_Up = object::Instantiate<DarkWhip>(eLayerType::Effect);
+			mDarkWhip_Down = object::Instantiate<DarkWhip>(eLayerType::Effect);
+			mDarkWhip_Up->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x - 0.35, mVesselPos.y + 0.05f, 0.0f));
+			mDarkWhip_Down->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x - 0.35, mVesselPos.y - 0.15f, 0.0f));
+			mDarkWhip_Up->DarkWhip_On_Up_Left();
+			mDarkWhip_Down->DarkWhip_On_Down_Left();
+
 			DarkTentacle_Start_Check = false;
 		}
 		if (DarkTentacle_Start_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Tentacle_Start_Right", true);
+
+			//Effect
+			mDark_Tentacle_Effect = object::Instantiate<Dark_Tentacle_Effect>(eLayerType::Effect);
+			mDark_Tentacle_Effect->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x + 0.09f, mVesselPos.y - 0.03f, 0.0f));
+			mDark_Tentacle_Effect->On_Right();
+
+			//Object
+			mDarkWhip_Up = object::Instantiate<DarkWhip>(eLayerType::Effect);
+			mDarkWhip_Down = object::Instantiate<DarkWhip>(eLayerType::Effect);
+			mDarkWhip_Up->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x + 0.35, mVesselPos.y + 0.05f, 0.0f));
+			mDarkWhip_Down->GetComponent<Transform>()->SetPosition(Vector3(mVesselPos.x + 0.35, mVesselPos.y - 0.15f, 0.0f));
+			mDarkWhip_Up->DarkWhip_On_Up_Right();
+			mDarkWhip_Down->DarkWhip_On_Down_Right();
+
 			DarkTentacle_Start_Check = false;
 		}
 	}
@@ -1646,6 +1711,7 @@ namespace km
 	void PureVessel::Dark_Tentacle_End()
 	{
 		mState = eVesselState::DarkTentacleEnd;
+		mDark_Tentacle_Effect->Destroy();
 
 		if (DarkTentacle_End_Check && mDirection == eDirection::Left)
 		{
@@ -1700,6 +1766,7 @@ namespace km
 		DarkTentacle_Loop_Timing = 0.0f;
 		Roar_On_Loop_Timing      = 0.0f;
 		Roar_Loop_Timing         = 0.0f;
+		Roar_Idle_Timing         = 0.0f;
 
 		Intro_Idle_Check = true;
 		Intro_00_Check   = true;
@@ -1760,6 +1827,7 @@ namespace km
 		Roar_Start_Check   = true;
 		Roar_Loop_Check    = true;
 		Roar_End_Check     = true;
+		Roar_Idle_Check    = true;
 	}
 
 	void PureVessel::Death()
@@ -1767,4 +1835,78 @@ namespace km
 
 	}
 
+	void PureVessel::SpikeObj()
+	{
+		mSpike00 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike01 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike02 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike03 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike04 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike05 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike06 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike07 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike08 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike09 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike10 = object::Instantiate<Spike>(eLayerType::BossObj);
+		mSpike11 = object::Instantiate<Spike>(eLayerType::BossObj);
+
+		mSpike00->GetComponent<Transform>()->SetPosition(Vector3(1.1f, 0.0f, 0.0f));
+		mSpike01->GetComponent<Transform>()->SetPosition(Vector3(0.9f, 0.0f, 0.0f));
+		mSpike02->GetComponent<Transform>()->SetPosition(Vector3(0.7f, 0.0f, 0.0f));
+		mSpike03->GetComponent<Transform>()->SetPosition(Vector3(0.5f, 0.0f, 0.0f));
+		mSpike04->GetComponent<Transform>()->SetPosition(Vector3(0.3f, 0.0f, 0.0f));
+		mSpike05->GetComponent<Transform>()->SetPosition(Vector3(0.1f, 0.0f, 0.0f));
+		mSpike06->GetComponent<Transform>()->SetPosition(Vector3(-0.1f, 0.0f, 0.0f));
+		mSpike07->GetComponent<Transform>()->SetPosition(Vector3(-0.3f, 0.0f, 0.0f));
+		mSpike08->GetComponent<Transform>()->SetPosition(Vector3(-0.5f, 0.0f, 0.0f));
+		mSpike09->GetComponent<Transform>()->SetPosition(Vector3(-0.7f, 0.0f, 0.0f));
+		mSpike10->GetComponent<Transform>()->SetPosition(Vector3(-0.9f, 0.0f, 0.0f));
+		mSpike11->GetComponent<Transform>()->SetPosition(Vector3(-1.1f, 0.0f, 0.0f));
+
+		mSpike00->Spike_On();
+		mSpike01->Spike_On();
+		mSpike02->Spike_On();
+		mSpike03->Spike_On();
+		mSpike04->Spike_On();
+		mSpike05->Spike_On();
+		mSpike06->Spike_On();
+		mSpike07->Spike_On();
+		mSpike07->Spike_On();
+		mSpike08->Spike_On();
+		mSpike09->Spike_On();
+		mSpike10->Spike_On();
+		mSpike11->Spike_On();
+	}
+
+	void PureVessel::CircleObj()
+	{
+		mCircle_Guid00 = object::Instantiate<LightCircleobj_Guid>(Vector3(1.0f, 0.15f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid01 = object::Instantiate<LightCircleobj_Guid>(Vector3(0.8f, -0.2f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid02 = object::Instantiate<LightCircleobj_Guid>(Vector3(0.4f, 0.1f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid03 = object::Instantiate<LightCircleobj_Guid>(Vector3(0.05f, -0.15f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid04 = object::Instantiate<LightCircleobj_Guid>(Vector3(-0.15f, 0.15f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid05 = object::Instantiate<LightCircleobj_Guid>(Vector3(-0.5f, -0.1f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid06 = object::Instantiate<LightCircleobj_Guid>(Vector3(-0.8f, 0.17f, 0.0f) ,eLayerType::BossObj);
+		mCircle_Guid07 = object::Instantiate<LightCircleobj_Guid>(Vector3(-0.9f, -0.2f, 0.0f) ,eLayerType::BossObj);
+
+		mCircle_Guid00->SetGuidEndTiming(0.8f);
+		mCircle_Guid01->SetGuidEndTiming(1.0f);
+		mCircle_Guid02->SetGuidEndTiming(1.2f);
+		mCircle_Guid03->SetGuidEndTiming(1.4f);
+		mCircle_Guid04->SetGuidEndTiming(1.6f);
+		mCircle_Guid05->SetGuidEndTiming(1.8f);
+		mCircle_Guid06->SetGuidEndTiming(2.0f);
+		mCircle_Guid07->SetGuidEndTiming(2.2f);
+		mCircle_Guid07->SetGuidEndTiming(2.4f);
+
+		mCircle_Guid00->Guid_On();
+		mCircle_Guid01->Guid_On();
+		mCircle_Guid02->Guid_On();
+		mCircle_Guid03->Guid_On();
+		mCircle_Guid04->Guid_On();
+		mCircle_Guid05->Guid_On();
+		mCircle_Guid06->Guid_On();
+		mCircle_Guid07->Guid_On();
+		mCircle_Guid07->Guid_On();
+	}
 }

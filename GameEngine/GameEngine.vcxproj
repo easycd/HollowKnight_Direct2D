@@ -157,6 +157,8 @@
     <ClInclude Include="kmAirDash_Effect.h" />
     <ClInclude Include="kmBoss_Grimm_Stage.h" />
     <ClInclude Include="kmCrowd.h" />
+    <ClInclude Include="kmDarkWhip.h" />
+    <ClInclude Include="kmDark_Tentacle_Effect.h" />
     <ClInclude Include="kmDirtmouth.h" />
     <ClInclude Include="kmDsahEffect.h" />
     <ClInclude Include="kmFIreBall.h" />
@@ -168,6 +170,9 @@
     <ClInclude Include="kmGrimm.h" />
     <ClInclude Include="kmGroundDash_Effect.h" />
     <ClInclude Include="kmGroundScript.h" />
+    <ClInclude Include="kmGuidLight.h" />
+    <ClInclude Include="kmLightCircle.h" />
+    <ClInclude Include="kmLightCircleobj_Guid.h" />
     <ClInclude Include="kmPlayer.h" />
     <ClInclude Include="kmPlayerEffet.h" />
     <ClInclude Include="kmPlayerHP.h" />
@@ -175,7 +180,10 @@
     <ClInclude Include="kmPlayerUI.h" />
     <ClInclude Include="kmPlayScene.h" />
     <ClInclude Include="kmPureVessel.h" />
+    <ClInclude Include="kmRoarEffect.h" />
     <ClInclude Include="kmSoulGauge.h" />
+    <ClInclude Include="kmSpear.h" />
+    <ClInclude Include="kmSpike.h" />
     <ClInclude Include="kmSpike_Object.h" />
     <ClInclude Include="kmTitleScene.h" />
     <ClInclude Include="kmTrumpNpc.h" />
@@ -194,6 +202,8 @@
     <ClCompile Include="kmAirDash_Effect.cpp" />
     <ClCompile Include="kmBoss_Grimm_Stage.cpp" />
     <ClCompile Include="kmCrowd.cpp" />
+    <ClCompile Include="kmDarkWhip.cpp" />
+    <ClCompile Include="kmDark_Tentacle_Effect.cpp" />
     <ClCompile Include="kmDirtmouth.cpp" />
     <ClCompile Include="kmDsahEffect.cpp" />
     <ClCompile Include="kmFIreBall.cpp" />
@@ -205,6 +215,9 @@
     <ClCompile Include="kmGrimm.cpp" />
     <ClCompile Include="kmGroundDash_Effect.cpp" />
     <ClCompile Include="kmGroundScript.cpp" />
+    <ClCompile Include="kmGuidLight.cpp" />
+    <ClCompile Include="kmLightCircle.cpp" />
+    <ClCompile Include="kmLightCircleobj_Guid.cpp" />
     <ClCompile Include="kmPlayer.cpp" />
     <ClCompile Include="kmPlayerEffet.cpp" />
     <ClCompile Include="kmPlayerHP.cpp" />
@@ -212,7 +225,10 @@
     <ClCompile Include="kmPlayerUI.cpp" />
     <ClCompile Include="kmPlayScene.cpp" />
     <ClCompile Include="kmPureVessel.cpp" />
+    <ClCompile Include="kmRoarEffect.cpp" />
     <ClCompile Include="kmSoulGauge.cpp" />
+    <ClCompile Include="kmSpear.cpp" />
+    <ClCompile Include="kmSpike.cpp" />
     <ClCompile Include="kmSpike_Object.cpp" />
     <ClCompile Include="kmTitleScene.cpp" />
     <ClCompile Include="kmTrumpNpc.cpp" />

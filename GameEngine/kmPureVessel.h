@@ -4,6 +4,13 @@
 namespace km
 {
 	class Player;
+	
+	class Spike;
+	class DarkWhip;
+	class LightCircle;
+	class LightCircleobj_Guid;
+
+	class Dark_Tentacle_Effect;
 
 	class PureVessel : public GameObject
 	{
@@ -66,6 +73,7 @@ namespace km
 			RoarStart,
 			RoarLoop,
 			RoarEnd,
+			RoarIdle,
 			DarkTentacleTeleIn,
 			DarkTentacleOn,
 			DarkTentacleStart,
@@ -139,6 +147,7 @@ namespace km
 		void Roar_Start();
 		void Roar_Loop();
 		void Roar_End();
+		void Roar_Idle();
 
 		void Dark_Tentacle_Tele_In();
 		void Dark_Tentacle_On();
@@ -149,6 +158,9 @@ namespace km
 		void Tele_Out();
 		void Tele_Out_State();
 		void Death();
+
+		void SpikeObj();
+		void CircleObj();
 
 
 	private:
@@ -171,6 +183,36 @@ namespace km
 		bool Wall_Check = false;
 
 	private:
+		Dark_Tentacle_Effect* mDark_Tentacle_Effect;
+
+	private:
+		DarkWhip* mDarkWhip_Up;
+		DarkWhip* mDarkWhip_Down;
+
+		Spike* mSpike00;
+		Spike* mSpike01;
+		Spike* mSpike02;
+		Spike* mSpike03;
+		Spike* mSpike04;
+		Spike* mSpike05;
+		Spike* mSpike06;
+		Spike* mSpike07;
+		Spike* mSpike08;
+		Spike* mSpike09;
+		Spike* mSpike10;
+		Spike* mSpike11;
+		Spike* mSpike12;
+
+		LightCircleobj_Guid* mCircle_Guid00;
+		LightCircleobj_Guid* mCircle_Guid01;
+		LightCircleobj_Guid* mCircle_Guid02;
+		LightCircleobj_Guid* mCircle_Guid03;
+		LightCircleobj_Guid* mCircle_Guid04;
+		LightCircleobj_Guid* mCircle_Guid05;
+		LightCircleobj_Guid* mCircle_Guid06;
+		LightCircleobj_Guid* mCircle_Guid07;
+
+	private:
 		Vector3 Temp_Pos;
 		int RoarLocationCounter;
 
@@ -188,6 +230,7 @@ namespace km
 		float DarkTentacle_Loop_Timing;
 		float Roar_On_Loop_Timing;
 		float Roar_Loop_Timing;
+		float Roar_Idle_Timing;
 
 	private:
 		bool Intro_Idle_Check = true;
@@ -250,6 +293,7 @@ namespace km
 		bool Roar_Start_Check   = true;
 		bool Roar_Loop_Check    = true;
 		bool Roar_End_Check     = true;
+		bool Roar_Idle_Check    = true;
 	};
 }
 

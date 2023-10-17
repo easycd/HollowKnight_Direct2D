@@ -115,6 +115,24 @@
     <Filter Include="Contents\GameObject\Player\Effect\Focus">
       <UniqueIdentifier>{0726f5b9-7c56-4bd0-be08-9186f80ae5a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\DarkWhip">
+      <UniqueIdentifier>{c5a08d4e-9257-41bc-ab1b-a5f3376ea430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\LightCircle">
+      <UniqueIdentifier>{f14762ec-288c-4ba1-9b2c-8d9a73dfea76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spear">
+      <UniqueIdentifier>{b9eda209-2051-4c6a-b337-cd23c5b2548f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spike">
+      <UniqueIdentifier>{9ff9002e-fc90-4766-bfec-b9e416156ea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Effect\Dark_Tentacle_Effect">
+      <UniqueIdentifier>{d188adfa-df22-42f5-8788-00a92f615ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\GameObject\Boss\PureVessel\Effect\Roar_Effect">
+      <UniqueIdentifier>{178a4c13-c8c9-49b5-b4fc-7cf0a2e0f35f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
@@ -218,6 +236,30 @@
     <ClInclude Include="kmGirmm_Hand.h">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand</Filter>
     </ClInclude>
+    <ClInclude Include="kmDarkWhip.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\DarkWhip</Filter>
+    </ClInclude>
+    <ClInclude Include="kmLightCircle.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\LightCircle</Filter>
+    </ClInclude>
+    <ClInclude Include="kmSpear.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spear</Filter>
+    </ClInclude>
+    <ClInclude Include="kmGuidLight.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spear</Filter>
+    </ClInclude>
+    <ClInclude Include="kmSpike.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spike</Filter>
+    </ClInclude>
+    <ClInclude Include="kmDark_Tentacle_Effect.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Effect\Dark_Tentacle_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="kmRoarEffect.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Effect\Roar_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="kmLightCircleobj_Guid.h">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\LightCircle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -316,6 +358,30 @@
     </ClCompile>
     <ClCompile Include="kmGirmm_Hand.cpp">
       <Filter>Contents\GameObject\Boss\Grimm\Gimm_Skill_Object\Hand</Filter>
+    </ClCompile>
+    <ClCompile Include="kmDarkWhip.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\DarkWhip</Filter>
+    </ClCompile>
+    <ClCompile Include="kmLightCircle.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\LightCircle</Filter>
+    </ClCompile>
+    <ClCompile Include="kmSpear.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spear</Filter>
+    </ClCompile>
+    <ClCompile Include="kmGuidLight.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spear</Filter>
+    </ClCompile>
+    <ClCompile Include="kmSpike.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\Spike</Filter>
+    </ClCompile>
+    <ClCompile Include="kmDark_Tentacle_Effect.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Effect\Dark_Tentacle_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="kmRoarEffect.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Effect\Roar_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="kmLightCircleobj_Guid.cpp">
+      <Filter>Contents\GameObject\Boss\PureVessel\Vessel_Skill_Object\LightCircle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
