@@ -7,13 +7,16 @@ namespace km
 
 	class GuidLight : public GameObject
 	{
+	public:
 		GuidLight();
 		virtual ~GuidLight();
 
 		virtual void Initialize();
 		virtual void Update();
 
-		void On();
+		void GuidLight_00();
+		void GuidLight_01();
+		void GuidLight_02();
 
 		void Destroy();
 
@@ -23,7 +26,10 @@ namespace km
 		Collider2D* mCollider;
 
 	private:
-		bool On_Check = true;
+		bool GuidLight_00_Check = true;
+		bool GuidLight_01_Check = true;
+		bool GuidLight_02_Check = true;
+		float Move_Timing;
 	};
 }
 

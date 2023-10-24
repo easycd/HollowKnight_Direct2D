@@ -14,8 +14,12 @@
 #include "kmSpike.h"
 #include "kmDarkWhip.h"
 #include "kmLightCircleobj_Guid.h"
+#include "kmGuidLight.h"
 
 #include "kmDark_Tentacle_Effect.h"
+
+#include "kmAudioClip.h"
+#include "kmAudioSource.h"
 
 namespace km
 {
@@ -34,7 +38,7 @@ namespace km
 		, Roar_On_Loop_Timing(0.0f)
 		, Roar_Loop_Timing(0.0f)
 		, Roar_Idle_Timing(0.0f)
-		, mPattern(5)
+		, mPattern(4)
 
 	{
 	}
@@ -46,7 +50,20 @@ namespace km
 	{
 		mTransform = GetComponent<Transform>();
 		mAnimation = AddComponent<Animator>();
-		mCollider = AddComponent<Collider2D>();
+		mCollider  = AddComponent<Collider2D>();
+
+		mBGM                  = AddComponent<AudioSource>();
+		mSlash_01             = AddComponent<AudioSource>(); 
+		mSlash_02			  = AddComponent<AudioSource>();
+		mSlash_03			  = AddComponent<AudioSource>();
+		mDark_tentacle_On	  = AddComponent<AudioSource>();
+		mDark_tentacle_Start  = AddComponent<AudioSource>();
+		mDash_On			  = AddComponent<AudioSource>();
+		mCircle_Burst		  = AddComponent<AudioSource>();
+		mRoar_On			  = AddComponent<AudioSource>();
+		mRoar_Focus           = AddComponent<AudioSource>();
+		mSpikeAttack_On		  = AddComponent<AudioSource>();
+		mTele_In			  = AddComponent<AudioSource>();
 
 		MeshRenderer* mr = AddComponent<MeshRenderer>();
 		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
@@ -385,6 +402,32 @@ namespace km
 		//Intro Scale//mTransform->SetScale(Vector3(0.55f, 0.62f, 0.0f));
 		//mTransform->SetPosition(Vector3(0.4f, -0.15f, 0.0f));
 
+		mBGM->SetClip(Resources::Load<AudioClip>(L"mBGM", L"..\\Resources\\Boss_PureVessel\\Vessel_bgm.wav"));
+		mSlash_01->SetClip(Resources::Load<AudioClip>(L"mSlash_01", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Slash_01.wav"));
+		mSlash_02->SetClip(Resources::Load<AudioClip>(L"mSlash_02", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Slash_02.wav"));
+		mSlash_03->SetClip(Resources::Load<AudioClip>(L"mSlash_03", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Slash_03.wav"));
+		mDark_tentacle_On->SetClip(Resources::Load<AudioClip>(L"mDark_tentacle_On", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Dark_tentacle_On.wav"));
+		mDark_tentacle_Start->SetClip(Resources::Load<AudioClip>(L"mDark_tentacle_Start", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Dark_tentacle_Start.wav"));
+		mDash_On->SetClip(Resources::Load<AudioClip>(L"mDash_On", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Dash_On.wav"));
+		mCircle_Burst->SetClip(Resources::Load<AudioClip>(L"mCircle_Burst", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Circle_Burst.wav"));
+		mRoar_On->SetClip(Resources::Load<AudioClip>(L"mRoar_On", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Roar_On.wav"));
+		mRoar_Focus->SetClip(Resources::Load<AudioClip>(L"mRoar_Focus", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Roar_Focus.wav"));
+		mSpikeAttack_On->SetClip(Resources::Load<AudioClip>(L"mSpikeAttack_On", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\SpikeAttack_On.wav"));
+		mTele_In->SetClip(Resources::Load<AudioClip>(L"mTele_In", L"..\\Resources\\Boss_PureVessel\\Vessel_Sound\\Tele_In.wav"));
+
+		mBGM->SetLoop(true);
+		mSlash_01->SetLoop(false);
+		mSlash_02->SetLoop(false);
+		mSlash_03->SetLoop(false);
+		mDark_tentacle_On->SetLoop(false);
+		mDark_tentacle_Start->SetLoop(false);
+		mDash_On->SetLoop(false);
+		mCircle_Burst->SetLoop(false);
+		mRoar_On->SetLoop(false);
+		mRoar_Focus->SetLoop(true);
+		mSpikeAttack_On->SetLoop(false);
+		mTele_In->SetLoop(false);
+
 		mTransform->SetScale(Vector3(0.9f, 0.9f, 0.0f));
 		mTransform->SetPosition(Vector3(0.4f, -0.13f, 0.0f));
 
@@ -694,6 +737,7 @@ namespace km
 		if (Intro_06_Check)
 		{
 			mAnimation->PlayAnimation(L"Intro06", true);
+			mBGM->Play();
 			Intro_06_Check = false;
 		}
 
@@ -731,12 +775,9 @@ namespace km
 			Slash_Tele_In();
 			break;
 		case 4:
-			Knife_Spread_Tele_In();
-			break;
-		case 5:
 			Roar_Tele_In();
 			break;
-		case 6:
+		case 5:
 			Dark_Tentacle_Tele_In();
 			break;
 		default:
@@ -924,11 +965,13 @@ namespace km
 		if (Dash_Shoot_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Dash_Shoot_Left", true);
+			mDash_On->Play();
 			Dash_Shoot_Check = false;
 		}
 		if (Dash_Shoot_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Dash_Shoot_Right", true);
+			mDash_On->Play();
 			Dash_Shoot_Check = false;
 		}
 
@@ -1013,11 +1056,13 @@ namespace km
 		if (Spike_Start_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Spike_Start_Left", true);
+			mSpikeAttack_On->Play();
 			Spike_Start_Check = false;
 		}
 		if (Spike_Start_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Spike_Start_Right", true);
+			mSpikeAttack_On->Play();
 			Spike_Start_Check = false;
 		}
 
@@ -1130,11 +1175,13 @@ namespace km
 		if (Slash_00_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Slash_00_Left", true);
+			mSlash_01->Play();
 			Slash_00_Check = false;
 		}
 		if (Slash_00_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Slash_00_Right", true);
+			mSlash_01->Play();
 			Slash_00_Check = false;
 		}
 
@@ -1170,11 +1217,13 @@ namespace km
 		if (Slash_02_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Slash_02_Left", true);
+			mSlash_02->Play();
 			Slash_02_Check = false;
 		}
 		if (Slash_02_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Slash_02_Right", true);
+			mSlash_02->Play();
 			Slash_02_Check = false;
 		}
 
@@ -1210,11 +1259,13 @@ namespace km
 		if (Slash_04_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Slash_04_Left", true);
+			mSlash_03->Play();
 			Slash_04_Check = false;
 		}
 		if (Slash_04_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Slash_04_Right", true);
+			mSlash_03->Play();
 			Slash_04_Check = false;
 		}
 
@@ -1313,11 +1364,13 @@ namespace km
 		if (Spread_Start_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"DartShoot_Start_Left", true);
+			GuidLightObj();
 			Spread_Start_Check = false;
 		}
 		if (Spread_Start_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"DartShoot_Start_Right", true);
+			GuidLightObj();
 			Spread_Start_Check = false;
 		}
 	}
@@ -1494,11 +1547,13 @@ namespace km
 		if (Roar_On_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Roar_On_Left", true);
+			mRoar_Focus->Play();
 			Roar_On_Check = false;
 		}
 		if (Roar_On_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Roar_On_Right", true);
+			mRoar_Focus->Play();
 			Roar_On_Check = false;
 		}
 	}
@@ -1530,11 +1585,15 @@ namespace km
 		if (Roar_Start_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Roar_Start_Left", true);
+			mRoar_Focus->Stop();
+			mRoar_On->Play();
 			Roar_Start_Check = false;
 		}
 		if (Roar_Start_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Roar_Start_Right", true);
+			mRoar_Focus->Stop();
+			mRoar_On->Play();
 			Roar_Start_Check = false;
 		}
 	}
@@ -1733,11 +1792,13 @@ namespace km
 		if (Tele_Out_Check && mDirection == eDirection::Left)
 		{
 			mAnimation->PlayAnimation(L"Tele_Out_Left", true);
+			mTele_In->Play();
 			Tele_Out_Check = false;
 		}
 		if (Tele_Out_Check && mDirection == eDirection::Right)
 		{
 			mAnimation->PlayAnimation(L"Tele_Out_Right", true);
+			mTele_In->Play();
 			Tele_Out_Check = false;
 		}
 	}
@@ -1749,7 +1810,7 @@ namespace km
 
 		mTransform->SetPosition(Vector3(0.0f, 100.0f, 0.0f));
 
-		if (Pattern_Timing > 0.5f)
+		if (Pattern_Timing > 0.1f)
 		{
 			mState = eVesselState::Pattern;
 			Pattern_Timing = 0.0f;
@@ -1908,5 +1969,29 @@ namespace km
 		mCircle_Guid06->Guid_On();
 		mCircle_Guid07->Guid_On();
 		mCircle_Guid07->Guid_On();
+	}
+	void PureVessel::GuidLightObj()
+	{
+		mGuidLight00 = object::Instantiate<GuidLight>(Vector3(mVesselPos.x - 2.05f, mVesselPos.y + 1.5f, 0.0f), eLayerType::BossObj);
+		mGuidLight01 = object::Instantiate<GuidLight>(Vector3(mVesselPos.x - 2.25f, mVesselPos.y + 1.0f, 0.0f), eLayerType::BossObj);
+		mGuidLight02 = object::Instantiate<GuidLight>(Vector3(mVesselPos.x - 2.4f, mVesselPos.y + 0.47f, 0.0f), eLayerType::BossObj);
+		mGuidLight03 = object::Instantiate<GuidLight>(Vector3(mVesselPos.x - 2.45f, mVesselPos.y + 0.2f, 0.0f), eLayerType::BossObj);
+		mGuidLight04 = object::Instantiate<GuidLight>(Vector3(mVesselPos.x - 4.0f, mVesselPos.y + 0.2f, 0.0f), eLayerType::BossObj);
+
+		mGuidLight03->GetComponent<Transform>()->SetScale(Vector3(0.3f, 6.0f, 0.0f));
+		mGuidLight04->GetComponent<Transform>()->SetScale(Vector3(15.0f, 10.0f, 0.0f));
+
+		mGuidLight00->GetComponent<Transform>()->SetRotation(-1.0f, 1.0f, 0.0f);
+		mGuidLight01->GetComponent<Transform>()->SetRotation(-1.2f, 1.0f, 0.0f);
+		mGuidLight02->GetComponent<Transform>()->SetRotation(-1.4f, 1.0f, 0.0f);
+		mGuidLight03->GetComponent<Transform>()->SetRotation(-1.5f, 1.0f, 0.0f);
+		mGuidLight04->GetComponent<Transform>()->SetRotation(-1.57f, 1.0f, -1.0f);
+
+		mGuidLight00->GuidLight_00();
+		mGuidLight01->GuidLight_00();
+		mGuidLight02->GuidLight_00();
+		mGuidLight03->GuidLight_00();
+		mGuidLight04->GuidLight_00();
+
 	}
 }

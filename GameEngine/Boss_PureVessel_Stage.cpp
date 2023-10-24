@@ -121,7 +121,7 @@ namespace km
 	}
 	void Boss_PureVessel_Stage::OnEnter()
 	{
-		mPureVessel->Idle();
+		mPureVessel->Intro_Idle();
 		renderer::mainCamera = mCamera;
 	}
 	void Boss_PureVessel_Stage::OnExit()

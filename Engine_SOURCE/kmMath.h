@@ -194,15 +194,7 @@ namespace km::math
         static const Vector2 UnitX;
         static const Vector2 UnitY;
 
-
-
-
-
-
-
-
-
-        float Length()
+       /* float Length()
         {
             return sqrtf(x * x + y * y);
         }
@@ -218,7 +210,7 @@ namespace km::math
             y /= length;
 
             return *this;
-        }
+        }*/
     };
 
     // Binary operators

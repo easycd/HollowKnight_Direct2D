@@ -9,8 +9,11 @@ namespace km
 	class DarkWhip;
 	class LightCircle;
 	class LightCircleobj_Guid;
+	class GuidLight;
 
 	class Dark_Tentacle_Effect;
+
+	class AudioSource;
 
 	class PureVessel : public GameObject
 	{
@@ -161,6 +164,7 @@ namespace km
 
 		void SpikeObj();
 		void CircleObj();
+		void GuidLightObj();
 
 
 	private:
@@ -181,6 +185,21 @@ namespace km
 		VectorR dr;
 		int mPattern;
 		bool Wall_Check = false;
+
+	private:
+		AudioSource* mBGM;
+		AudioSource* mSlash_01;
+		AudioSource* mSlash_02;
+		AudioSource* mSlash_03;
+		AudioSource* mDark_tentacle_On;
+		AudioSource* mDark_tentacle_Start;
+		AudioSource* mDash_On;
+		AudioSource* mCircle_Burst;
+		AudioSource* mRoar_On;
+		AudioSource* mRoar_Focus;
+		AudioSource* mSpikeAttack_On;
+		AudioSource* mTele_In;
+
 
 	private:
 		Dark_Tentacle_Effect* mDark_Tentacle_Effect;
@@ -211,6 +230,12 @@ namespace km
 		LightCircleobj_Guid* mCircle_Guid05;
 		LightCircleobj_Guid* mCircle_Guid06;
 		LightCircleobj_Guid* mCircle_Guid07;
+
+		GuidLight* mGuidLight00;
+		GuidLight* mGuidLight01;
+		GuidLight* mGuidLight02;
+		GuidLight* mGuidLight03;
+		GuidLight* mGuidLight04;
 
 	private:
 		Vector3 Temp_Pos;
